@@ -30,9 +30,6 @@ interface TooltipProps
     HTMLElementAttributesWithOmittedAttributes {
   children: ReactNode;
   content: ReactNode;
-
-  arrowClassName?: string;
-  triggerClassName?: string;
 }
 
 // #endregion
@@ -51,8 +48,6 @@ export default function Tooltip({
   defaultOpen,
   open,
   className,
-  arrowClassName,
-  triggerClassName,
   ...props
 }: TooltipProps): JSX.Element {
   return (
@@ -63,9 +58,7 @@ export default function Tooltip({
         defaultOpen={defaultOpen}
         open={open}
       >
-        <Trigger asChild={true} className={triggerClassName}>
-          {children}
-        </Trigger>
+        <Trigger asChild={true}>{children}</Trigger>
         <Content
           align={align}
           alignOffset={alignOffset}
@@ -91,8 +84,7 @@ export default function Tooltip({
             className={cls(
               "fill-current shadow-2xl",
               "stroke-coal text-black",
-              "dark:stroke-gray-200 dark:text-gray-100",
-              arrowClassName
+              "dark:stroke-gray-200 dark:text-gray-100"
             )}
           />
           {content}
