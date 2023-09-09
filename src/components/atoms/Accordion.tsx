@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, type JSX, useCallback, useMemo } from "react";
+import { type ReactNode, type JSX, useCallback } from "react";
 
 import { Root, Item, Header, Trigger, Content } from "@radix-ui/react-accordion";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
@@ -34,12 +34,22 @@ interface AccordionProps<T extends string> {
   items: AccordionItem<T>[];
   value: T;
 
+  className?: string;
+
+  isCollapsible?: boolean;
+
   onFocusChange?: AccordionControlledStateEventHandler<T>;
 }
 
 // #endregion
 
-export default function Accordion<T extends string>({ items, value, onFocusChange }: AccordionProps<T>): JSX.Element {
+export default function Accordion<T extends string>({
+  items,
+  value,
+  onFocusChange,
+  isCollapsible = false,
+  className,
+}: AccordionProps<T>): JSX.Element {
   const handleValueChange = useCallback(
     function handleValueChange$(value: string) {
       const item = items.find(({ key }) => key === value) ?? items[0];
@@ -53,24 +63,30 @@ export default function Accordion<T extends string>({ items, value, onFocusChang
   );
 
   return (
-    <Root type="single" value={value} className={cls("space-y-4 w-full")} onValueChange={handleValueChange}>
-      {items.map(({ header, content }, index) => {
-        const value = `item-${index + 1}}`;
+    <Root
+      type="single"
+      value={value}
+      collapsible={isCollapsible}
+      className={cls("space-y-4 w-full", className)}
+      onValueChange={handleValueChange}
+    >
+      {items.map(({ header, content, key }, index) => {
+        const itemValue = `item-${index + 1}}`;
 
         return (
           <Item
             key={String(header)}
-            value={value}
-            className="rounded-lg focus-within:ring focus-within:ring-indigo-500 focus-within:ring-opacity-75 focus:outline-none w-full"
+            value={key ?? itemValue}
+            className={cls(
+              "border-l border-t border-r border-transparent",
+              "focus-within:border-purple-700 focus-within:dark:border-purple-300",
+              "radix-state-open:rounded-t-lg radix-state-closed:rounded-lg",
+              "focus-within:rounded-t-lg",
+              "transition-all focus-within:animate-slide-up-fade"
+            )}
           >
             <Header className="w-full">
-              <Trigger
-                className={cls(
-                  "radix-state-open:rounded-t-lg radix-state-closed:rounded-lg",
-                  "focus:outline-none",
-                  "inline-flex w-full items-center justify-between bg-white px-4 py-2 text-left dark:bg-gray-800"
-                )}
-              >
+              <Trigger className={cls("inline-flex w-full items-center justify-between px-4 py-3 text-left")}>
                 <span className="text-sm font-medium text-gray-900 dark:text-gray-100">{header}</span>
                 <ChevronDownIcon
                   className={cls(
@@ -80,7 +96,7 @@ export default function Accordion<T extends string>({ items, value, onFocusChang
                 />
               </Trigger>
             </Header>
-            <Content className="pt-1 w-full rounded-b-lg bg-white px-4 pb-3 dark:bg-gray-800">
+            <Content className="pt-1 w-full px-4 pb-3 animate-scale-in-content">
               <div className="text-sm text-gray-700 dark:text-gray-400">{content}</div>
             </Content>
           </Item>
