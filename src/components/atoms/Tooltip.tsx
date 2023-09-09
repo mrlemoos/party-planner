@@ -73,7 +73,7 @@ export default function Tooltip({
             "rounded-md shadow-xl cursor-default",
             "text-xs",
             "bg-coal text-white",
-            "dark:bg-white text-black",
+            "dark:bg-white dark:text-coal",
             className
           )}
           {...props}
