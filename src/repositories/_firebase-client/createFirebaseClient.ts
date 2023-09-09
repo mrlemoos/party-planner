@@ -11,6 +11,10 @@ const firebaseConfig = {
   measurementId: "G-FWTL8H7NPN",
 };
 
+/**
+ * Creates the Firebase client from the module `firebase/app`. This function
+ * should be called only once on the client side.
+ */
 export default function createFirebaseClient() {
   const firebase = initializeApp(firebaseConfig);
 

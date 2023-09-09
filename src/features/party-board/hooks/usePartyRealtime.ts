@@ -11,9 +11,19 @@ import type PartyMember from "@root/models/PartyMember";
 import createFirebaseClient from "@root/repositories/_firebase-client/createFirebaseClient";
 import convertFirebaseObjectToArray from "@root/util/covertFirebaseObjectToArray";
 
+// We only invoke the Firebase and get the database instance once on the client
+// side. This is because the Firebase client is not available on the server side
+// as a singleton.This is why we need to create the Firebase client on the
+// client side to update the party data in realtime on the client.
 createFirebaseClient();
 
-function transformSnapshotIntoPartyDataset(snapshot: DataSnapshot) {
+// #region Interfaces & Types
+
+/**
+ * Transforms the {@link DataSnapshot} into a {@link Party} dataset given the
+ * snapshot exists. Otherwise it returns `undefined`.
+ */
+function $transformSnapshotIntoPartyDataset(snapshot: DataSnapshot): Party | undefined {
   if (!snapshot.exists()) {
     return undefined;
   }
@@ -32,10 +42,20 @@ const defaultValues: Party = {
   updatedAt: "",
 };
 
+// #endregion
+
+/**
+ * The custom hook that connects and updates the party data in realtime from the
+ * database and provides the functions. This hook creates an instance of the
+ * {@link useEffect} that the firebase realtime database and updates the party
+ * data every time a new snapshot is received.
+ *
+ * It is important to note that this hook does not provide the party data
+ * immediately, but only after the first snapshot is received. This means that
+ * the party data will be a default object until the first snapshot is received.
+ */
 export default function usePartyRealtime(partyId: string) {
   const [party, setParty] = useState<Party>(defaultValues);
-  const [isFirstLoading, setFirstLoading] = useState(true);
-
   const router = useRouter();
 
   const addStory = useCallback(
@@ -159,7 +179,7 @@ export default function usePartyRealtime(partyId: string) {
   );
 
   const revealStoryVotes = useCallback(
-    function resetVotes$(storyId: string) {
+    function revealStoryVotes$(storyId: string) {
       const database = getDatabase();
       const ref = child(ref$(database, `parties/${partyId}`), "stories");
 
@@ -174,12 +194,14 @@ export default function usePartyRealtime(partyId: string) {
 
         return { storyId: storyId$, ...story };
       });
+
+      update(ref, stories);
     },
     [party.stories, partyId]
   );
 
   const voteStory = useCallback(
-    function resetVotes$(userId: string, storyId: string, vote: number) {
+    function voteStory$(userId: string, storyId: string, vote: number) {
       const database = getDatabase();
       const ref = child(ref$(database, `parties/${partyId}`), "stories");
 
@@ -206,9 +228,17 @@ export default function usePartyRealtime(partyId: string) {
     },
     [party.stories, partyId]
   );
-  const resetState = useCallback(function resetVotes$(party: Party) {
-    setParty(party);
-  }, []);
+  const resetState = useCallback(
+    function resetState$(party: Party) {
+      const database = getDatabase();
+      const ref = ref$(database, `parties/${partyId}`);
+
+      set(ref, party);
+
+      setParty(party);
+    },
+    [partyId]
+  );
 
   const partyOwner = useMemo(
     () => party.members?.find(({ userId }) => userId === party.ownerUserId) ?? party.members?.[0],
@@ -219,12 +249,20 @@ export default function usePartyRealtime(partyId: string) {
     const database = getDatabase();
     const ref = ref$(database, `parties/${partyId}`);
 
+    /**
+     * The event listener that is invoked every time a new snapshot is received
+     * from the database. This function is also invoked once when the listener
+     * is attached to the database.
+     *
+     * If the snapshot does not exist, then we redirect the user to the pathname
+     * /404.
+     */
     function onSnapshot(snapshot: DataSnapshot) {
       if (!snapshot.exists()) {
         router.push("/404");
         return;
       }
-      const party = transformSnapshotIntoPartyDataset(snapshot);
+      const party = $transformSnapshotIntoPartyDataset(snapshot);
 
       console.log("🚨 Realtime watcher has got this registry:", party);
 
@@ -238,7 +276,6 @@ export default function usePartyRealtime(partyId: string) {
     (async () => {
       const snapshot = await get(ref);
       onSnapshot(snapshot);
-      setFirstLoading(false);
     })();
 
     const unsubscribe = onValue(ref, onSnapshot);
