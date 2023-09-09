@@ -1,27 +1,59 @@
 "use client";
 
-import { ReactNode, type JSX } from "react";
+import { type ReactNode, type JSX, useCallback, useMemo } from "react";
 
 import { Root, Item, Header, Trigger, Content } from "@radix-ui/react-accordion";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import cls from "classnames";
 
-// #region Interfaces & Types
+// #region Utilities & Constants
 
-type AccordionItem = {
-  header: ReactNode;
-  content: ReactNode;
-};
-
-interface AccordionProps {
-  items: AccordionItem[];
+class AccordionControlledStateEvent<T extends string> {
+  constructor(
+    public readonly rawValue: string,
+    public readonly item: AccordionItem<T>,
+    public readonly items: AccordionItem<T>[]
+  ) {}
 }
 
 // #endregion
 
-export default function Accordion({ items }: AccordionProps): JSX.Element {
+// #region Interfaces & Types
+
+interface AccordionControlledStateEventHandler<T extends string> {
+  (event: AccordionControlledStateEvent<T>): void;
+}
+
+type AccordionItem<T extends string> = {
+  header: ReactNode;
+  content: ReactNode;
+  key?: T;
+};
+
+interface AccordionProps<T extends string> {
+  items: AccordionItem<T>[];
+  value: T;
+
+  onFocusChange?: AccordionControlledStateEventHandler<T>;
+}
+
+// #endregion
+
+export default function Accordion<T extends string>({ items, value, onFocusChange }: AccordionProps<T>): JSX.Element {
+  const handleValueChange = useCallback(
+    function handleValueChange$(value: string) {
+      const item = items.find(({ key }) => key === value) ?? items[0];
+      const event = new AccordionControlledStateEvent<T>(value, item, items);
+
+      if (typeof onFocusChange === "function") {
+        onFocusChange(event);
+      }
+    },
+    [items, onFocusChange]
+  );
+
   return (
-    <Root type="single" defaultValue="item-1" className={cls("space-y-4 w-full")}>
+    <Root type="single" value={value} className={cls("space-y-4 w-full")} onValueChange={handleValueChange}>
       {items.map(({ header, content }, index) => {
         const value = `item-${index + 1}}`;
 
