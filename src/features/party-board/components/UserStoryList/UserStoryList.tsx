@@ -9,8 +9,8 @@ import Button from "@root/components/atoms/Button";
 import Heading from "@root/components/atoms/Heading";
 import TextButton from "@root/components/atoms/TextButton";
 import Tooltip from "@root/components/atoms/Tooltip";
-import type Story from "@root/models/Story";
 import toRem from "@root/util/toRem";
+import type Story from "@root/models/Story";
 
 import usePartyBoardContext from "../../context-hooks/usePartyBoardContext";
 import generateStoryId from "../../util/generateStoryId";
