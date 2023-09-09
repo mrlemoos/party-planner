@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "party-planner-723a3",
+  "private_key_id": "8ace90c94daa42209a271502dec1e113dca73b42",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCdLheORy7rYDnI\nQ7e497OHljixVEOSBZt/VTbvzkkUesUsfSZHqnnuj9uIW5JOSJlV/YRIA8+8uM9H\nm5J92PgWwgX2jf+aeGe7dTu+liY//7gtl8RNmE4CyR4lzEc4B38nJitgIiDYOB6p\nQ3nEhQbAl5GY+Iu5NlDGK64PSR2a0VeoWSqnSBbbK0d5mjdjY8Ugx3qvGPGYqvSG\nVw2TnwLMWuiW2NwpN1IuRptSZSh0IvnFQ+c5svcVQjb4tWjYNcICzaDSOdsOuY6S\nQqbIoOiepTHZZnthvj1RvJRN53qZNGiJOmpUmfUgohuNqKGkIlHtDfvdDFuc6ALV\nVKNmytwxAgMBAAECggEASaUHd2vl0XXgDPOhmOJCNVSO0pNTJ49GCLayC1EBj71o\nNgybS3fWMo8nwq95EQHWCmLCwIU8p8WFpR0A2cM3ll4pMhjdOpCQtdXbfNRYLqNP\ntdkGqn6iio6V+ArLEbb9fifVqfDDp9s/jnoliwzzGXjKyLwnp0uKNBfSMapF2zvf\n0ipoNlfPpqktMLBYzNMs/pW4v2MxfAh9JZ1iwE2gqkkNWdlTV63HDz87YPsavUE6\nX0w/VfeFjc5gHOuxIRG6yCev5rSOE8WYILU78rJb+Pc66bhC5yS3jFDx4ueO744m\nQv6XNFluG5SyJCi2T2tk7iMd4C5wN8/HZGsjdbd0GwKBgQDLlVhgHPuDmUY3PATS\n5TigVKDXQm1Ae9IcaYpMQQhI8gK90+5T9+95In681gbbJ41nuxnDATsinMYmIZRQ\nwiGlBg5jlo/Tdv966/obWnKEIEfMQLPCsKV9VOTuOuF1cMqZ6mK7lYB0ENYFzUq1\nATub5bXBWsxQ7zYquJTpQw8MJwKBgQDFpjHuMgshPak4wm3bzVuSGPU30ndFFpx3\nVfU/w5w7m0K9ZLCfIskpN/KdsWzW/5NgdIf8XA9WiZ4k2L+PI/tP2R1uHA8Z079l\nh2IptokTqvqEVMvG+3Dbn+F44XXlSNoTG5LUcVXNRSW0sX2hVeHgeNo7PW4HiIp4\nlMfU6TAT5wKBgDfn2i4Cp3r7A1I1tClp8wPsWYLjZfcYSZmtzeGk1i6Z7vDMGx2J\n74Q3WdBngdh64xUCR0/Krb+Sh8N+4yjONskHgboNZY+vlPbfiH4sd1gbOTw45GRp\nd/iT8I4PM0y53ZkoyVYz9uNooC1Vs9dC8GieSyw+z+7F0f0nVRU9agtvAoGBAJ3C\n/YHKUhXzWNpkXzoeHaRs5XbsOKVd2gBrDTobUd5GHKx97XjoVDbhYHe8gkrOb32D\nJnQpq1iAuklg9O41Y0il3ZbhMLCF0vUgbhsrhxi61gHAiXNHihrT8C4DkI42a1Lr\nJHUMDdeuBN3I+qVHnucEr/SvIN9EfnqnDyaEBwsrAoGAT1D8hIU/xZhVMEfLBwtv\nn4GEhuArmnQUBsbJnO35xdppTVo9FYb5zYckxTCmoU1zLkrFjGugutm0HkGg2VHq\ntrzmIWQnFT/NPK3mL5lRfsUEEON5T8VxOr3dgoFbexgcQ1RkbTZRX7kJlY1rqZHK\nRQbEcfn8e56LrcEhb4TlwTw=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-y8jqo@party-planner-723a3.iam.gserviceaccount.com",
+  "client_id": "117511682967379495706",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-y8jqo%40party-planner-723a3.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
