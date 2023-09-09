@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, type JSX, Fragment, useState, useCallback } from "react";
+import { useMemo, type JSX, useState, useCallback } from "react";
 
 import { PlusIcon } from "@radix-ui/react-icons";
 
@@ -8,7 +8,6 @@ import AddUserStoryForm from "@root/features/party-board/components/UserStoryLis
 import Button from "@root/components/atoms/Button";
 import Heading from "@root/components/atoms/Heading";
 import TextButton from "@root/components/atoms/TextButton";
-import ListItem from "@root/components/atoms/ListItem";
 import Tooltip from "@root/components/atoms/Tooltip";
 import type Story from "@root/models/Story";
 import toRem from "@root/util/toRem";
@@ -52,7 +51,7 @@ export default function UserStoryList(): JSX.Element {
               <Heading level="h3" className="text-xl font-semibold select-none ml-4">
                 User Stories
               </Heading>
-              <Tooltip content={<span>Add User Story</span>}>
+              <Tooltip content={<span>Add User Story</span>} sideOffset={-10} side="left">
                 <div>
                   <TextButton onClick={handleAddUserStory} className="text-2xl" aria-label="Add User Story">
                     <PlusIcon />
