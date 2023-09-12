@@ -29,7 +29,7 @@ function TopBar({
   ...props
 }: TopBarProps): JSX.Element {
   return (
-    <div className={cls("top-4 sticky h-14", className)} {...props}>
+    <div className={cls("top-4 z-30 sticky h-14", className)} {...props}>
       <div className={cls("container mx-auto", containerClassName)}>
         <header
           className={cls(

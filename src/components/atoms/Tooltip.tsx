@@ -79,8 +79,6 @@ export default function Tooltip({
           {...props}
         >
           <Arrow
-            // width={12}
-            // height={8}
             className={cls(
               "fill-current shadow-2xl",
               "stroke-coal text-black",

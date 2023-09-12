@@ -76,7 +76,7 @@ export default function Avatar({
         {...props}
       >
         {isPartyOwner && (
-          <span className={cls("absolute -top-6 text-2xl", crownClassName)}>👑</span>
+          <span className={cls("absolute -top-5 -right-1 text-2xl rotate-[20deg]", crownClassName)}>👑</span>
         )}
         {typeof children === "string" ? <span>{children.charAt(0).toUpperCase()}</span> : children}
       </div>

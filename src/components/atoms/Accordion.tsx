@@ -70,18 +70,18 @@ export default function Accordion<T extends string>({
       className={cls("space-y-4 w-full", className)}
       onValueChange={handleValueChange}
     >
-      {items.map(({ header, content, key }, index) => {
-        const itemValue = `item-${index + 1}}`;
+      {items.map(({ header, content, key }) => {
+        const isSelected = value === key;
 
         return (
           <Item
-            key={String(header)}
-            value={key ?? itemValue}
+            key={String(key)}
+            value={String(key)}
             className={cls(
-              "border-l border-t border-r border-transparent",
-              "focus-within:border-purple-700 focus-within:dark:border-purple-300",
-              "radix-state-open:rounded-t-lg radix-state-closed:rounded-lg",
-              "focus-within:rounded-t-lg",
+              "border-l border-t border-r border-transparent rounded-t-lg",
+              {
+                "dark:bg-light-coal bg-gray-100": isSelected,
+              },
               "transition-all focus-within:animate-slide-up-fade"
             )}
           >
@@ -91,7 +91,10 @@ export default function Accordion<T extends string>({
                 <ChevronDownIcon
                   className={cls(
                     "ml-2 h-5 w-5 shrink-0 text-gray-700 ease-in-out dark:text-gray-400",
-                    "group-radix-state-open:rotate-180 group-radix-state-open:duration-300"
+                    "group-radix-state-open:rotate-180 group-radix-state-open:duration-300",
+                    {
+                      "rotate-180": isSelected,
+                    }
                   )}
                 />
               </Trigger>
