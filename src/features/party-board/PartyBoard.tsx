@@ -1,59 +1,44 @@
 "use client";
 
-import { type JSX } from "react";
+import { useMemo, type JSX } from "react";
 
+import useWindowSize from "@root/hooks/useWindowSize";
 import type Party from "@root/models/Party";
 import SizedBox from "@root/components/atoms/SizedBox";
 
 import usePartyRealtime from "./hooks/usePartyRealtime";
-import UserStoryList from "./components/UserStoryList";
+import UserStoryList from "./components/organisms/UserStoryList";
+import ConnectedMembers from "./components/molecules/ConnectedMembers";
 import PartyBoardProvider from "./providers/PartyBoardProvider";
-import VotingResults from "./components/VotingResults";
-import ConnectedMembers from "./components/ConnectedMembers";
+import VotingResults from "./components/organisms/VotingResults";
+import VotingBoard from "./components/organisms/VotingBoard";
+import StartVote from "./components/organisms/StartVote";
 
 type PartyBoardProps = Pick<Party, "partyId">;
 
 export default function PartyBoard({ partyId }: PartyBoardProps): JSX.Element {
-  const {
-    addStory,
-    editStory,
-    connectMember,
-    disconnectMember,
-    members,
-    ownerUserId,
-    partyOwner,
-    removeStory,
-    resetState,
-    resetVotes,
-    revealStoryVotes,
-    stories,
-    voteStory,
-  } = usePartyRealtime(partyId);
+  const { voteSession, ...realtime } = usePartyRealtime(partyId);
+
+  const { width } = useWindowSize();
+
+  const shouldShowVotingBoard = useMemo(
+    () => typeof voteSession?.currentStoryId === "string" && voteSession?.status === "Voting",
+    [voteSession?.currentStoryId, voteSession?.status]
+  );
+  const shouldShowStartVote = useMemo(() => voteSession?.status === "Not Started", [voteSession?.status]);
 
   return (
-    <PartyBoardProvider
-      addStory={addStory}
-      connectMember={connectMember}
-      disconnectMember={disconnectMember}
-      members={members}
-      ownerUserId={ownerUserId}
-      partyOwner={partyOwner}
-      removeStory={removeStory}
-      resetVotes={resetVotes}
-      revealStoryVotes={revealStoryVotes}
-      stories={stories}
-      voteStory={voteStory}
-      partyId={partyId}
-      resetState={resetState}
-      editStory={editStory}
-    >
+    <PartyBoardProvider {...realtime} voteSession={voteSession}>
       <SizedBox height={30} />
       <ConnectedMembers />
 
       <div className="container mx-auto">
         <div className="flex flex-col gap-8">
-          <div className="flex flex-row gap-3">
-            <div className="flex-1">
+          {shouldShowStartVote && <StartVote />}
+          {shouldShowVotingBoard && <VotingBoard storyId={voteSession!.currentStoryId} />}
+          <SizedBox height={64} />
+          <div className="flex gap-3" style={{ flexDirection: width < 1000 ? "column" : "row" }}>
+            <div className="flex-1 gap-5">
               <UserStoryList />
             </div>
             <div>

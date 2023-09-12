@@ -6,7 +6,7 @@ import Accordion from "@root/components/atoms/Accordion";
 import Heading from "@root/components/atoms/Heading";
 import getVotesSummaryPerStory from "@root/util/getVotesSummaryPerStory";
 
-import usePartyBoardContext from "../context-hooks/usePartyBoardContext";
+import usePartyBoardContext from "../../context-hooks/usePartyBoardContext";
 
 type AccordionFocusChangeEventHandler = NonNullable<ComponentProps<typeof Accordion>["onFocusChange"]>;
 
@@ -23,7 +23,7 @@ export default function VotingResults(): JSX.Element {
   }, []);
 
   return (
-    <aside className="flex flex-col justify-center h-full p-6" style={{ maxWidth: 800, minWidth: 500 }}>
+    <aside className="flex flex-col justify-center h-full p-6 mr-4" style={{ maxWidth: 800, minWidth: 500 }}>
       <Heading level="h4">Results</Heading>
       {hasVoteStarted ? (
         <div>
@@ -32,17 +32,22 @@ export default function VotingResults(): JSX.Element {
               <Accordion
                 value={currentAccordionItem}
                 onFocusChange={handleFocusChange}
+                isCollapsible={true}
                 items={[
                   {
                     key: storyId,
                     header: title,
                     content: (
                       <div className="flex flex-col gap-2">
-                        {votesWithMember.map(({ memberDisplayName, vote }) => (
-                          <span key={memberDisplayName}>
-                            <b>{memberDisplayName}</b> has voted <b>{vote}</b>
-                          </span>
-                        ))}
+                        {votesWithMember.length ? (
+                          votesWithMember.map(({ memberDisplayName, vote }) => (
+                            <span key={memberDisplayName}>
+                              <b>{memberDisplayName}</b> has voted <b>{vote}</b>
+                            </span>
+                          ))
+                        ) : (
+                          <span>This story has not been voted yet.</span>
+                        )}
                       </div>
                     ),
                   },

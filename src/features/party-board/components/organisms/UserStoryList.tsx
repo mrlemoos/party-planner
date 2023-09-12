@@ -4,7 +4,6 @@ import { useMemo, type JSX, useState, useCallback } from "react";
 
 import { PlusIcon } from "@radix-ui/react-icons";
 
-import AddUserStoryForm from "@root/features/party-board/components/UserStoryList/AddUserStoryForm";
 import Button from "@root/components/atoms/Button";
 import Heading from "@root/components/atoms/Heading";
 import TextButton from "@root/components/atoms/TextButton";
@@ -15,8 +14,9 @@ import type Story from "@root/models/Story";
 import usePartyBoardContext from "../../context-hooks/usePartyBoardContext";
 import generateStoryId from "../../util/generateStoryId";
 
-import UserStoryListEmptyState from "./UserStoryListEmptyState";
-import UserStoryListItem from "./UserStoryListItem";
+import AddUserStoryForm from "./AddUserStoryForm";
+import UserStoryListEmptyState from "../molecules/UserStoryListEmptyState";
+import UserStoryListItem from "../molecules/UserStoryListItem";
 
 export default function UserStoryList(): JSX.Element {
   const { stories, addStory } = usePartyBoardContext();
@@ -42,13 +42,13 @@ export default function UserStoryList(): JSX.Element {
   );
 
   return (
-    <section className="bg-gray-100 dark:bg-slate-800 shadow-lg rounded-xl flex flex-col" style={{ padding: toRem(8) }}>
+    <div className="bg-gray-100 dark:bg-coal shadow-lg rounded-xl flex flex-col" style={{ padding: toRem(8) }}>
       <div className="flex flex-col">
         {isAddingUserStory && <AddUserStoryForm onSubmit={handleAddUserStorySubmit} />}
         {hasStories ? (
           <div className="flex flex-col m-2">
             <div className="flex justify-between items-center">
-              <Heading level="h3" className="text-xl font-semibold select-none ml-4">
+              <Heading level="h3" className="text-xl font-semibold select-none ml-6">
                 User Stories
               </Heading>
               <Tooltip content={<span>Add User Story</span>} sideOffset={-10} side="left">
@@ -86,6 +86,6 @@ export default function UserStoryList(): JSX.Element {
           />
         )}
       </div>
-    </section>
+    </div>
   );
 }
