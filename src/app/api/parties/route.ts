@@ -38,10 +38,7 @@ export async function POST() {
     );
   } catch {
     return NextResponse.json(
-      handleException(
-        "CP-2",
-        "Failed to create party due to an internal error. Please try again soon."
-      ),
+      handleException("CP-2", "Failed to create party due to an internal error. Please try again soon."),
       {
         status: 500,
       }
