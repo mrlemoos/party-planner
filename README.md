@@ -1,34 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Party Planner 🎉
 
-## Getting Started
+The product built on top of NextJS that makes Story Pointing the User Stories for your next sprint nice and fun! 🎉
 
-First, run the development server:
+## Getting Started ⛳️
+
+As we're using [yarn](https://yarnpkg.com/) as our package manager, you'll need to install it first. Then, you can run the following commands:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+yarn install # or just "yarn" if you don't like to type too much
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+After that, you can run the following command to start the development server:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+yarn run dev # or "yarn dev"
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+To generate the **Production** environment build, you can run the following command:
 
-## Learn More
+```bash
+yarn run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+And to run the **Production** environment build, you can run the following command (Note that you need to have generated the production build first):
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+yarn run start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Technology Stack 🛠
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [NodeJS](https://nodejs.org/en/) (>=v20.0)
+- [NextJS](https://nextjs.org/) (>=v13.4)
+- [ReactJS](https://reactjs.org/) (>=v18)
+- [TypeScript](https://www.typescriptlang.org/) (>=v5.2)
+- [TailwindCSS](https://tailwindcss.com/)
+- [PostCSS](https://postcss.org/)
+- [Jest](https://jestjs.io/)
+- [Testing Library](https://testing-library.com/)
+- [ESLint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [Husky](https://typicode.github.io/husky/#/)
