@@ -10,4 +10,10 @@ export default interface Party {
 
   createdAt: string;
   updatedAt: string;
+
+  voteSession?: {
+    currentStoryId: string;
+    status: "Voting" | "Not Started" | "Revealing" | "Finished";
+    timer: number;
+  };
 }
