@@ -176,12 +176,11 @@ export default function useForm<U extends object>(
         controlUserFeedback({ type: "Set Submitting", payload: true });
         try {
           await onSubmit({ ...values }, event);
+          if (resetAfterSubmit) {
+            reset();
+          }
         } catch (error) {}
         controlUserFeedback({ type: "Set Submitting", payload: false });
-
-        if (resetAfterSubmit) {
-          reset();
-        }
       },
     [validate, values, onSubmit, errors, controlUserFeedback, resetAfterSubmit, reset]
   );
