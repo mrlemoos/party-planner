@@ -2,6 +2,7 @@ import { type ReactNode } from "react";
 
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import cls from "classnames";
 
 import Inter from "@root/styles/Inter";
 import "@root/styles/globals.css";
@@ -19,9 +20,7 @@ function RootLayout({ children }: RootLayoutProps): JSX.Element {
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={Inter.className} style={{ width: "100vw", height: "100vh" }}>
-          {children}
-        </body>
+        <body className={cls(Inter.className, "w-screen min-h-screen")}>{children}</body>
       </html>
     </ClerkProvider>
   );
