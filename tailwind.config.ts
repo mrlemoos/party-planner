@@ -123,7 +123,8 @@ const config: Config = {
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        coal: "#262626",
+        coal: "#202020",
+        "light-coal": "#303030",
       },
     },
   },
