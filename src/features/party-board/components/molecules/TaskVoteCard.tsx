@@ -85,7 +85,7 @@ export default function TaskVoteCard({
   }, [computedStory, userId, cardValue]);
 
   const disabled = useMemo(
-    () => voteSession?.status === "Voting" || hasVotedThisUserStoryWithThisCard || !isUserAllowedToVote,
+    () => voteSession?.status !== "Voting" || hasVotedThisUserStoryWithThisCard || !isUserAllowedToVote,
     [voteSession?.status, hasVotedThisUserStoryWithThisCard, isUserAllowedToVote]
   );
 
