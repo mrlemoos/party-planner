@@ -310,6 +310,21 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
     [party.voteSession]
   );
 
+  const tickTimer = useCallback(
+    function tickTimer$(partyId: string, milliseconds: number) {
+      const database = getDatabase();
+      const ref = child(ref$(database, `parties/${partyId}`), "voteSession");
+
+      const voteSession: VoteSession = {
+        ...party?.voteSession!,
+        timer: milliseconds,
+      };
+
+      set(ref, voteSession);
+    },
+    [party.voteSession]
+  );
+
   const partyOwner = useMemo(
     () => party.members?.find(({ userId }) => userId === party.ownerUserId) ?? party.members?.[0],
     [party.members, party.ownerUserId]
@@ -375,5 +390,6 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
     createVoteSession,
     updateVoteStatus,
     rewriteStories,
+    tickTimer,
   };
 }

@@ -13,6 +13,7 @@ import PartyBoardProvider from "./providers/PartyBoardProvider";
 import VotingResults from "./components/organisms/VotingResults";
 import VotingBoard from "./components/organisms/VotingBoard";
 import StartVote from "./components/organisms/StartVote";
+import Timer from "./components/atoms/Timer";
 
 type PartyBoardProps = Pick<Party, "partyId">;
 
@@ -30,7 +31,9 @@ export default function PartyBoard({ partyId }: PartyBoardProps): JSX.Element {
   return (
     <PartyBoardProvider {...realtime} voteSession={voteSession}>
       <SizedBox height={30} />
+
       <ConnectedMembers />
+      <Timer />
 
       <div className="container mx-auto">
         <div className="flex flex-col gap-8">
