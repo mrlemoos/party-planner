@@ -27,7 +27,7 @@ const allowedVoteSessionStatuses = ["Voting", "Revealing"] as (string | undefine
 // #endregion
 
 export default function Timer(): JSX.Element | null {
-  const { voteSession, tickTimer, partyId, updateVoteStatus } = usePartyBoardContext();
+  const { voteSession, tickTimer, partyId, updateVoteStatus, isCurrentUserPartyOwner } = usePartyBoardContext();
 
   const timeInSeconds = useMemo(
     () => (typeof voteSession?.timer !== "number" ? -1 : Math.floor(voteSession.timer / 1000)),
@@ -43,7 +43,7 @@ export default function Timer(): JSX.Element | null {
   }, [timeInSeconds, voteSession?.status]);
 
   useEffect(() => {
-    if (timeInSeconds === -1 || typeof voteSession?.timer === "undefined") {
+    if (timeInSeconds === -1 || typeof voteSession?.timer === "undefined" || !isCurrentUserPartyOwner) {
       return;
     }
 
@@ -64,7 +64,15 @@ export default function Timer(): JSX.Element | null {
     return () => {
       clearTimeout(timer);
     };
-  }, [timeInSeconds, voteSession?.timer, voteSession?.status, tickTimer, partyId, updateVoteStatus]);
+  }, [
+    timeInSeconds,
+    voteSession?.timer,
+    voteSession?.status,
+    tickTimer,
+    partyId,
+    updateVoteStatus,
+    isCurrentUserPartyOwner,
+  ]);
 
   if (!allowedVoteSessionStatuses.includes(voteSession?.status) || timeInSeconds === -1) {
     return null;
