@@ -1,10 +1,15 @@
 "use client";
 
-import { type HTMLAttributes, type ReactNode, type JSX } from "react";
+import { type HTMLAttributes, type ReactNode, type JSX, type ComponentProps } from "react";
 
 import cls from "classnames";
 
 import Tooltip from "@root/components/atoms/Tooltip";
+
+// #region Interfaces & Types
+
+type TooltipProps = ComponentProps<typeof Tooltip>;
+type TooltipSide = TooltipProps["side"];
 
 interface AvatarProps extends HTMLAttributes<HTMLElement> {
   /**
@@ -42,7 +47,26 @@ interface AvatarProps extends HTMLAttributes<HTMLElement> {
    * @see {@link isPartyOwner}
    */
   crownClassName?: string;
+
+  /**
+   * This property is used to apply a custom size to the avatar.
+   *
+   * @default 'medium'
+   */
+  size?: "small" | "medium";
+
+  /**
+   * The side of the avatar that the {@link Tooltip} renders on.
+   *
+   * @default 'left'
+   *
+   * @see {@link TooltipSide}
+   * @see {@link TooltipProps}
+   */
+  tooltipSide?: TooltipSide;
 }
+
+// #endregion
 
 /**
  * The `Avatar` component is used to render a user's avatar. This component
@@ -58,19 +82,26 @@ export default function Avatar({
   isPartyOwner = false,
   crownClassName,
   tooltipContent,
+  size = "medium",
+  tooltipSide = "left",
   ...props
 }: AvatarProps): JSX.Element {
   return (
     <Tooltip
-      side="left"
+      side={tooltipSide}
       sideOffset={4}
-      content={tooltipContent ?? <span className="font-medium text-sm">{children}</span>}
+      content={
+        tooltipContent ?? (
+          <span className={cls("font-medium", size === "small" ? "text-xs" : "text-sm")}>{children}</span>
+        )
+      }
     >
       <div
         className={cls(
-          "w-8 h-8 rounded-full border-[1px] border-coal dark:border-white",
+          "rounded-full border-[1px] border-coal dark:border-white",
           "bg-yellow-300 text-black font-bold flex justify-center items-center cursor-default",
           { relative: isPartyOwner },
+          size === "small" ? "w-6 h-6 text-xs" : "w-8 h-8",
           className
         )}
         {...props}
@@ -78,7 +109,17 @@ export default function Avatar({
         {isPartyOwner && (
           <span className={cls("absolute -top-5 -right-1 text-2xl rotate-[20deg]", crownClassName)}>👑</span>
         )}
-        {typeof children === "string" ? <span>{children.charAt(0).toUpperCase()}</span> : children}
+        {typeof children === "string" ? (
+          <span
+            className={cls({
+              "text-xs": size === "small",
+            })}
+          >
+            {children.charAt(0).toUpperCase()}
+          </span>
+        ) : (
+          children
+        )}
       </div>
     </Tooltip>
   );
