@@ -7,7 +7,7 @@ export default function useFormContext<U extends object>(): ContextType<typeof F
 
   if (!context) {
     throw new Error(
-      "useFormContext(): FormContext is undefined, did you forget to wrap your component in a <FormProvider> (from @root/providers/FormProvider)?"
+      "useFormContext(): FormContext is undefined, did you forget to wrap your component in a <FormProvider> (from @root/providers/FormProvider)?",
     );
   }
 

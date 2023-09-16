@@ -33,25 +33,22 @@ const earlyFibonacciSequence = [
 export default function VotingBoard({ storyId }: VotingBoardProps): JSX.Element {
   const { stories, voteSession } = usePartyBoardContext();
 
-  const computedStory = useMemo(
-    () => stories.find(({ storyId: storyId$ }) => storyId$ === storyId)!,
-    [stories, storyId]
-  );
+  const computedStory = useMemo(() => stories.find(({ storyId: storyId$ }) => storyId$ === storyId)!, [stories, storyId]);
 
   const isUserAllowedToVote = useMemo(() => voteSession?.status === "Voting", [voteSession?.status]);
   const hasUserStory = useMemo(
     () => [computedStory.title, computedStory.storyId].every(Boolean),
-    [computedStory.title, computedStory.storyId]
+    [computedStory.title, computedStory.storyId],
   );
 
   return (
-    <div className="flex flex-col gap-3 relative">
+    <div className='flex flex-col gap-3 relative'>
       {hasUserStory && (
-        <div className="flex items-center gap-2">
+        <div className='flex items-center gap-2'>
           {!isGeneratedStoryId(computedStory.storyId) && (
-            <span className="font-normal text-gray-500 animate-scale-in-content">{computedStory.storyId}</span>
+            <span className='font-normal text-gray-500 animate-scale-in-content'>{computedStory.storyId}</span>
           )}
-          <span className="font-medium animate-scale-in-content">{computedStory.title}</span>
+          <span className='font-medium animate-scale-in-content'>{computedStory.title}</span>
         </div>
       )}
 
@@ -60,7 +57,7 @@ export default function VotingBoard({ storyId }: VotingBoardProps): JSX.Element 
           initial={{ height: 0 }}
           animate={{ height: "100%", transition: { duration: 0.5 } }}
           exit={{ height: 0 }}
-          className="flex justify-center items-center flex-wrap gap-3 mb-8"
+          className='flex justify-center items-center flex-wrap gap-3 mb-8'
         >
           {earlyFibonacciSequence.map(({ value, importantComment }) => (
             <TaskVoteCard

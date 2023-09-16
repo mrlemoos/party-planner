@@ -6,9 +6,6 @@ type CreatePartyProviderProps = ContextType<typeof CreatePartyContext> & {
   children: ReactNode;
 };
 
-export default function CreatePartyProvider({
-  children,
-  ...context
-}: CreatePartyProviderProps): JSX.Element {
+export default function CreatePartyProvider({ children, ...context }: CreatePartyProviderProps): JSX.Element {
   return <CreatePartyContext.Provider value={context}>{children}</CreatePartyContext.Provider>;
 }

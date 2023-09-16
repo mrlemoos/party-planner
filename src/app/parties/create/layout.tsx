@@ -19,13 +19,10 @@ interface CreatePartyLayoutProps {
   };
 }
 
-const CreatePartyLayout = ({
-  children,
-  searchParams = { lang: "en" },
-}: CreatePartyLayoutProps): ReactElement => (
+const CreatePartyLayout = ({ children, searchParams = { lang: "en" } }: CreatePartyLayoutProps): ReactElement => (
   <html lang={searchParams.lang}>
     <body className={Inter.className} style={{ width: "100vw" }}>
-      <TopBar className="fixed" />
+      <TopBar className='fixed' />
       {children}
     </body>
   </html>

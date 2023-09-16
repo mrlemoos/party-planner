@@ -10,7 +10,7 @@ const useProxy = <T extends object>(initialState: T) => {
         setIndex((previousIndex) => previousIndex + 1);
         return true;
       },
-    })
+    }),
   );
 
   return proxy.current;

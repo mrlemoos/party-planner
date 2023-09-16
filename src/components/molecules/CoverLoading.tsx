@@ -23,16 +23,8 @@ export default function CoverLoading({
   ...props
 }: CoverLoadingProps): JSX.Element {
   return (
-    <div
-      className={cls("flex flex-col justify-center items-center fixed top-0 bottom-0 left-0 right-0", className)}
-      {...props}
-    >
-      <Loading
-        hasPartyEmoji={hasPartyEmoji}
-        emojiClassName={emojiClassName}
-        className={labelClassName}
-        isLogoMinimum={isLogoMinimum}
-      >
+    <div className={cls("flex flex-col justify-center items-center fixed top-0 bottom-0 left-0 right-0", className)} {...props}>
+      <Loading hasPartyEmoji={hasPartyEmoji} emojiClassName={emojiClassName} className={labelClassName} isLogoMinimum={isLogoMinimum}>
         {children}
       </Loading>
     </div>

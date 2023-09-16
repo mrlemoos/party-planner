@@ -12,8 +12,8 @@ interface AuthPageProps {
 export default function AuthPage({ children }: AuthPageProps): JSX.Element {
   return (
     <Fragment>
-      <div className="fixed right-10 top-8">
-        <Link href="/" target="_self">
+      <div className='fixed right-10 top-8'>
+        <Link href='/' target='_self'>
           <Logo isInteractive={true} />
         </Link>
       </div>

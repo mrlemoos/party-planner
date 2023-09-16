@@ -31,7 +31,7 @@ export default function Timer(): JSX.Element | null {
 
   const timeInSeconds = useMemo(
     () => (typeof voteSession?.timer !== "number" ? -1 : Math.floor(voteSession.timer / 1000)),
-    [voteSession?.timer]
+    [voteSession?.timer],
   );
 
   const time = useMemo(() => {
@@ -64,15 +64,7 @@ export default function Timer(): JSX.Element | null {
     return () => {
       clearTimeout(timer);
     };
-  }, [
-    timeInSeconds,
-    voteSession?.timer,
-    voteSession?.status,
-    tickTimer,
-    partyId,
-    updateVoteStatus,
-    isCurrentUserPartyOwner,
-  ]);
+  }, [timeInSeconds, voteSession?.timer, voteSession?.status, tickTimer, partyId, updateVoteStatus, isCurrentUserPartyOwner]);
 
   if (!allowedVoteSessionStatuses.includes(voteSession?.status) || timeInSeconds === -1) {
     return null;
@@ -82,7 +74,7 @@ export default function Timer(): JSX.Element | null {
 
   return (
     <AfloatBottomBar
-      className="flex items-center gap-2 px-3 py-2 transition-all bg-red-700 pointer-events-none animate-scale-in-content"
+      className='flex items-center gap-2 px-3 py-2 transition-all bg-red-700 pointer-events-none animate-scale-in-content'
       style={{
         backgroundColor: isCountingDownHighlighted ? "rgb(185 28 28)" : undefined,
         color: isCountingDownHighlighted ? "white" : undefined,

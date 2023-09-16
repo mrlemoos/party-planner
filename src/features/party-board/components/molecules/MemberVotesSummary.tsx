@@ -11,7 +11,7 @@ interface MemberVotesSummaryProps {
 
 function MemberVotesSummary$({ votesWithMember }: MemberVotesSummaryProps): JSX.Element {
   return (
-    <div className="flex items-center">
+    <div className='flex items-center'>
       {votesWithMember.map(({ memberDisplayName, vote }) => {
         const key = `${memberDisplayName}-${vote}`;
 

@@ -51,7 +51,7 @@ export default function UserStoryListItemOrderChevrons({
       rewriteStories,
       createVoteSession,
       partyId,
-    ]
+    ],
   );
 
   return (
@@ -64,9 +64,9 @@ export default function UserStoryListItemOrderChevrons({
         <Tooltip content={<span>Move to the top</span>} delayDuration={3}>
           <div>
             <IconButton
-              className="cursor-pointer"
+              className='cursor-pointer'
               onClick={handleMoveToTop}
-              aria-label="Move up the order"
+              aria-label='Move up the order'
               icon={<ChevronUpIcon height={18} width={18} />}
             />
           </div>

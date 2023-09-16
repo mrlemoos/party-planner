@@ -35,7 +35,7 @@ export default function UserStoryListItemActions({
         createVoteSession(partyId, newStories[0]?.storyId, "Not Started");
       }
     },
-    [stories, computedStory, rewriteStories, storyId, createVoteSession, partyId]
+    [stories, computedStory, rewriteStories, storyId, createVoteSession, partyId],
   );
 
   const handleStartVote = useCallback(() => {
@@ -52,17 +52,17 @@ export default function UserStoryListItemActions({
   return (
     <Fragment>
       <IconButton
-        aria-label="Delete User Story"
-        className="bg-transparent hover:bg-red-300 dark:hover:bg-transparent"
-        icon={<TrashIcon height={18} width={18} className="text-red-500" />}
+        aria-label='Delete User Story'
+        className='bg-transparent hover:bg-red-300 dark:hover:bg-transparent'
+        icon={<TrashIcon height={18} width={18} className='text-red-500' />}
       />
 
       {stories.length > 1 && isStoryCurrentlyBeingVotedOn ? (
-        <TextButton className="text-sm" onClick={handleSkipStory}>
+        <TextButton className='text-sm' onClick={handleSkipStory}>
           Skip
         </TextButton>
       ) : (
-        <TextButton className="text-sm" onClick={handleStartVote}>
+        <TextButton className='text-sm' onClick={handleStartVote}>
           Vote
         </TextButton>
       )}

@@ -29,12 +29,12 @@ export default function VotingResults(): JSX.Element {
   }, []);
 
   return (
-    <aside className="flex flex-col justify-center h-full p-6 mr-4" style={asideStyle}>
-      <Heading level="h4">Results</Heading>
+    <aside className='flex flex-col justify-center h-full p-6 mr-4' style={asideStyle}>
+      <Heading level='h4'>Results</Heading>
       {hasVoteStarted ? (
         <div>
           {votesSummaryPerStory.map(({ storyId, title, votesWithMember }) => (
-            <div key={storyId} className="flex flex-col gap-2">
+            <div key={storyId} className='flex flex-col gap-2'>
               <Accordion
                 value={currentAccordionItem}
                 onFocusChange={handleFocusChange}
@@ -44,7 +44,7 @@ export default function VotingResults(): JSX.Element {
                     key: storyId,
                     header: title,
                     content: (
-                      <div className="flex flex-col gap-2">
+                      <div className='flex flex-col gap-2'>
                         {votesWithMember.length ? (
                           votesWithMember.map(({ memberDisplayName, vote }) => (
                             <span key={memberDisplayName}>
@@ -63,7 +63,7 @@ export default function VotingResults(): JSX.Element {
           ))}
         </div>
       ) : (
-        <Heading level="h5" className="text-gray-500 font-normal text-center">
+        <Heading level='h5' className='text-gray-500 font-normal text-center'>
           The vote summary will be displayed here once the vote has started. 🚀
         </Heading>
       )}

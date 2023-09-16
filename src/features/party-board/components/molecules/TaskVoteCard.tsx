@@ -69,10 +69,7 @@ export default function TaskVoteCard({
 
   const { userId } = useAuth();
 
-  const handleVoteStory = useCallback(
-    () => voteStory(userId!, storyId, cardValue),
-    [voteStory, userId, storyId, cardValue]
-  );
+  const handleVoteStory = useCallback(() => voteStory(userId!, storyId, cardValue), [voteStory, userId, storyId, cardValue]);
 
   const hasVotedThisUserStoryWithThisCard = useMemo(() => {
     if (!userId) {
@@ -86,16 +83,16 @@ export default function TaskVoteCard({
 
   const disabled = useMemo(
     () => voteSession?.status !== "Voting" || hasVotedThisUserStoryWithThisCard || !isUserAllowedToVote,
-    [voteSession?.status, hasVotedThisUserStoryWithThisCard, isUserAllowedToVote]
+    [voteSession?.status, hasVotedThisUserStoryWithThisCard, isUserAllowedToVote],
   );
 
   return (
-    <div className="relative">
+    <div className='relative'>
       <motion.div
         onClick={handleVoteStory}
         className={cls(
           "py-6 px-1 bg-white rounded-lg shadow-md flex flex-col justify-between items-center",
-          disabled ? "pointer-events-none cursor-default" : "cursor-pointer"
+          disabled ? "pointer-events-none cursor-default" : "cursor-pointer",
         )}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -107,14 +104,14 @@ export default function TaskVoteCard({
         }}
         style={style}
       >
-        <div aria-hidden="true" />
-        <div className="flex flex-col justify-center items-center">
-          <span className="font-medium text-black" style={{ fontSize: 48 }}>
+        <div aria-hidden='true' />
+        <div className='flex flex-col justify-center items-center'>
+          <span className='font-medium text-black' style={{ fontSize: 48 }}>
             {cardValue}
           </span>
           <StoryPointSticks totalStoryPoints={cardValue} />
         </div>
-        <span className="mb-3 px-4 text-center text-xs text-gray-500 font-medium">{importantComment}</span>
+        <span className='mb-3 px-4 text-center text-xs text-gray-500 font-medium'>{importantComment}</span>
       </motion.div>
       {hasVotedThisUserStoryWithThisCard && <UserVoteIndicator />}
     </div>

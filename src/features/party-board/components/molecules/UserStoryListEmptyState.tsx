@@ -14,10 +14,7 @@ interface UserStoryListEmptyStateProps {
   className?: string;
 }
 
-export default function UserStoryListEmptyState({
-  callToAction,
-  className,
-}: UserStoryListEmptyStateProps): JSX.Element {
+export default function UserStoryListEmptyState({ callToAction, className }: UserStoryListEmptyStateProps): JSX.Element {
   const { user, isSignedIn } = useUser();
   const { ownerUserId } = usePartyBoardContext();
 
@@ -27,15 +24,11 @@ export default function UserStoryListEmptyState({
 
   return (
     <div className={cls("flex flex-col justify-center items-center gap-6 p-3", className)} style={{ minHeight: 400 }}>
-      <h3 className={cls("inline-block font-bold text-xl select-none", Poppins.className)}>
-        There are no user stories yet 😢
-      </h3>
+      <h3 className={cls("inline-block font-bold text-xl select-none", Poppins.className)}>There are no user stories yet 😢</h3>
       {isOwner ? (
         <Fragment>
           {hasCallToAction && (
-            <span className={cls("text-gray-500 text-sm select-none")}>
-              Click on the button below to add user stories.
-            </span>
+            <span className={cls("text-gray-500 text-sm select-none")}>Click on the button below to add user stories.</span>
           )}
           {callToAction}
         </Fragment>

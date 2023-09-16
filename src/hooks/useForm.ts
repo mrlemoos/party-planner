@@ -1,10 +1,4 @@
-import {
-  type HTMLInputTypeAttribute,
-  type ReactNode,
-  useCallback,
-  type FormEvent as ReactFormEvent,
-  useReducer,
-} from "react";
+import { type HTMLInputTypeAttribute, type ReactNode, useCallback, type FormEvent as ReactFormEvent, useReducer } from "react";
 
 import FormValueNotProvidedError from "@root/errors/FormValueNotProvidedError";
 import useProxy from "@root/hooks/useProxy";
@@ -31,20 +25,18 @@ const $initialFormUserFeedbackState: FormUserFeedbackState = {
     | "symbol"
     | "undefined"
     | "object"
-    | "function"
+    | "function",
 ): type is (typeof $allowedPrimitiveTypes)[number] {
   return $allowedPrimitiveTypes.includes(type as (typeof $allowedPrimitiveTypes)[number]);
 }
 
-/* internal */ function $isPrimitiveTypeOfValueAllowed(
-  value: unknown
-): value is (typeof $allowedPrimitiveTypes)[number] {
+/* internal */ function $isPrimitiveTypeOfValueAllowed(value: unknown): value is (typeof $allowedPrimitiveTypes)[number] {
   return $isPrimitiveTypeAllowed(typeof value);
 }
 
 /* internal */ function $reduceFormUserFeedbackState(
   state = $initialFormUserFeedbackState,
-  { type, payload }: FormUserFeedbackAction
+  { type, payload }: FormUserFeedbackAction,
 ): FormUserFeedbackState {
   switch (type) {
     case "Set Submitting":
@@ -103,15 +95,12 @@ export interface AsynchronousHandleSubmit<U extends object> {
 
 export default function useForm<U extends object>(
   initialValues: Partial<U> = {},
-  { onChange, validate, onSubmit, resetAfterSubmit }: UseFormProps<U>
+  { onChange, validate, onSubmit, resetAfterSubmit }: UseFormProps<U>,
 ) {
   const values = useProxy({ ...initialValues } as U);
   const errors = useProxy<FormValidationErrors<U>>({});
 
-  const [{ isSubmitting }, controlUserFeedback] = useReducer(
-    $reduceFormUserFeedbackState,
-    $initialFormUserFeedbackState
-  );
+  const [{ isSubmitting }, controlUserFeedback] = useReducer($reduceFormUserFeedbackState, $initialFormUserFeedbackState);
 
   const handleChange = useCallback(
     <E>(field: keyof U, value?: U[keyof U]) =>
@@ -131,11 +120,11 @@ export default function useForm<U extends object>(
           throw new FormValueNotProvidedError<U>(
             "useForm()",
             field,
-            `Note that the form fields have to be of type ${$allowedPrimitiveTypes.join(", ")}.`
+            `Note that the form fields have to be of type ${$allowedPrimitiveTypes.join(", ")}.`,
           );
         }
       },
-    [values, onChange]
+    [values, onChange],
   );
 
   const reset = useCallback(() => {
@@ -149,7 +138,7 @@ export default function useForm<U extends object>(
     (field: keyof U, value: U[keyof U]) => {
       values[field] = value;
     },
-    [values]
+    [values],
   );
 
   const handleSubmit = useCallback(
@@ -182,7 +171,7 @@ export default function useForm<U extends object>(
         } catch (error) {}
         controlUserFeedback({ type: "Set Submitting", payload: false });
       },
-    [validate, values, onSubmit, errors, controlUserFeedback, resetAfterSubmit, reset]
+    [validate, values, onSubmit, errors, controlUserFeedback, resetAfterSubmit, reset],
   );
 
   return {

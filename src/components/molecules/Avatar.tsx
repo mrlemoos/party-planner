@@ -90,11 +90,7 @@ export default function Avatar({
     <Tooltip
       side={tooltipSide}
       sideOffset={4}
-      content={
-        tooltipContent ?? (
-          <span className={cls("font-medium", size === "small" ? "text-xs" : "text-sm")}>{children}</span>
-        )
-      }
+      content={tooltipContent ?? <span className={cls("font-medium", size === "small" ? "text-xs" : "text-sm")}>{children}</span>}
     >
       <div
         className={cls(
@@ -102,13 +98,11 @@ export default function Avatar({
           "bg-yellow-300 text-black font-bold flex justify-center items-center cursor-default",
           { relative: isPartyOwner },
           size === "small" ? "w-6 h-6 text-xs" : "w-8 h-8",
-          className
+          className,
         )}
         {...props}
       >
-        {isPartyOwner && (
-          <span className={cls("absolute -top-5 -right-1 text-2xl rotate-[20deg]", crownClassName)}>👑</span>
-        )}
+        {isPartyOwner && <span className={cls("absolute -top-5 -right-1 text-2xl rotate-[20deg]", crownClassName)}>👑</span>}
         {typeof children === "string" ? (
           <span
             className={cls({

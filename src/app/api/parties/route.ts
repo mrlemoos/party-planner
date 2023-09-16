@@ -34,14 +34,11 @@ export async function POST() {
       },
       {
         status: 201,
-      }
+      },
     );
   } catch {
-    return NextResponse.json(
-      handleException("CP-2", "Failed to create party due to an internal error. Please try again soon."),
-      {
-        status: 500,
-      }
-    );
+    return NextResponse.json(handleException("CP-2", "Failed to create party due to an internal error. Please try again soon."), {
+      status: 500,
+    });
   }
 }

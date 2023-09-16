@@ -23,11 +23,7 @@ type HTMLElementAttributes = HTMLAttributes<HTMLElement>;
 type OmittedHTMLElementAttributes = "children" | "content";
 type HTMLElementAttributesWithOmittedAttributes = Omit<HTMLElementAttributes, OmittedHTMLElementAttributes>;
 
-interface TooltipProps
-  extends PickedContentProps,
-    PickedRootProps,
-    PickedProviderProps,
-    HTMLElementAttributesWithOmittedAttributes {
+interface TooltipProps extends PickedContentProps, PickedRootProps, PickedProviderProps, HTMLElementAttributesWithOmittedAttributes {
   children: ReactNode;
   content: ReactNode;
 }
@@ -52,12 +48,7 @@ export default function Tooltip({
 }: TooltipProps): JSX.Element {
   return (
     <Provider skipDelayDuration={skipDelayDuration} delayDuration={delayDuration}>
-      <Root
-        onOpenChange={onOpenChange}
-        disableHoverableContent={disableHoverableContent}
-        defaultOpen={defaultOpen}
-        open={open}
-      >
+      <Root onOpenChange={onOpenChange} disableHoverableContent={disableHoverableContent} defaultOpen={defaultOpen} open={open}>
         <Trigger asChild={true}>{children}</Trigger>
         <Content
           align={align}
@@ -74,17 +65,11 @@ export default function Tooltip({
             "text-xs",
             "bg-coal text-white",
             "dark:bg-white dark:text-coal",
-            className
+            className,
           )}
           {...props}
         >
-          <Arrow
-            className={cls(
-              "fill-current shadow-2xl",
-              "stroke-coal text-black",
-              "dark:stroke-gray-200 dark:text-gray-100"
-            )}
-          />
+          <Arrow className={cls("fill-current shadow-2xl", "stroke-coal text-black", "dark:stroke-gray-200 dark:text-gray-100")} />
           {content}
         </Content>
       </Root>

@@ -8,10 +8,7 @@ export type LabelProps = LabelHTMLAttributes<HTMLLabelElement> & {
 
 const Label = ({ children, className, htmlFor, ...props }: LabelProps): ReactElement => (
   <label
-    className={cls(
-      "block uppercase tracking-wide text-gray-700 dark:text-gray-500 text-xs font-bold mb-2",
-      className
-    )}
+    className={cls("block uppercase tracking-wide text-gray-700 dark:text-gray-500 text-xs font-bold mb-2", className)}
     htmlFor={htmlFor}
     {...props}
   >

@@ -19,13 +19,13 @@ export default function UserStoryEditableStoryId({ storyId }: UserStoryEditableS
 
       editStory(storyId, { storyId: newStoryId });
     },
-    [editStory, storyId]
+    [editStory, storyId],
   );
 
   return (
     <span
       contentEditable={true}
-      className="text-gray-500 dark:text-gray-700 text-sm font-thin"
+      className='text-gray-500 dark:text-gray-700 text-sm font-thin'
       dangerouslySetInnerHTML={{ __html: storyId }}
       onBlur={handleStoryIdChange}
     />

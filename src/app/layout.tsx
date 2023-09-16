@@ -19,7 +19,7 @@ interface RootLayoutProps {
 function RootLayout({ children }: RootLayoutProps): JSX.Element {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang='en'>
         <body className={cls(Inter.className, "w-screen min-h-screen")}>{children}</body>
       </html>
     </ClerkProvider>

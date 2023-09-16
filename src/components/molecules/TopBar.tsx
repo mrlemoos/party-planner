@@ -34,13 +34,13 @@ function TopBar({
         <header
           className={cls(
             "flex justify-between items-center pl-4 pr-2 py-2 shadow-xl rounded-xl backdrop-blur-lg sticky top-4 mt-4 border-[1px] border-gray-100 dark:border-gray-900",
-            headerClassName
+            headerClassName,
           )}
         >
-          <div className="flex items-center gap-2">
+          <div className='flex items-center gap-2'>
             {beforeLogo}
-            <Link href="/">
-              <Logo className="mr-4" isMinimum={true} />
+            <Link href='/'>
+              <Logo className='mr-4' isMinimum={true} />
             </Link>
             {afterLogo}
           </div>
@@ -48,16 +48,16 @@ function TopBar({
           {children}
 
           <nav className={cls("flex align-items gap-2", navClassName)}>
-            <NavigationAnchor href="/parties/create">Create a Party</NavigationAnchor>
+            <NavigationAnchor href='/parties/create'>Create a Party</NavigationAnchor>
 
             {navigation}
 
             <SignedOut>
-              <NavigationAnchor href="/sign-in">Sign in</NavigationAnchor>
+              <NavigationAnchor href='/sign-in'>Sign in</NavigationAnchor>
             </SignedOut>
             <SignedIn>
-              <div className="mx-2">
-                <UserButton afterSignOutUrl="/parties/create" />
+              <div className='mx-2'>
+                <UserButton afterSignOutUrl='/parties/create' />
               </div>
             </SignedIn>
           </nav>

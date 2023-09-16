@@ -1,11 +1,4 @@
-import {
-  type ReactElement,
-  type InputHTMLAttributes,
-  type LabelHTMLAttributes,
-  type HTMLAttributes,
-  type ReactNode,
-  useMemo,
-} from "react";
+import { type ReactElement, type InputHTMLAttributes, type LabelHTMLAttributes, type HTMLAttributes, type ReactNode, useMemo } from "react";
 
 import cls from "classnames";
 
@@ -19,17 +12,17 @@ import Input from "./Input";
 
 // #region Interfaces & Types
 
-interface HTMLInputElementAttributes extends Omit<InputHTMLAttributes<HTMLInputElement>, 'children'> {
+interface HTMLInputElementAttributes extends Omit<InputHTMLAttributes<HTMLInputElement>, "children"> {
   children?: never;
 }
 
-type HTMLLabelElementAttributes = Omit<LabelHTMLAttributes<HTMLLabelElement>, "htmlFor" | 'children' | 'className'>;
+type HTMLLabelElementAttributes = Omit<LabelHTMLAttributes<HTMLLabelElement>, "htmlFor" | "children" | "className">;
 
-type WithLabelProps = PrefixObjectKeys<HTMLLabelElementAttributes, 'label'>;
+type WithLabelProps = PrefixObjectKeys<HTMLLabelElementAttributes, "label">;
 
-type HTMLElementAttributes = Omit<HTMLAttributes<HTMLElement>, 'children' | 'className'>;
+type HTMLElementAttributes = Omit<HTMLAttributes<HTMLElement>, "children" | "className">;
 
-type WithContainerProps = PrefixObjectKeys<HTMLElementAttributes, 'container'>
+type WithContainerProps = PrefixObjectKeys<HTMLElementAttributes, "container">;
 
 interface FieldProps extends HTMLInputElementAttributes, WithLabelProps, WithContainerProps {
   children?: never;
@@ -54,19 +47,19 @@ const Field = ({
 }: FieldProps): ReactElement => {
   const [labelProps$, containerProps$] = useDeconstructedMemo<[HTMLLabelElementAttributes, HTMLElementAttributes]>([
     {
-      prefix: 'label',
+      prefix: "label",
       props,
     },
     {
-      prefix: 'container',
+      prefix: "container",
       props,
-    }
-  ])
+    },
+  ]);
 
-  const labelProps = labelProps$ as HTMLLabelElementAttributes
-  const containerProps = containerProps$ as HTMLElementAttributes
+  const labelProps = labelProps$ as HTMLLabelElementAttributes;
+  const containerProps = containerProps$ as HTMLElementAttributes;
 
-  const errorElementId = `${name}-error`
+  const errorElementId = `${name}-error`;
 
   return (
     <div className={cls("w-full")} {...containerProps}>
@@ -86,11 +79,7 @@ const Field = ({
         spellCheck={spellCheck}
         {...props}
       />
-      <ErrorMessage
-        id={errorElementId}
-        aria-hidden={error ? "false" : "true"}
-        className={cls({ "hidden animate-fade-in": !error })}
-      >
+      <ErrorMessage id={errorElementId} aria-hidden={error ? "false" : "true"} className={cls({ "hidden animate-fade-in": !error })}>
         {error}
       </ErrorMessage>
     </div>

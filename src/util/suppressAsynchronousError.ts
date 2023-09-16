@@ -1,6 +1,6 @@
 export default async function suppressAsynchronousError<F extends (...args: any[]) => Promise<any>>(
   func: F,
-  defaultReturnValue?: ReturnType<Awaited<F>>
+  defaultReturnValue?: ReturnType<Awaited<F>>,
 ) {
   try {
     return await func();

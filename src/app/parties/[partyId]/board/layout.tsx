@@ -23,10 +23,7 @@ interface PartyBoardLayoutProps {
   searchParams?: PartyBoardLayoutSearchParams;
 }
 
-export default function PartyBoardLayout({
-  children,
-  searchParams = { lang: "en" },
-}: PartyBoardLayoutProps): JSX.Element {
+export default function PartyBoardLayout({ children, searchParams = { lang: "en" } }: PartyBoardLayoutProps): JSX.Element {
   return (
     <html lang={searchParams?.lang}>
       <body className={Inter.className} style={{ width: "100vw" }}>

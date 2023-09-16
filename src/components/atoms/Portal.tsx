@@ -8,8 +8,6 @@ interface PortalProps {
   anchor?: HTMLElement | null;
 }
 
-const Portal = ({ children, anchor }: PortalProps): ReactElement => (
-  <Fragment>{createPortal(children, anchor || document.body)}</Fragment>
-);
+const Portal = ({ children, anchor }: PortalProps): ReactElement => <Fragment>{createPortal(children, anchor || document.body)}</Fragment>;
 
 export default Portal;

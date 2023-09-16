@@ -1,13 +1,3 @@
 {
-  "cSpell.words": [
-    "commitlint",
-    "endregion",
-    "Hoverable",
-    "nextjs",
-    "Roboto",
-    "scrummates",
-    "supabase",
-    "tailwindcss",
-    "zustand"
-  ]
+  "cSpell.words": ["commitlint", "endregion", "Hoverable", "nextjs", "Roboto", "scrummates", "supabase", "tailwindcss", "zustand"]
 }

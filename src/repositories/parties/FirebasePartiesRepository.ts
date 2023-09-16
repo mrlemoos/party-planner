@@ -1,15 +1,6 @@
 import { randomUUID } from "node:crypto";
 
-import {
-  type DatabaseReference,
-  getDatabase,
-  ref as ref$,
-  set,
-  type Database,
-  get,
-  child,
-  update,
-} from "firebase/database";
+import { type DatabaseReference, getDatabase, ref as ref$, set, type Database, get, child, update } from "firebase/database";
 
 import type Party from "@root/models/Party";
 

@@ -25,7 +25,7 @@ export default function PartyBoard({ partyId }: PartyBoardProps): JSX.Element {
 
   const shouldShowVotingBoard = useMemo(
     () => typeof voteSession?.currentStoryId === "string" && voteSession?.status === "Voting",
-    [voteSession?.currentStoryId, voteSession?.status]
+    [voteSession?.currentStoryId, voteSession?.status],
   );
   const shouldShowStartVote = useMemo(() => voteSession?.status === "Not Started", [voteSession?.status]);
 
@@ -38,14 +38,14 @@ export default function PartyBoard({ partyId }: PartyBoardProps): JSX.Element {
       <ConnectedMembers />
       <Timer />
 
-      <div className="container mx-auto">
-        <div className="flex flex-col gap-8">
+      <div className='container mx-auto'>
+        <div className='flex flex-col gap-8'>
           {shouldShowStartVote && <StartVote />}
           {shouldShowVotingBoard && <VotingBoard storyId={voteSession!.currentStoryId} />}
           {shouldShowVotingSessionSummary && <VotingSessionSummary />}
           <SizedBox height={64} />
-          <div className="flex gap-3" style={{ flexDirection: width < 1000 ? "column" : "row" }}>
-            <div className="flex-1 gap-5">
+          <div className='flex gap-3' style={{ flexDirection: width < 1000 ? "column" : "row" }}>
+            <div className='flex-1 gap-5'>
               <UserStoryList />
             </div>
             <div>

@@ -28,7 +28,7 @@ export default function useClipboard(): [string | undefined, (text: string) => v
 
       proxy.text = text;
     },
-    [proxy]
+    [proxy],
   );
 
   return [proxy.text, copyToClipboard];

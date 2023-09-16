@@ -11,7 +11,7 @@ export default function GradientContainer({ children }: GradientContainerProps):
     <div
       className={cls(
         "flex flex-col justify-center items-center bg-gradient-to-tr from-blue-400 to-purple-400",
-        "dark:from-blue-800 dark:to-purple-800"
+        "dark:from-blue-800 dark:to-purple-800",
       )}
       style={{ width: "100vw", height: "100vh" }}
     >

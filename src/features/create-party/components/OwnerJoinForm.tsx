@@ -25,7 +25,7 @@ export default function OwnerJoinForm(): JSX.Element {
   return (
     <Fragment>
       <SizedBox height={12} />
-      <Button type="button" onClick={handleStartParty}>
+      <Button type='button' onClick={handleStartParty}>
         Start the party <span className={cls({ "animate-pulse": isRedirecting })}>🎉</span>
       </Button>
     </Fragment>

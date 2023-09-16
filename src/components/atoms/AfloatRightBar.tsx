@@ -14,7 +14,7 @@ export default function AfloatRightBar({ children, className, ...props }: Afloat
         "hidden md:block fixed right-3 top-[30%] w-16 px-4 py-3 min-h-[300px]",
         "flex flex-col justify-center gap-3",
         "animate-slide-left-fade",
-        className
+        className,
       )}
       {...props}
     >

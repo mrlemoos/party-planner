@@ -7,10 +7,7 @@ type DividerProps = HTMLAttributes<HTMLDivElement> & {
 };
 
 const Divider = ({ className, ...props }: DividerProps): ReactElement => (
-  <div
-    className={cls("border-t border-gray-200 dark:border-gray-800", className)}
-    {...props}
-  />
+  <div className={cls("border-t border-gray-200 dark:border-gray-800", className)} {...props} />
 );
 
 export default Divider;

@@ -19,15 +19,10 @@ export default function UserStoryEditableTitle({ title, storyId }: UserStoryEdit
 
       editStory(storyId, { title: newTitle });
     },
-    [editStory, storyId]
+    [editStory, storyId],
   );
 
   return (
-    <span
-      className="font-normal flex-1"
-      contentEditable={true}
-      onBlur={handleTitleChange}
-      dangerouslySetInnerHTML={{ __html: title }}
-    />
+    <span className='font-normal flex-1' contentEditable={true} onBlur={handleTitleChange} dangerouslySetInnerHTML={{ __html: title }} />
   );
 }

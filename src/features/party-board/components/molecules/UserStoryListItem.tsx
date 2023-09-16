@@ -28,23 +28,12 @@ interface UserStoryListItemProps extends PickedStory {
 
 // #endregion
 
-export default function UserStoryListItem({
-  storyId,
-  title,
-  isFirstItem,
-  isLastItem,
-}: UserStoryListItemProps): JSX.Element {
+export default function UserStoryListItem({ storyId, title, isFirstItem, isLastItem }: UserStoryListItemProps): JSX.Element {
   const { isCurrentUserPartyOwner, stories, voteSession } = usePartyBoardContext();
 
-  const isCurrentBeingVotedOn = useMemo(
-    () => voteSession?.currentStoryId === storyId,
-    [voteSession?.currentStoryId, storyId]
-  );
+  const isCurrentBeingVotedOn = useMemo(() => voteSession?.currentStoryId === storyId, [voteSession?.currentStoryId, storyId]);
 
-  const computedStory = useMemo(
-    () => stories.find(({ storyId: storyId$ }) => storyId$ === storyId)!,
-    [stories, storyId]
-  );
+  const computedStory = useMemo(() => stories.find(({ storyId: storyId$ }) => storyId$ === storyId)!, [stories, storyId]);
 
   return (
     <ListItem
@@ -55,12 +44,12 @@ export default function UserStoryListItem({
           "rounded-b-md": isLastItem,
         },
         "dark:border-t dark:border-t-purple-300",
-        "transition-all"
+        "transition-all",
       )}
       style={{ padding: toRem(12) }}
     >
-      <div className="flex items-center gap-6">
-        <div className="w-8">
+      <div className='flex items-center gap-6'>
+        <div className='w-8'>
           {!isCurrentBeingVotedOn && (
             <UserStoryListItemOrderChevrons
               storyId={storyId}
@@ -69,18 +58,14 @@ export default function UserStoryListItem({
             />
           )}
         </div>
-        <div className="flex flex-col">
+        <div className='flex flex-col'>
           <UserStoryEditableTitle storyId={storyId} title={title} />
           {!isGeneratedStoryId(storyId) && <UserStoryEditableStoryId storyId={storyId} />}
         </div>
       </div>
-      <div className="flex items-center gap-1">
+      <div className='flex items-center gap-1'>
         {isCurrentUserPartyOwner && (
-          <UserStoryListItemActions
-            computedStory={computedStory}
-            isStoryCurrentlyBeingVotedOn={isCurrentBeingVotedOn}
-            storyId={storyId}
-          />
+          <UserStoryListItemActions computedStory={computedStory} isStoryCurrentlyBeingVotedOn={isCurrentBeingVotedOn} storyId={storyId} />
         )}
       </div>
     </ListItem>

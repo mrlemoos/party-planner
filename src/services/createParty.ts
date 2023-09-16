@@ -7,9 +7,7 @@ interface CreatePartyOptions {
   token: string;
 }
 
-export default async function createParty({
-  token,
-}: CreatePartyOptions): Promise<CreatePartyResponseContract> {
+export default async function createParty({ token }: CreatePartyOptions): Promise<CreatePartyResponseContract> {
   if (!token) {
     throw new Error("createParty(): You must be logged in to create a party.");
   }
