@@ -4,7 +4,7 @@ import useProxy from "@root/hooks/useProxy";
 
 // #region Types & Interfaces
 
-/* internal */ interface UseClipboardProxy {
+interface UseClipboardProxy {
   text?: string;
 }
 
@@ -12,8 +12,8 @@ import useProxy from "@root/hooks/useProxy";
 
 // #region Utilities & Constants
 
-/* internal */ function $_copyToClipboard(text: string) {
-  if ("clipboard" in navigator && navigator.clipboard && "writeText" in navigator.clipboard) {
+function $_copyToClipboard(text: string) {
+  if ("navigator" in window && "clipboard" in window.navigator && window.navigator.clipboard && "writeText" in window.navigator.clipboard) {
     navigator.clipboard.writeText(text);
   }
 }
