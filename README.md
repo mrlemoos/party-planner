@@ -4,30 +4,30 @@ The product built on top of NextJS that makes Story Pointing the User Stories fo
 
 ## Getting Started ⛳️
 
-As we're using [yarn](https://yarnpkg.com/) as our package manager, you'll need to install it first. Then, you can run
+As we're using [bun](https://bun.sh/) as our package manager, you'll need to install it first. Then, you can run
 the following commands:
 
 ```bash
-yarn install # or just "yarn" if you don't like to type too much
+bun install
 ```
 
 After that, you can run the following command to start the development server:
 
 ```bash
-yarn run dev # or "yarn dev"
+bun run dev
 ```
 
 To generate the **Production** environment build, you can run the following command:
 
 ```bash
-yarn run build
+bun run build
 ```
 
 And to run the **Production** environment build, you can run the following command (Note that you need to have generated
 the production build first):
 
 ```bash
-yarn run start
+bun run start
 ```
 
 ## Technology Stack 🛠
