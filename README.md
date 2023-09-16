@@ -4,7 +4,8 @@ The product built on top of NextJS that makes Story Pointing the User Stories fo
 
 ## Getting Started ⛳️
 
-As we're using [yarn](https://yarnpkg.com/) as our package manager, you'll need to install it first. Then, you can run the following commands:
+As we're using [yarn](https://yarnpkg.com/) as our package manager, you'll need to install it first. Then, you can run
+the following commands:
 
 ```bash
 yarn install # or just "yarn" if you don't like to type too much
@@ -22,7 +23,8 @@ To generate the **Production** environment build, you can run the following comm
 yarn run build
 ```
 
-And to run the **Production** environment build, you can run the following command (Note that you need to have generated the production build first):
+And to run the **Production** environment build, you can run the following command (Note that you need to have generated
+the production build first):
 
 ```bash
 yarn run start
@@ -30,7 +32,7 @@ yarn run start
 
 ## Technology Stack 🛠
 
-- [NodeJS](https://nodejs.org/en/) (>=v20.0)
+- [Bun](https://bun.sh) (>=1.0)
 - [NextJS](https://nextjs.org/) (>=v13.4)
 - [ReactJS](https://reactjs.org/) (>=v18)
 - [TypeScript](https://www.typescriptlang.org/) (>=v5.2)
@@ -41,3 +43,7 @@ yarn run start
 - [ESLint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
 - [Husky](https://typicode.github.io/husky/#/)
+- [CommitLint](https://commitlint.js.org/)
+- [Commitizen](https://github.com/commitizen)
+
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
