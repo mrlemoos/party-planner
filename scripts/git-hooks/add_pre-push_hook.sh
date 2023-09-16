@@ -1,0 +1,1 @@
+npx husky add .husky/pre-push  'bun wiptest'

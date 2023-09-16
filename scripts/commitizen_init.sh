@@ -1,0 +1,1 @@
+commitizen init cz-conventional-changelog --save-dev --save-exact && rm -rf package-lock.json && bun install
