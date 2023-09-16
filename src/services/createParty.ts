@@ -22,7 +22,5 @@ export default async function createParty({
     },
   });
 
-  const response = await meta.json();
-
-  return response;
+  return (await meta.json()) as CreatePartyResponseContract;
 }
