@@ -1,27 +1,29 @@
 {
   "name": "party-planner",
   "version": "0.1.0",
+  "description": "Point tickets. Plan your sprint. Have fun 🎉!",
   "private": true,
   "scripts": {
     "dev": "NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky install",
+    "format": "prettier --write --list-different",
+    "commitizen:init": "sh ./scripts/commitizen_init.sh",
+    "commit": "cz",
+    "git-hooks:add-commit-msg": "sh ./scripts/git-hooks/add_commit-msg_hook.sh",
+    "git-hooks:add-pre-push": "sh ./scripts/git-hooks/add_pre-push_hook.sh",
+    "git-hooks:add-prepare-commit-msg": "sh ./scripts/git-hooks/add_prepare-commit-msg_hook.sh"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.23.5",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-tooltip": "^1.0.6",
-    "@supabase/realtime-js": "^2.7.4",
-    "@types/node": "20.5.9",
-    "@types/react": "18.2.21",
-    "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
     "classnames": "^2.3.2",
     "encoding": "^0.1.13",
-    "eslint": "8.48.0",
-    "eslint-config-next": "13.4.19",
     "firebase": "^10.3.1",
     "firebase-admin": "^11.10.1",
     "framer-motion": "^10.16.2",
@@ -29,12 +31,73 @@
     "postcss": "8.4.29",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tailwindcss": "3.3.3",
-    "tailwindcss-radix": "^2.8.0",
-    "typescript": "5.2.2",
     "zustand": "^4.4.1"
   },
+  "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
+    "@types/node": "20.5.9",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.7",
+    "bun-types": "^1.0.2",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "8.48.0",
+    "eslint-config-next": "13.4.19",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
+    "tailwindcss": "3.3.3",
+    "tailwindcss-radix": "^2.8.0",
+    "typescript": "5.2.2"
+  },
   "prettier": {
-    "printWidth": 120
+    "printWidth": 140,
+    "jsxSingleQuote": true,
+    "singleQuote": false,
+    "singleAttributePerLine": false,
+    "tabWidth": 2,
+    "semi": true
+  },
+  "eslint": {
+    "extends": [
+      "eslint:recommended",
+      "next",
+      "prettier",
+      "import",
+      "jsx-a11y",
+      "react",
+      "react-hooks"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "npx --no -- commitlint --edit '$1'",
+      "pre-push": "bun wiptest",
+      "prepare-commit-msg": "exec < /dev/tty && node_modules/.bin/cz --hook || true"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.(ts|tsx)": [
+      "prettier --write --list-different",
+      "eslint --fix"
+    ],
+    "*.(md|mdx)": [
+      "prettier --write --list-different"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
