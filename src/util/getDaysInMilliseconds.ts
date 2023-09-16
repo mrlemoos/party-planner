@@ -1,10 +1,14 @@
 interface GetDaysInMillisecondsOptions {
-  from: number;
+  from?: number;
 }
 
-export default function getDaysInMilliseconds(
+function getDaysInMilliseconds(
   days: number,
-  { from }: GetDaysInMillisecondsOptions = { from: Date.now() }
+  options?: GetDaysInMillisecondsOptions
 ) {
+  const from = options?.from ?? Date.now();
+
   return days * 1000 * 60 * 60 * 24 + from;
 }
+
+export default getDaysInMilliseconds;
