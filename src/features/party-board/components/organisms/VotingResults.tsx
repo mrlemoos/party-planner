@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, type JSX, useState, useCallback, type ComponentProps } from "react";
+import { useMemo, type JSX, useState, useCallback, type ComponentProps, type CSSProperties } from "react";
 
 import Accordion from "@root/components/atoms/Accordion";
 import Heading from "@root/components/atoms/Heading";
@@ -8,7 +8,13 @@ import getVotesSummaryPerStory from "@root/util/getVotesSummaryPerStory";
 
 import usePartyBoardContext from "../../context-hooks/usePartyBoardContext";
 
-type AccordionFocusChangeEventHandler = NonNullable<ComponentProps<typeof Accordion>["onFocusChange"]>;
+type AccordionProps = NonNullable<ComponentProps<typeof Accordion>>;
+type AccordionFocusChangeEventHandler = NonNullable<AccordionProps["onFocusChange"]>;
+
+const asideStyle: CSSProperties = {
+  maxWidth: 800,
+  minWidth: 500,
+};
 
 export default function VotingResults(): JSX.Element {
   const { stories, members } = usePartyBoardContext();
@@ -23,7 +29,7 @@ export default function VotingResults(): JSX.Element {
   }, []);
 
   return (
-    <aside className="flex flex-col justify-center h-full p-6 mr-4" style={{ maxWidth: 800, minWidth: 500 }}>
+    <aside className="flex flex-col justify-center h-full p-6 mr-4" style={asideStyle}>
       <Heading level="h4">Results</Heading>
       {hasVoteStarted ? (
         <div>

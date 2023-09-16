@@ -11,51 +11,65 @@ import cls from "classnames";
 
 import type PrefixObjectKeys from "@root/type-util/PrefixObjectKeys";
 import isValidRenderElement from "@root/util/isValidRenderElement";
-import convertFromObjectWithPrefix from "@root/util/convertFromObjectWithPrefix";
+import useDeconstructedMemo from "@root/hooks/useDeconstructedMemo";
 
 import Label from "./Label";
 import ErrorMessage from "./ErrorMessage";
 import Input from "./Input";
 
-type RawHTMLLabelElementAttributes = Omit<LabelHTMLAttributes<HTMLLabelElement>, "htmlFor">;
-type RawHTMLDivElementAttributes = HTMLAttributes<HTMLDivElement>;
+// #region Interfaces & Types
 
-type FieldProps = InputHTMLAttributes<HTMLInputElement> & {
+interface HTMLInputElementAttributes extends Omit<InputHTMLAttributes<HTMLInputElement>, 'children'> {
+  children?: never;
+}
+
+type HTMLLabelElementAttributes = Omit<LabelHTMLAttributes<HTMLLabelElement>, "htmlFor" | 'children' | 'className'>;
+
+type WithLabelProps = PrefixObjectKeys<HTMLLabelElementAttributes, 'label'>;
+
+type HTMLElementAttributes = Omit<HTMLAttributes<HTMLElement>, 'children' | 'className'>;
+
+type WithContainerProps = PrefixObjectKeys<HTMLElementAttributes, 'container'>
+
+interface FieldProps extends HTMLInputElementAttributes, WithLabelProps, WithContainerProps {
   children?: never;
 
   error?: ReactNode;
   label?: ReactNode;
-} & PrefixObjectKeys<RawHTMLLabelElementAttributes, "label"> &
-  PrefixObjectKeys<RawHTMLDivElementAttributes, "container">;
+}
+
+// #endregion
 
 const Field = ({
   className,
   name,
   error,
   type = "text",
-
-  containerClassName,
-  labelClassName,
-
   label,
-
   autoCapitalize = "off",
   autoCorrect = "off",
   autoComplete = "off",
   spellCheck = false,
-
   ...props
 }: FieldProps): ReactElement => {
-  const labelProps = useMemo(() => convertFromObjectWithPrefix<RawHTMLLabelElementAttributes>(props, "label"), [props]);
-  const containerProps = useMemo(
-    () => convertFromObjectWithPrefix<RawHTMLDivElementAttributes>(props, "container"),
-    [props]
-  );
+  const [labelProps$, containerProps$] = useDeconstructedMemo<[HTMLLabelElementAttributes, HTMLElementAttributes]>([
+    {
+      prefix: 'label',
+      props,
+    },
+    {
+      prefix: 'container',
+      props,
+    }
+  ])
 
-  const errorElementId = useMemo(() => (error ? `${name}-error` : undefined), [error, name]);
+  const labelProps = labelProps$ as HTMLLabelElementAttributes
+  const containerProps = containerProps$ as HTMLElementAttributes
+
+  const errorElementId = `${name}-error`
 
   return (
-    <div className={cls("w-full", containerClassName)} {...containerProps}>
+    <div className={cls("w-full")} {...containerProps}>
       {isValidRenderElement(label) && (
         <Label htmlFor={name} {...labelProps}>
           {label}

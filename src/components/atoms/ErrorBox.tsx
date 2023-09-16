@@ -7,7 +7,12 @@ interface ErrorBoxProps {
   isContainer?: boolean;
 }
 
-export default function ErrorBox({ isContainer }: ErrorBoxProps): JSX.Element {
+/**
+ * The <ErrorBox /> component renders a JSX, following up to the {@link ErrorBoxProps} interface.
+ *
+ * @see {@link ErrorBoxProps}
+ */
+function ErrorBox({ isContainer }: ErrorBoxProps): JSX.Element {
   return (
     <div
       className={cls(
@@ -31,3 +36,5 @@ export default function ErrorBox({ isContainer }: ErrorBoxProps): JSX.Element {
     </div>
   );
 }
+
+export default ErrorBox;

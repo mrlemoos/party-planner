@@ -2,9 +2,10 @@
 
 import { useMemo, type JSX, useCallback } from "react";
 
-import usePartyBoardContext from "../../context-hooks/usePartyBoardContext";
 import Button from "@root/components/atoms/Button";
 import SizedBox from "@root/components/atoms/SizedBox";
+
+import usePartyBoardContext from "../../context-hooks/usePartyBoardContext";
 
 export default function StartVote(): JSX.Element {
   const { voteSession, stories, isCurrentUserPartyOwner, updateVoteStatus, partyId, partyOwner } =
