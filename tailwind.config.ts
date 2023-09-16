@@ -69,7 +69,6 @@ const config: Config = {
         "0%": { opacity: "1" },
         "100%": { opacity: "0" },
       },
-      // Toast
       "toast-hide": {
         "0%": { opacity: "1" },
         "100%": { opacity: "0" },
@@ -85,13 +84,13 @@ const config: Config = {
       "toast-swipe-out-x": {
         "0%": { transform: "translateX(var(--radix-toast-swipe-end-x))" },
         "100%": {
-          transform: `translateX(calc(100% + 1rem))`,
+          transform: 'translateX(calc(100% + 1rem))',
         },
       },
       "toast-swipe-out-y": {
         "0%": { transform: "translateY(var(--radix-toast-swipe-end-y))" },
         "100%": {
-          transform: `translateY(calc(100% + 1rem))`,
+          transform: 'translateY(calc(100% + 1rem))',
         },
       },
     },
