@@ -7,22 +7,20 @@ import cls from "classnames";
 
 type DangerToastProps = HTMLAttributes<HTMLDivElement> & {
   header: ReactNode;
-  headerClassName?: string;
 
   action: ReactNode;
-  actionClassName?: string;
 };
 
-function DangerToast({ header, headerClassName, children, action, actionClassName, className, ...props }: DangerToastProps): JSX.Element {
+function DangerToast({ header, children, action, className, ...props }: DangerToastProps): JSX.Element {
   return (
     <div className={cls("md:w-[420px] flex flex-col gap-y-1 bg-white px-2 py-1 rounded-lg", className)} {...props}>
       <div className='flex items-center gap-1 text-rose-800'>
         <Cross2Icon height={18} width={18} />
-        <span className={cls("font-semibold text-md", headerClassName)}>{header}</span>
+        <span className={cls("font-semibold text-md")}>{header}</span>
       </div>
       <div className='flex items-center gap-2 text-black ml-6'>
         <span className='font-normal text-sm flex-1'>{children}</span>
-        <div className={cls("flex items-center text-sm gap-1 mb-1", actionClassName)}>{action}</div>
+        <div className={cls("flex items-center text-sm gap-1 mb-1")}>{action}</div>
       </div>
     </div>
   );
