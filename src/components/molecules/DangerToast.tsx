@@ -5,11 +5,34 @@ import { type HTMLAttributes, type ReactNode, type ReactElement, type ButtonHTML
 import { Cross2Icon } from "@radix-ui/react-icons";
 import cls from "classnames";
 
-type DangerToastProps = HTMLAttributes<HTMLDivElement> & {
+interface DangerToastProps extends HTMLAttributes<HTMLDivElement> {
+  /**
+   * The custom {@link ReactNode} that corresponds to the header area of the
+   * danger toast. By default, it renders this prop inside of a `<span>` tag
+   * with the text weight set to `semibold` and the text size slightly larger
+   * than the content ({@link children}). It is recommended to use a string
+   * literal for this prop.
+   *
+   * @see {@link ReactNode}
+   * @see {@link children}
+   */
   header: ReactNode;
 
+  /**
+   * The custom {@link ReactNode} that corresponds to the actions area of the
+   * danger toast. This node or nodes are rendered inside of a `<div>` tag with
+   * the flexbox layout and some small gap between the children. It is
+   * recommended to use a button-like component or native HTML element for this
+   * prop, such as {@link DangerToast.Action}.
+   *
+   * If it is necessary to render more than one element inside of the actions,
+   * it is recommended to wrap them in a `<Fragment>` component so the layout
+   * remains consistent.
+   *
+   * @see {@link ReactNode}
+   */
   action: ReactNode;
-};
+}
 
 function DangerToast({ header, children, action, className, ...props }: DangerToastProps): JSX.Element {
   return (
