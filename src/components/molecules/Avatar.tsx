@@ -84,6 +84,14 @@ interface AvatarProps extends HTMLAttributes<HTMLElement> {
    * coherent fashion.
    */
   userId: string;
+
+  /**
+   * Boolean indicating whether the avatar is disabled. If that is the case, the
+   * avatar will be rendered with a lower opacity with neutral colors.
+   *
+   * @default false
+   */
+  isDisabled?: boolean;
 }
 
 // #endregion
@@ -106,13 +114,22 @@ export default function Avatar({
   tooltipSide = "left",
   preventTooltip = false,
   userId,
+  isDisabled = false,
   ...props
 }: AvatarProps): JSX.Element {
   const { getUserAvatarAppearance } = useCachedUserAvatarAppearance();
 
   const { foregroundColor, backgroundColor } = useMemo(
-    () => getUserAvatarAppearance(userId, { orDefaultsTo: "random" }),
-    [getUserAvatarAppearance, userId]
+    () =>
+      getUserAvatarAppearance(userId, {
+        orDefaultsTo: isDisabled
+          ? {
+              backgroundColor: "#e2e8f0",
+              foregroundColor: "#a0aec0",
+            }
+          : "random",
+      }),
+    [getUserAvatarAppearance, userId, isDisabled]
   );
 
   return (
@@ -121,7 +138,9 @@ export default function Avatar({
         className={cls(
           "rounded-full border-[1px] border-coal dark:border-white",
           " font-bold flex justify-center items-center cursor-default",
-          { relative: isPartyOwner },
+          {
+            relative: isPartyOwner,
+          },
           size === "small" ? "w-6 h-6 text-xs" : "w-8 h-8",
           className
         )}

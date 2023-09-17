@@ -53,6 +53,7 @@ export default class FirebasePartiesRepository implements PartiesRepository {
           userId: ownerUserId,
           joinedAt: now,
           lastSeenAt: now,
+          status: "Disconnected",
         },
       ],
       stories: [],
@@ -93,6 +94,7 @@ export default class FirebasePartiesRepository implements PartiesRepository {
         userId,
         joinedAt: now,
         lastSeenAt: now,
+        status: "Disconnected",
       };
       const newMembers = [...party.members, userAsMember];
 

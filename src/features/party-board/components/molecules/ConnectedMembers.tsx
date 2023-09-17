@@ -10,12 +10,14 @@ import Avatar from "@root/components/molecules/Avatar";
 import Divider from "@root/components/atoms/Divider";
 import IconButton from "@root/components/atoms/IconButton";
 import SizedBox from "@root/components/atoms/SizedBox";
+import OnlineBubble from "@root/components/molecules/OnlineBubble";
 import Tooltip from "@root/components/atoms/Tooltip";
 import useClipboard from "@root/hooks/useClipboard";
 import useCurrentUser from "@root/hooks/useCurrentUser";
 import getLinkToJoinParty from "@root/util/getLinkToJoinParty";
 
 import usePartyBoardContext from "../../context-hooks/usePartyBoardContext";
+import OfflineBubble from "@root/components/molecules/OfflineBubble";
 
 export default function ConnectedMembers(): JSX.Element {
   const { members, ownerUserId } = usePartyBoardContext();
@@ -50,14 +52,37 @@ export default function ConnectedMembers(): JSX.Element {
         <Divider />
         <SizedBox height={6} />
       </div>
-      {members.map(({ displayName, userId }) => {
+      {members.map(({ displayName, userId, status }) => {
         const isPartyOwner = userId === ownerUserId;
         const key = `connected-members-avatar-${userId}-${isPartyOwner}-${displayName}`;
 
+        const isDisconnected = status === "Disconnected";
+
         return (
-          <Avatar key={key} isPartyOwner={isPartyOwner} className='mb-2 motion-safe:animate-scale-in-content' userId={userId}>
-            {displayName}
-          </Avatar>
+          <div key={key} className='relative'>
+            <Avatar
+              tooltipContent={
+                isDisconnected ? (
+                  <span className='font-normal'>
+                    <b>{displayName}</b> is offline
+                  </span>
+                ) : (
+                  displayName
+                )
+              }
+              isPartyOwner={isPartyOwner}
+              className={"mb-2 motion-safe:animate-scale-in-content"}
+              isDisabled={isDisconnected}
+              userId={userId}
+            >
+              {displayName}
+            </Avatar>
+            {isDisconnected ? (
+              <OfflineBubble className='absolute bottom-0 left-0' />
+            ) : (
+              <OnlineBubble className='absolute bottom-0 left-0' />
+            )}
+          </div>
         );
       })}
     </AfloatRightBar>

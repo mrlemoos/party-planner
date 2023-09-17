@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 import createFirebaseClient from "@root/repositories/_firebase-client/createFirebaseClient";
 import transformSnapshotIntoPartyDataset from "@root/util/transformSnapshotIntoPartyDataset";
+import useCurrentUser from "@root/hooks/useCurrentUser";
 import type Party from "@root/models/Party";
 import type Story from "@root/models/Story";
 import type PartyMember from "@root/models/PartyMember";
@@ -53,6 +54,8 @@ const defaultValues: Party = {
 export default function usePartyRealtime(partyId: string): PartyRealtime {
   const [party, setParty] = useState<Party>(defaultValues);
   const router = useRouter();
+
+  const { userId } = useCurrentUser();
 
   const addStory = useCallback(
     function addStory$(story: Story) {
@@ -316,6 +319,10 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
   const isCurrentUserPartyOwner = useMemo(() => partyOwner?.userId === party.ownerUserId, [partyOwner, party.ownerUserId]);
 
   useEffect(() => {
+    if (!partyId) {
+      return;
+    }
+
     const database = getDatabase();
     const ref = ref$(database, `parties/${partyId}`);
 
@@ -349,10 +356,78 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
     })();
 
     const unsubscribe = onValue(ref, onSnapshot);
+
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [partyId, router]);
+
+  useEffect(() => {
+    if (!Array(party?.members) || party.members.length === 0) {
+      return;
+    }
+
+    function handleUnloadEventListener(event: Event) {
+      event.preventDefault();
+
+      const currentUserMember = party.members.find(({ userId: memberUserId$ }) => memberUserId$ === userId);
+
+      if (!currentUserMember || currentUserMember.status === "Disconnected") {
+        return;
+      }
+
+      const database = getDatabase();
+      const ref = child(ref$(database, `parties/${partyId}`), "members");
+
+      const newMembers = party.members.map<PartyMember>((member) => {
+        if (member.userId === userId) {
+          return {
+            ...member,
+            status: "Disconnected",
+          };
+        }
+
+        return member;
+      });
+
+      set(ref, newMembers);
+    }
+
+    window.addEventListener("unload", handleUnloadEventListener);
+
+    return () => {
+      window.removeEventListener("unload", handleUnloadEventListener);
+    };
+  }, [party?.members, partyId, userId]);
+
+  useEffect(() => {
+    if (
+      !Array.isArray(party?.members) ||
+      party.members.length === 0 ||
+      // If the user's status is "Connected", then the user is already connected
+      // and we don't need to update the status.
+      party.members.find(({ userId: memberUserId$ }) => memberUserId$ === userId)?.status === "Connected"
+    ) {
+      return;
+    }
+
+    const database = getDatabase();
+    const ref = ref$(database, `parties/${partyId}`);
+    const refChild = child(ref, "members");
+
+    const newMembers = party.members.map<PartyMember>((member) => {
+      if (member.userId === userId) {
+        return {
+          ...member,
+          status: "Connected",
+        };
+      }
+
+      return member;
+    });
+
+    set(refChild, newMembers);
+  }, [party?.members, partyId, userId]);
 
   return {
     ...party,
