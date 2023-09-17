@@ -12,7 +12,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "types": ["bun-types"],
+    "types": ["bun-types", "web"],
     "incremental": true,
     "plugins": [
       {
