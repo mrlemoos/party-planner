@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo, type JSX, type CSSProperties } from "react";
 
 import { type AnimationProps, motion } from "framer-motion";
@@ -6,7 +8,10 @@ import cls from "classnames";
 import useWindowSize from "@root/hooks/useWindowSize";
 import Poppins from "@root/styles/Poppins";
 import Avatar from "@root/components/molecules/Avatar";
+import getAverageOf from "@root/util/getAverageOf";
 import toRem from "@root/util/toRem";
+import SizedBox from "@root/components/atoms/SizedBox";
+import UserDot from "@root/components/molecules/UserDot";
 
 import usePartyBoardContext from "../../context-hooks/usePartyBoardContext";
 import PercentageBar from "../atoms/PercentageBar";
@@ -25,6 +30,8 @@ interface AnimationMap {
 
 // #region Utilities & Constants
 
+const percentageBarHeight = toRem(280);
+
 const animationCanvasStyle: CSSProperties = {
   height: toRem(380),
 };
@@ -35,10 +42,11 @@ const animation: AnimationMap = {
     opacity: 0,
   },
   animate: {
-    height: toRem(280),
+    height: percentageBarHeight,
     opacity: 1,
     transition: {
-      duration: 0.2,
+      duration: 0.5,
+      delay: 1,
     },
   },
 };
@@ -52,29 +60,25 @@ export default function VotingSessionSummary(): JSX.Element {
 
   const currentStory = useMemo(
     () => stories.find(({ storyId }) => storyId === voteSession?.currentStoryId),
-    [stories, voteSession?.currentStoryId],
+    [stories, voteSession?.currentStoryId]
   );
 
-  const { winnerStoryPoint, votesCount } = useMemo(() => {
+  const { averageResult, votesCount } = useMemo(() => {
     if (!currentStory?.votes) {
       return {};
     }
 
     const votes = Object.values(currentStory.votes);
+    const averageOfTotalVotes = getAverageOf(votes);
 
-    let winnerStoryPoint: number | null = null;
-    let winnerStoryPointCount = 0;
+    const averageResult =
+      // If the average is NaN, display N/A so the user doesn't see a NaN string
+      // on the screen.
+      Number.isNaN(averageOfTotalVotes) ? "N/A" : String(averageOfTotalVotes.toFixed(1)).replace(".0", "");
 
-    for (const vote of votes) {
-      const voteCount = votes.filter((voteValue) => voteValue === vote).length;
+    const votesCount = votes.length;
 
-      if (voteCount > winnerStoryPointCount) {
-        winnerStoryPoint = vote;
-        winnerStoryPointCount = voteCount;
-      }
-    }
-
-    return { winnerStoryPoint, votesCount: winnerStoryPointCount };
+    return { averageResult, votesCount };
   }, [currentStory?.votes]);
 
   const memberVotes = useMemo(() => {
@@ -87,24 +91,21 @@ export default function VotingSessionSummary(): JSX.Element {
         .filter(([, voteValue]) => voteValue === vote)
         .map(([memberUserId]) => memberUserId);
 
-      const memberDisplayNames = members
+      const membersWhoVoted = members
         .filter(({ userId }) => memberUserIdWithSameVote.includes(userId))
-        .map(({ displayName }) => displayName);
+        .map(({ displayName, userId }) => ({ userId, displayName }));
 
-      const percentage = (memberDisplayNames.length / members.length) * 100;
-
-      const isWinner = vote === winnerStoryPoint;
+      const percentage = (membersWhoVoted.length / members.length) * 100;
 
       return {
         vote,
-        memberDisplayNames,
+        membersWhoVoted,
         percentage,
-        isWinner,
       };
     });
 
     return votes;
-  }, [currentStory?.votes, members, winnerStoryPoint]);
+  }, [currentStory?.votes, members]);
 
   return (
     <div className='flex items-center gap-4'>
@@ -115,22 +116,23 @@ export default function VotingSessionSummary(): JSX.Element {
             <b>{votesCount}</b> members have formed a majority of the votes
             <span className='text-2xl ml-2'>🏆</span>
           </span>
-          <span className={cls("text-3xl font-bold", Poppins.className)}>{winnerStoryPoint}</span>
+          <span className={cls("text-3xl font-semibold", Poppins.className)}>{averageResult}</span>
         </span>
       </div>
       {width > 900 && (
         <div className='flex flex-col items-center gap-3 flex-1'>
-          <div className='flex gap-x-4 gap-y-2 items-center animate-scale-in-content' style={animationCanvasStyle}>
-            {memberVotes.map(({ vote, memberDisplayNames, percentage }) => (
-              <div key={`${vote}-vote`} className='flex items-center flex-col gap-1'>
-                <motion.div initial={animation.initial} animate={animation.animate}>
-                  <PercentageBar percentage={percentage} />
-                </motion.div>
+          <SizedBox height={32} />
+          <div className='flex gap-1 animate-scale-in-content' style={animationCanvasStyle}>
+            {memberVotes.map(({ vote, membersWhoVoted, percentage }) => (
+              <div key={`${vote}-vote`} className='flex items-center flex-col'>
+                <div className='flex flex-col'>
+                  <motion.div initial={animation.initial} animate={animation.animate}>
+                    <PercentageBar percentage={percentage} />
+                  </motion.div>
+                </div>
                 <span className={cls("text-xl font-normal mt-3", Poppins.className)}>{vote}</span>
-                {memberDisplayNames.map((displayName) => (
-                  <Avatar key={displayName} size='small' tooltipSide='bottom'>
-                    {displayName}
-                  </Avatar>
+                {membersWhoVoted.map(({ displayName, userId }) => (
+                  <UserDot key={`${userId}-user-dot`} userId={userId} userDisplayName={displayName} />
                 ))}
               </div>
             ))}

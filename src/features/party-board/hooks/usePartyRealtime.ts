@@ -5,8 +5,8 @@ import { type ContextType, useCallback, useEffect, useMemo, useState } from "rea
 import { getDatabase, ref as ref$, onValue, type DataSnapshot, get, set, child, update } from "firebase/database";
 import { useRouter } from "next/navigation";
 
-import convertFirebaseObjectToArray from "@root/util/covertFirebaseObjectToArray";
 import createFirebaseClient from "@root/repositories/_firebase-client/createFirebaseClient";
+import transformSnapshotIntoPartyDataset from "@root/util/transformSnapshotIntoPartyDataset";
 import type Party from "@root/models/Party";
 import type Story from "@root/models/Story";
 import type PartyMember from "@root/models/PartyMember";
@@ -27,19 +27,7 @@ type PartyRealtime = NonNullable<ContextType<typeof PartyBoardContext>>;
 
 // #endregion
 
-/**
- * Transforms the {@link DataSnapshot} into a {@link Party} dataset given the
- * snapshot exists. Otherwise it returns `undefined`.
- */
-function $transformSnapshotIntoPartyDataset(snapshot: DataSnapshot): Party | undefined {
-  if (!snapshot.exists()) {
-    return undefined;
-  }
-  const party = snapshot.toJSON() as Party;
-  party.stories = party.stories ? (convertFirebaseObjectToArray(party.stories) as Story[]) : [];
-  party.members = party.members ? (convertFirebaseObjectToArray(party.members) as PartyMember[]) : [];
-  return party;
-}
+// #region Utilities & Constants
 
 const defaultValues: Party = {
   partyId: "",
@@ -80,7 +68,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
         stories,
       }));
     },
-    [partyId, party.stories],
+    [partyId, party.stories]
   );
 
   const removeStory = useCallback(
@@ -97,7 +85,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
         stories,
       }));
     },
-    [partyId, party.stories],
+    [partyId, party.stories]
   );
 
   const connectMember = useCallback(
@@ -114,7 +102,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
         members,
       }));
     },
-    [partyId, party.members],
+    [partyId, party.members]
   );
 
   const disconnectMember = useCallback(
@@ -131,7 +119,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
         members,
       }));
     },
-    [party.members, partyId],
+    [party.members, partyId]
   );
 
   const editStory = useCallback(
@@ -157,7 +145,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
         stories,
       }));
     },
-    [party.stories, partyId],
+    [party.stories, partyId]
   );
 
   const rewriteStories = useCallback(
@@ -172,7 +160,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
         stories,
       }));
     },
-    [partyId],
+    [partyId]
   );
 
   const resetVotes = useCallback(
@@ -198,7 +186,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
         stories,
       }));
     },
-    [partyId, party.stories],
+    [partyId, party.stories]
   );
 
   const revealStoryVotes = useCallback(
@@ -220,7 +208,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       update(ref, stories);
     },
-    [party.stories, partyId],
+    [party.stories, partyId]
   );
 
   const voteStory = useCallback(
@@ -250,7 +238,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
         stories,
       }));
     },
-    [party.stories, partyId],
+    [party.stories, partyId]
   );
 
   const resetState = useCallback(
@@ -262,7 +250,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       setParty(party);
     },
-    [partyId],
+    [partyId]
   );
 
   const createVoteSession = useCallback(function createVoteSession$(partyId: string, storyId: string, voteStatus: VoteStatus) {
@@ -302,7 +290,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
         voteSession,
       }));
     },
-    [party.voteSession],
+    [party.voteSession]
   );
 
   const tickTimer = useCallback(
@@ -317,12 +305,12 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       set(ref, voteSession);
     },
-    [party.voteSession],
+    [party.voteSession]
   );
 
   const partyOwner = useMemo(
     () => party.members?.find(({ userId }) => userId === party.ownerUserId) ?? party.members?.[0],
-    [party.members, party.ownerUserId],
+    [party.members, party.ownerUserId]
   );
 
   const isCurrentUserPartyOwner = useMemo(() => partyOwner?.userId === party.ownerUserId, [partyOwner, party.ownerUserId]);
@@ -344,7 +332,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
         router.push("/404");
         return;
       }
-      const party = $transformSnapshotIntoPartyDataset(snapshot);
+      const party = transformSnapshotIntoPartyDataset(snapshot);
 
       console.log("🚨 Realtime watcher has got this registry:", party);
 

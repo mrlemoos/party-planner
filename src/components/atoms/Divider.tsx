@@ -1,13 +1,14 @@
-import { type ReactElement, type HTMLAttributes } from "react";
+import { type HTMLAttributes, memo } from "react";
 
 import cls from "classnames";
 
-type DividerProps = HTMLAttributes<HTMLDivElement> & {
+interface DividerProps extends HTMLAttributes<HTMLDivElement> {
+  /** @ignore */
   children?: never;
-};
+}
 
-const Divider = ({ className, ...props }: DividerProps): ReactElement => (
-  <div className={cls("border-t border-gray-200 dark:border-gray-800", className)} {...props} />
-);
+const Divider = memo<DividerProps>(({ className, ...props }) => <div className={cls("border-t border-gray-500", className)} {...props} />);
+
+Divider.displayName = "Divider";
 
 export default Divider;

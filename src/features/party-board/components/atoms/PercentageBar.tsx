@@ -1,5 +1,9 @@
 import { useMemo, type JSX } from "react";
 
+import cls from "classnames";
+
+import Tooltip from "@root/components/atoms/Tooltip";
+import Poppins from "@root/styles/Poppins";
 import toRem from "@root/util/toRem";
 
 // #region Utilities & Constants
@@ -23,5 +27,17 @@ interface PercentageBarProps {
 export default function PercentageBar({ percentage }: PercentageBarProps): JSX.Element {
   const backgroundColor = useMemo(() => $getRandomColor(), []);
 
-  return <div style={{ height: `${percentage}%`, width: toRem(36), backgroundColor }} />;
+  const displayPercentageValue =
+    // Given the percentage is NaN, it means that the value is not available yet,
+    // so we hand over the null value to the Tooltip component so the ReactNode
+    // won't render.
+    Number.isNaN(percentage) ? null : (
+      <span className={cls(Poppins.className, "font-medium text-sm")}>{`${percentage.toFixed(1).replace(".0", "")}%`}</span>
+    );
+
+  return (
+    <Tooltip content={displayPercentageValue}>
+      <div style={{ height: `${percentage}%`, width: toRem(36), backgroundColor }} aria-label={`${percentage} percent of the votes`} />
+    </Tooltip>
+  );
 }

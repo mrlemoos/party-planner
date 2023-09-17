@@ -18,7 +18,7 @@ export default function Heading({ level, children, className, ...props }: Headin
   const HeadingElement = level as ElementType;
 
   return (
-    <HeadingElement className={cls("user-select-none font-medium mt-3", className)} {...props}>
+    <HeadingElement className={cls("user-select-none font-medium", className)} {...props}>
       {children}
     </HeadingElement>
   );

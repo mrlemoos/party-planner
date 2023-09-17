@@ -33,8 +33,8 @@ function TopBar({
       <div className={cls("container mx-auto", containerClassName)}>
         <header
           className={cls(
-            "flex justify-between items-center pl-4 pr-2 py-2 shadow-xl rounded-xl backdrop-blur-lg sticky top-4 mt-4 border-[1px] border-gray-100 dark:border-gray-900",
-            headerClassName,
+            "flex justify-between items-center pl-4 pr-2 py-2 shadow-xl dark:shadow-md rounded-xl backdrop-blur-lg sticky top-4 mt-4 border-[1px] border-gray-100 dark:border-light-coal",
+            headerClassName
           )}
         >
           <div className='flex items-center gap-2'>

@@ -1,10 +1,11 @@
 "use client";
 
-import { type HTMLAttributes, type ReactNode, type JSX, type ComponentProps } from "react";
+import { type HTMLAttributes, type ReactNode, type JSX, type ComponentProps, useMemo } from "react";
 
 import cls from "classnames";
 
 import Tooltip from "@root/components/atoms/Tooltip";
+import useCachedUserAvatarAppearance from "@root/hooks/useCachedUserAvatarAppearance";
 
 // #region Interfaces & Types
 
@@ -64,6 +65,25 @@ interface AvatarProps extends HTMLAttributes<HTMLElement> {
    * @see {@link TooltipProps}
    */
   tooltipSide?: TooltipSide;
+
+  /**
+   * Given true, this property will prevent the {@link Tooltip} from rendering,
+   * even if the {@link tooltipContent} prop is provided.
+   *
+   * @default false
+   *
+   * @see {@link tooltipContent}
+   * @see {@link tooltipSide}
+   * @see {@link Tooltip}
+   */
+  preventTooltip?: boolean;
+
+  /**
+   * The user ID of the user that the avatar belongs to. This prop is necessary
+   * to ensure that the avatar renders the background and foreground colors in a
+   * coherent fashion.
+   */
+  userId: string;
 }
 
 // #endregion
@@ -81,33 +101,40 @@ export default function Avatar({
   className,
   isPartyOwner = false,
   crownClassName,
-  tooltipContent,
   size = "medium",
+  tooltipContent = <span className={cls("font-medium", size === "small" ? "text-xs" : "text-sm")}>{children}</span>,
   tooltipSide = "left",
+  preventTooltip = false,
+  userId,
   ...props
 }: AvatarProps): JSX.Element {
+  const { getUserAvatarAppearance } = useCachedUserAvatarAppearance();
+
+  const { foregroundColor, backgroundColor } = useMemo(
+    () => getUserAvatarAppearance(userId, { orDefaultsTo: "random" }),
+    [getUserAvatarAppearance, userId]
+  );
+
   return (
-    <Tooltip
-      side={tooltipSide}
-      sideOffset={4}
-      content={tooltipContent ?? <span className={cls("font-medium", size === "small" ? "text-xs" : "text-sm")}>{children}</span>}
-    >
+    <Tooltip side={tooltipSide} sideOffset={4} content={preventTooltip ? null : tooltipContent}>
       <div
         className={cls(
           "rounded-full border-[1px] border-coal dark:border-white",
-          "bg-yellow-300 text-black font-bold flex justify-center items-center cursor-default",
+          " font-bold flex justify-center items-center cursor-default",
           { relative: isPartyOwner },
           size === "small" ? "w-6 h-6 text-xs" : "w-8 h-8",
-          className,
+          className
         )}
         {...props}
+        style={{ backgroundColor }}
       >
-        {isPartyOwner && <span className={cls("absolute -top-5 -right-1 text-2xl rotate-[20deg]", crownClassName)}>👑</span>}
+        {isPartyOwner && <span className={cls("absolute -top-4 -right-[5px] text-xl rotate-[30deg]", crownClassName)}>👑</span>}
         {typeof children === "string" ? (
           <span
             className={cls({
               "text-xs": size === "small",
             })}
+            style={{ color: foregroundColor }}
           >
             {children.charAt(0).toUpperCase()}
           </span>
