@@ -51,7 +51,7 @@ export default function UserStoryListItemOrderChevrons({
       rewriteStories,
       createVoteSession,
       partyId,
-    ],
+    ]
   );
 
   return (
@@ -66,8 +66,9 @@ export default function UserStoryListItemOrderChevrons({
             <IconButton
               className='cursor-pointer'
               onClick={handleMoveToTop}
-              aria-label='Move up the order'
+              aria-label='Move to top'
               icon={<ChevronUpIcon height={18} width={18} />}
+              alt='Move this User Story to the top of the list.'
             />
           </div>
         </Tooltip>
