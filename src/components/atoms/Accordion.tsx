@@ -22,12 +22,11 @@ import cls from "classnames";
 class AccordionControlledStateEvent<T extends string> {
   constructor(
     /**
-     * The raw string value that corresponds to the key that is used
-     * by the controlled state passed to the {@link Accordion}
-     * component.
+     * The raw string value that corresponds to the key that is used by the
+     * controlled state passed to the {@link Accordion} component.
      *
-     * This value is required so it is always defined for the event
-     * object passed to the Accordion custom event handlers.
+     * This value is required so it is always defined for the event object
+     * passed to the Accordion custom event handlers.
      *
      * @see {@link Accordion}
      * @see {@link AccordionItem.key}
@@ -35,8 +34,8 @@ class AccordionControlledStateEvent<T extends string> {
     public readonly rawValue: string,
 
     /**
-     * The item -- typed by the {@link AccordionItem} interface -- that
-     * is the one focused to the Accordion component.
+     * The item -- typed by the {@link AccordionItem} interface -- that is the
+     * one focused to the Accordion component.
      *
      * @see {@link AccordionItem}
      */
@@ -51,7 +50,7 @@ class AccordionControlledStateEvent<T extends string> {
      * @see {@link AccordionProps}
      * @see {@link AccordionProps.items}
      */
-    public readonly items: AccordionItem<T>[],
+    public readonly items: AccordionItem<T>[]
   ) {}
 }
 
@@ -60,9 +59,8 @@ class AccordionControlledStateEvent<T extends string> {
 // #region Interfaces & Types
 
 /**
- * The interface which corresponds to the function that is called
- * as {@link Accordion.onFocusChange} when the controlled state
- * has any update.
+ * The interface which corresponds to the function that is called as
+ * {@link Accordion.onFocusChange} when the controlled state has any update.
  *
  * @see {@link AccordionControlledStateEvent}
  */
@@ -72,9 +70,9 @@ interface AccordionControlledStateEventHandler<T extends string> {
 
 /**
  * The interface that corresponds to the item that is mapped by the Accordion
- * component before rendering each of the focusable items. It is also recommended
- * to provide the AccordionItem a key (that extends string) which corresponds
- * to the JSX key in the mapped element root.
+ * component before rendering each of the focusable items. It is also
+ * recommended to provide the AccordionItem a key (that extends string) which
+ * corresponds to the JSX key in the mapped element root.
  */
 interface AccordionItem<T extends string> {
   header: ReactNode;
@@ -92,17 +90,17 @@ interface AccordionProps<T extends string> {
   items: AccordionItem<T>[];
 
   /**
-   * The actual and current value of the controlled state that defines
-   * the {@link AccordionItem} to render as the focused element, and
-   * if the {@link isCollapsible} is true, to open down the accordion item.
+   * The actual and current value of the controlled state that defines the
+   * {@link AccordionItem} to render as the focused element, and if the
+   * {@link isCollapsible} is true, to open down the accordion item.
    *
    * @see {@link T}
    */
   value: T;
 
   /**
-   * The classes that are forwarded to the root element of the Accordion
-   * root element.
+   * The classes that are forwarded to the root element of the Accordion root
+   * element.
    */
   className?: string;
 
@@ -126,16 +124,15 @@ interface AccordionProps<T extends string> {
 // #endregion
 
 /**
- * The Accordion component relates to the props whose shape is defined by
- * the {@link AccordionProps} interface. Looping through the
- * {@link AccordionProps.items} property, the component renders the items
- * and supports creates the custom event handlers that provide the class
- * {@link AccordionControlledStateEvent} via the {@link AccordionControlledStateEventHandler}
- * function type.
+ * The Accordion component relates to the props whose shape is defined by the
+ * {@link AccordionProps} interface. Looping through the
+ * {@link AccordionProps.items} property, the component renders the items and
+ * supports creates the custom event handlers that provide the class
+ * {@link AccordionControlledStateEvent} via the
+ * {@link AccordionControlledStateEventHandler} function type.
  *
- * **⛳️ Note that** the Accordion component is rendered _only_ on the
- * client-side because it uses 3rd-party libraries that require of the
- * browser APIs.
+ * **⛳️ Note that** the Accordion component is rendered _only_ on the client
+ * because it uses 3rd-party libraries that require of the browser APIs.
  *
  * @see {@link AccordionProps}
  * @see {@link AccordionProps.items}
@@ -151,7 +148,7 @@ function Accordion<T extends string>({ items, value, onFocusChange, isCollapsibl
         onFocusChange(event);
       }
     },
-    [items, onFocusChange],
+    [items, onFocusChange]
   );
 
   return (
@@ -175,7 +172,7 @@ function Accordion<T extends string>({ items, value, onFocusChange, isCollapsibl
               {
                 "dark:bg-light-coal bg-gray-100": isSelected,
               },
-              "transition-all focus-within:animate-slide-up-fade",
+              "transition-all focus-within:animate-slide-up-fade"
             )}
           >
             <Header className='w-full'>
@@ -187,7 +184,7 @@ function Accordion<T extends string>({ items, value, onFocusChange, isCollapsibl
                     "group-radix-state-open:rotate-180 group-radix-state-open:duration-300",
                     {
                       "rotate-180": isSelected,
-                    },
+                    }
                   )}
                 />
               </Trigger>
