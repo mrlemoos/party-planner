@@ -7,15 +7,15 @@ import { useParams } from "next/navigation";
 
 import AfloatRightBar from "@root/components/atoms/AfloatRightBar";
 import Avatar from "@root/components/molecules/Avatar";
-import Tooltip from "@root/components/atoms/Tooltip";
+import Divider from "@root/components/atoms/Divider";
+import IconButton from "@root/components/atoms/IconButton";
 import SizedBox from "@root/components/atoms/SizedBox";
+import Tooltip from "@root/components/atoms/Tooltip";
 import useClipboard from "@root/hooks/useClipboard";
 import useCurrentUser from "@root/hooks/useCurrentUser";
 import getLinkToJoinParty from "@root/util/getLinkToJoinParty";
 
 import usePartyBoardContext from "../../context-hooks/usePartyBoardContext";
-import IconButton from "@root/components/atoms/IconButton";
-import Divider from "@root/components/atoms/Divider";
 
 export default function ConnectedMembers(): JSX.Element {
   const { members, ownerUserId } = usePartyBoardContext();

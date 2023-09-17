@@ -2,9 +2,8 @@
 
 import { type HTMLAttributes, type ReactNode, type ReactElement, type ButtonHTMLAttributes } from "react";
 
+import { Cross2Icon } from "@radix-ui/react-icons";
 import cls from "classnames";
-
-import Icon from "@root/components/atoms/Icon";
 
 type DangerToastProps = HTMLAttributes<HTMLDivElement> & {
   header: ReactNode;
@@ -18,7 +17,7 @@ function DangerToast({ header, headerClassName, children, action, actionClassNam
   return (
     <div className={cls("md:w-[420px] flex flex-col gap-y-1 bg-white px-2 py-1 rounded-lg", className)} {...props}>
       <div className='flex items-center gap-1 text-rose-800'>
-        <Icon name='Mini XMark' height={18} width={18} />
+        <Cross2Icon height={18} width={18} />
         <span className={cls("font-semibold text-md", headerClassName)}>{header}</span>
       </div>
       <div className='flex items-center gap-2 text-black ml-6'>
@@ -38,7 +37,7 @@ const Action = ({ children, className, ...props }: ActionProps): ReactElement =>
       "bg-gray-200 text-gray-800 px-2 py-1 rounded-md",
       "hover:bg-gray-300 hover:text-gray-950",
       "transition-colors duration-200 ease-in-out",
-      className,
+      className
     )}
     type='button'
   >
