@@ -8,6 +8,9 @@ import cls from "classnames";
 import useClipboard from "@root/hooks/useClipboard";
 
 interface ClipboardBlockProps extends HTMLAttributes<HTMLElement> {
+  /**
+   * The text that will be copied to the clipboard when the button is clicked.
+   */
   textToCopy?: string;
 }
 
