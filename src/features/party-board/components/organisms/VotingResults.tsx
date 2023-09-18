@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, type JSX, useState, useCallback, type ComponentProps, type CSSProperties } from "react";
+import { useMemo, type JSX, useState, useCallback, type ComponentProps, type CSSProperties, Fragment } from "react";
 
 import Accordion from "@root/components/atoms/Accordion";
 import Heading from "@root/components/atoms/Heading";
@@ -30,7 +30,6 @@ export default function VotingResults(): JSX.Element {
 
   return (
     <aside className='flex flex-col justify-center h-full p-6 mr-4' style={asideStyle}>
-      <Heading level='h4'>Results</Heading>
       {hasVoteStarted ? (
         <div>
           {votesSummaryPerStory.map(({ storyId, title, votesWithMember }) => (

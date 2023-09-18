@@ -12,7 +12,7 @@ import usePartyBoardContext from "../../context-hooks/usePartyBoardContext";
 
 // #region Utilities & Constants
 
-function formatTime(time: number): string {
+function $formatTime(time: number): string {
   const rawMinutes = Math.floor(time / 60);
   const minutes = rawMinutes < 10 ? `0${rawMinutes}` : rawMinutes;
 
@@ -31,7 +31,7 @@ export default function Timer(): JSX.Element | null {
 
   const timeInSeconds = useMemo(
     () => (typeof voteSession?.timer !== "number" ? -1 : Math.floor(voteSession.timer / 1000)),
-    [voteSession?.timer],
+    [voteSession?.timer]
   );
 
   const time = useMemo(() => {
@@ -39,7 +39,7 @@ export default function Timer(): JSX.Element | null {
       return "00:00";
     }
 
-    return formatTime(timeInSeconds);
+    return $formatTime(timeInSeconds);
   }, [timeInSeconds, voteSession?.status]);
 
   useEffect(() => {

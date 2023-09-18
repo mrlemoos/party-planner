@@ -31,6 +31,8 @@ interface PartyBoardContextSchema extends PickedParty {
   createVoteSession(partyId: string, storyId: string, voteStatus: VoteStatus): void;
   updateVoteStatus(partyId: string, voteStatus: VoteStatus): void;
   tickTimer(partyId: string, milliseconds: number): void;
+
+  isLoading: boolean;
 }
 
 const PartyBoardContext = createContext<PartyBoardContextSchema | null>(null);

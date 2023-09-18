@@ -1,6 +1,6 @@
 "use client";
 
-import { type ContextType, useCallback, useEffect, useMemo, useState } from "react";
+import { type ContextType, useCallback, useEffect, useMemo, useReducer } from "react";
 
 import { getDatabase, ref as ref$, onValue, type DataSnapshot, get, set, child, update } from "firebase/database";
 import { useRouter } from "next/navigation";
@@ -26,6 +26,21 @@ type VoteSession = Required<Pick<Party, "voteSession">>["voteSession"];
 type VoteStatus = VoteSession["status"];
 type PartyRealtime = NonNullable<ContextType<typeof PartyBoardContext>>;
 
+interface PartyRealtimeReducerState {
+  party: Party;
+  isLoading: boolean;
+}
+
+type PartyRealtimeReducerAction =
+  | {
+      type: "Update Realtime Party";
+      payload: Party;
+    }
+  | {
+      type: "Switch Loading";
+      payload: boolean;
+    };
+
 // #endregion
 
 // #region Utilities & Constants
@@ -38,6 +53,30 @@ const defaultValues: Party = {
   createdAt: "",
   updatedAt: "",
 };
+
+const defaultReducerState: PartyRealtimeReducerState = {
+  party: defaultValues,
+  isLoading: true,
+};
+
+function $reducePartyRealtime(state = defaultReducerState, { type, payload }: PartyRealtimeReducerAction): PartyRealtimeReducerState {
+  switch (type) {
+    case "Update Realtime Party": {
+      return {
+        ...state,
+        party: payload,
+      };
+    }
+    case "Switch Loading": {
+      return {
+        ...state,
+        isLoading: payload,
+      };
+    }
+    default:
+      return state;
+  }
+}
 
 // #endregion
 
@@ -52,10 +91,20 @@ const defaultValues: Party = {
  * the party data will be a default object until the first snapshot is received.
  */
 export default function usePartyRealtime(partyId: string): PartyRealtime {
-  const [party, setParty] = useState<Party>(defaultValues);
+  const [{ isLoading, party }, dispatch] = useReducer($reducePartyRealtime, defaultReducerState);
   const router = useRouter();
 
   const { userId } = useCurrentUser();
+
+  const setParty = useCallback(
+    (nextState: Party | ((previousState: Party) => Party)) => {
+      dispatch({
+        type: "Update Realtime Party",
+        payload: typeof nextState === "function" ? nextState(party) : nextState,
+      });
+    },
+    [party]
+  );
 
   const addStory = useCallback(
     function addStory$(story: Story) {
@@ -319,7 +368,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
   const isCurrentUserPartyOwner = useMemo(() => partyOwner?.userId === party.ownerUserId, [partyOwner, party.ownerUserId]);
 
   useEffect(() => {
-    if (!partyId) {
+    if (!(partyId && isLoading)) {
       return;
     }
 
@@ -353,6 +402,10 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
     (async () => {
       const snapshot = await get(ref);
       onSnapshot(snapshot);
+      dispatch({
+        type: "Switch Loading",
+        payload: false,
+      });
     })();
 
     const unsubscribe = onValue(ref, onSnapshot);
@@ -446,5 +499,6 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
     updateVoteStatus,
     rewriteStories,
     tickTimer,
+    isLoading,
   };
 }

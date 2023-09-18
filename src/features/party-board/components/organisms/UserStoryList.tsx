@@ -3,14 +3,14 @@
 import { useMemo, type JSX, useState, useCallback } from "react";
 
 import { PlusIcon } from "@radix-ui/react-icons";
-import cls from 'classnames'
+import cls from "classnames";
 
 import Button from "@root/components/atoms/Button";
 import Heading from "@root/components/atoms/Heading";
 import TextButton from "@root/components/atoms/TextButton";
 import Tooltip from "@root/components/atoms/Tooltip";
 import toRem from "@root/util/toRem";
-import Poppins from '@root/styles/Poppins'
+import Poppins from "@root/styles/Poppins";
 import type Story from "@root/models/Story";
 
 import usePartyBoardContext from "../../context-hooks/usePartyBoardContext";
@@ -40,7 +40,7 @@ export default function UserStoryList(): JSX.Element {
 
       addStory(story);
     },
-    [addStory],
+    [addStory]
   );
 
   return (
@@ -50,7 +50,7 @@ export default function UserStoryList(): JSX.Element {
         {hasStories ? (
           <div className='flex flex-col'>
             <div className='flex justify-between items-center'>
-              <Heading level='h3' className={cls('text-xl font-medium select-none ml-6', Poppins.className)}>
+              <Heading level='h3' className={cls("text-xl font-medium select-none ml-6", Poppins.className)}>
                 User Stories
               </Heading>
               <Tooltip content={<span>Add User Story</span>} sideOffset={-10} side='left'>
