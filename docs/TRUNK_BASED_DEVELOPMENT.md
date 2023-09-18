@@ -4,6 +4,10 @@ Trunk-based development eases the friction of code integration. When developers 
 
 Yet they should not merge changes to the truck until they have verified that they can build successfully. During this phase, conflicts may arise if modifications have been made since the new work began. In particular, these conflicts are increasingly complex as development teams grow and the code base scales. This happens when developers create separate branches that deviate from the source branch and other developers are simultaneously merging overlapping code. Luckily, the trunk-based development model reduces these conflicts.
 
+## References ⛳️
+
+- [Trunk Based Development - Learn why this version control management practice is common practice among DevOps teams.](https://www.atlassian.com/continuous-delivery/continuous-integration/trunk-based-development) by Kev Zettler, Full Stack Web Developer @ Atlassian
+
 - **Our trunk** branch is the `main` branch.
 - **The other branches** must follow the conventional commit type pattern:
   - `refactor/{{ description fo the change }}` for code refactoring.
