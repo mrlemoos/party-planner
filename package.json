@@ -65,7 +65,7 @@
     "tabWidth": 2,
     "semi": true
   },
-  "eslint": {
+  "eslintConfig": {
     "extends": [
       "eslint:recommended",
       "next",
