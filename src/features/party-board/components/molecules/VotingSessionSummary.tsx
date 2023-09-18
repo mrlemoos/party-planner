@@ -7,8 +7,8 @@ import cls from "classnames";
 
 import useWindowSize from "@root/hooks/useWindowSize";
 import Poppins from "@root/styles/Poppins";
-import Avatar from "@root/components/molecules/Avatar";
 import getAverageOf from "@root/util/getAverageOf";
+import removeDuplicates from "@root/util/removeDuplicates";
 import toRem from "@root/util/toRem";
 import SizedBox from "@root/components/atoms/SizedBox";
 import UserDot from "@root/components/molecules/UserDot";
@@ -86,10 +86,13 @@ export default function VotingSessionSummary(): JSX.Element {
       return [];
     }
 
-    const votes = Object.values(currentStory.votes).map((vote) => {
-      const memberUserIdWithSameVote = Object.entries(currentStory.votes)
-        .filter(([, voteValue]) => voteValue === vote)
-        .map(([memberUserId]) => memberUserId);
+    const voteResults = Object.values(currentStory.votes);
+    const uniqueVoteResults = removeDuplicates(voteResults);
+
+    const votesAsEntries = Object.entries(currentStory.votes);
+
+    const votes = uniqueVoteResults.map((vote) => {
+      const memberUserIdWithSameVote = votesAsEntries.filter(([, voteValue]) => voteValue === vote).map(([memberUserId]) => memberUserId);
 
       const membersWhoVoted = members
         .filter(({ userId }) => memberUserIdWithSameVote.includes(userId))
@@ -131,9 +134,11 @@ export default function VotingSessionSummary(): JSX.Element {
                   </motion.div>
                 </div>
                 <span className={cls("text-xl font-normal mt-3", Poppins.className)}>{vote}</span>
-                {membersWhoVoted.map(({ displayName, userId }) => (
-                  <UserDot key={`${userId}-user-dot`} userId={userId} userDisplayName={displayName} />
-                ))}
+                <div className='flex items-center'>
+                  {membersWhoVoted.map(({ displayName, userId }) => (
+                    <UserDot key={`${userId}-user-dot`} userId={userId} userDisplayName={displayName} />
+                  ))}
+                </div>
               </div>
             ))}
           </div>
