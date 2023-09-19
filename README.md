@@ -38,7 +38,7 @@ bun run start
 - [x] Registration system
 - [x] User Story registration
 - [x] Create party to point stories
-- [ ] Realtime User Story pointing
+- [x] Realtime User Story pointing
 - [x] Join party via link
 - [ ] Voting Results
 
