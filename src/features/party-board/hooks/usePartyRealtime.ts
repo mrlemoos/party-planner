@@ -365,7 +365,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
     [party.members, party.ownerUserId]
   );
 
-  const isCurrentUserPartyOwner = useMemo(() => partyOwner?.userId === party.ownerUserId, [partyOwner, party.ownerUserId]);
+  const isCurrentUserPartyOwner = useMemo(() => userId === party.ownerUserId, [userId, party.ownerUserId]);
 
   useEffect(() => {
     if (!(partyId && isLoading)) {
