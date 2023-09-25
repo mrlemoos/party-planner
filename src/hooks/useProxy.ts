@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef } from 'react';
 
 const useProxy = <T extends object>(initialState: T) => {
   const [, setIndex] = useState(0);

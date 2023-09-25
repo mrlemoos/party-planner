@@ -1,4 +1,7 @@
-export default class FormValueNotProvidedError<U extends object, K = keyof U> extends Error {
+export default class FormValueNotProvidedError<
+  U extends object,
+  K = keyof U,
+> extends Error {
   constructor(origin: string, field: K, additionalInfo?: string) {
     super(
       `${origin}: Could not set field "${String(

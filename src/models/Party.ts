@@ -1,5 +1,5 @@
-import type PartyMember from "./PartyMember";
-import type Story from "./Story";
+import type PartyMember from './PartyMember';
+import type Story from './Story';
 
 export default interface Party {
   ownerUserId: string;
@@ -13,7 +13,7 @@ export default interface Party {
 
   voteSession?: {
     currentStoryId: string;
-    status: "Voting" | "Not Started" | "Revealing" | "Finished";
+    status: 'Voting' | 'Not Started' | 'Revealing' | 'Finished';
     timer: number;
   };
 }

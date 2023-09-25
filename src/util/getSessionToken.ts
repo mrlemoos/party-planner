@@ -1,5 +1,5 @@
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers';
 
 export default function getSessionToken() {
-  return cookies().get("__session")?.value;
+  return cookies().get('__session')?.value;
 }

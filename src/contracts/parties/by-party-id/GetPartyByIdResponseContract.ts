@@ -1,4 +1,4 @@
-import type Party from "@root/models/Party";
+import type Party from '@root/models/Party';
 
 type GetPartyByIdResponseContract = Party | null;
 

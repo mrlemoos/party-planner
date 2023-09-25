@@ -1,7 +1,9 @@
-import { ContextType, useContext } from "react";
+import { ContextType, useContext } from 'react';
 
-import CreatePartyContext from "../context/CreatePartyContext";
+import CreatePartyContext from '../context/CreatePartyContext';
 
-export default function useCreatePartyContext(): NonNullable<ContextType<typeof CreatePartyContext>> {
+export default function useCreatePartyContext(): NonNullable<
+  ContextType<typeof CreatePartyContext>
+> {
   return useContext(CreatePartyContext)!;
 }

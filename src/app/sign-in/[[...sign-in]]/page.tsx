@@ -1,6 +1,6 @@
-import { SignIn } from "@clerk/nextjs/app-beta";
+import { SignIn } from '@clerk/nextjs/app-beta';
 
-import AuthPage from "@root/components/organisms/AuthPage";
+import AuthPage from '@root/components/organisms/AuthPage';
 
 export default function SignInPage(): JSX.Element {
   return (

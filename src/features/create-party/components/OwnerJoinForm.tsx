@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { useState, useCallback, Fragment } from "react";
+import { useState, useCallback, Fragment } from 'react';
 
-import cls from "classnames";
-import { useRouter } from "next/navigation";
+import cls from 'classnames';
+import { useRouter } from 'next/navigation';
 
-import Button from "@root/components/atoms/Button";
-import SizedBox from "@root/components/atoms/SizedBox";
+import Button from '@root/components/atoms/Button';
+import SizedBox from '@root/components/atoms/SizedBox';
 
-import useCreatePartyContext from "../context-hooks/useCreatePartyContext";
+import useCreatePartyContext from '../context-hooks/useCreatePartyContext';
 
 export default function OwnerJoinForm(): JSX.Element {
   const [isRedirecting, updateRedirectingStatus] = useState(false);
@@ -25,8 +25,9 @@ export default function OwnerJoinForm(): JSX.Element {
   return (
     <Fragment>
       <SizedBox height={12} />
-      <Button type='button' onClick={handleStartParty}>
-        Start the party <span className={cls({ "animate-pulse": isRedirecting })}>🎉</span>
+      <Button type="button" onClick={handleStartParty}>
+        Start the party{' '}
+        <span className={cls({ 'animate-pulse': isRedirecting })}>🎉</span>
       </Button>
     </Fragment>
   );

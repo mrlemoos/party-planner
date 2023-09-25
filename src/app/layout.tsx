@@ -1,15 +1,15 @@
-import { type ReactNode } from "react";
+import { type ReactNode } from 'react';
 
-import type { Metadata } from "next";
-import { ClerkProvider } from "@clerk/nextjs";
-import cls from "classnames";
+import type { Metadata } from 'next';
+import { ClerkProvider } from '@clerk/nextjs';
+import cls from 'classnames';
 
-import Inter from "@root/styles/Inter";
-import "@root/styles/globals.css";
+import Inter from '@root/styles/Inter';
+import '@root/styles/globals.css';
 
 export const metadata: Metadata = {
-  title: "Party Planner 🎉",
-  description: "Vote your User Stories. Plan the next Sprint.",
+  title: 'Party Planner 🎉',
+  description: 'Vote your User Stories. Plan the next Sprint.',
 };
 
 interface RootLayoutProps {
@@ -19,8 +19,10 @@ interface RootLayoutProps {
 function RootLayout({ children }: RootLayoutProps): JSX.Element {
   return (
     <ClerkProvider>
-      <html lang='en'>
-        <body className={cls(Inter.className, "w-screen min-h-screen")}>{children}</body>
+      <html lang="en">
+        <body className={cls(Inter.className, 'w-screen min-h-screen')}>
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );

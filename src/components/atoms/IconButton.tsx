@@ -1,10 +1,13 @@
-import { type ButtonHTMLAttributes, type ReactNode, forwardRef } from "react";
+import { type ButtonHTMLAttributes, type ReactNode, forwardRef } from 'react';
 
-import cls from "classnames";
+import cls from 'classnames';
 
 // #region Interfaces & Types
 
-type OmittedHTMLButtonElementAttributes = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children" | "content" | "aria-label">;
+type OmittedHTMLButtonElementAttributes = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'children' | 'content' | 'aria-label'
+>;
 
 interface IconButtonProps extends OmittedHTMLButtonElementAttributes {
   /** @ignore */
@@ -33,12 +36,22 @@ interface IconButtonProps extends OmittedHTMLButtonElementAttributes {
 
 // #endregion
 
-const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(({ icon, className, type = "button", ...props }, ref) => (
-  <button ref={ref} className={cls("flex justify-center items-center cursor-pointer", className)} type={type} {...props}>
-    {icon}
-  </button>
-));
+const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
+  ({ icon, className, type = 'button', ...props }, ref) => (
+    <button
+      ref={ref}
+      className={cls(
+        'flex justify-center items-center cursor-pointer',
+        className,
+      )}
+      type={type}
+      {...props}
+    >
+      {icon}
+    </button>
+  ),
+);
 
-IconButton.displayName = "IconButton";
+IconButton.displayName = 'IconButton';
 
 export default IconButton;

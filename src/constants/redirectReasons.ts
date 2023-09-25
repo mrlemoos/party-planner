@@ -1,5 +1,5 @@
-const redirectReasons = {
-  MaximumJoinRetriesReached: "Maximum Join Retries Reached",
+const RedirectReasons = {
+  MaximumJoinRetriesReached: 'Maximum Join Retries Reached',
 };
 
-export default redirectReasons;
+export default RedirectReasons;

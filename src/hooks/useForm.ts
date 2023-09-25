@@ -1,36 +1,48 @@
-import { type HTMLInputTypeAttribute, type ReactNode, useCallback, type FormEvent as ReactFormEvent, useReducer } from "react";
+import {
+  type HTMLInputTypeAttribute,
+  type ReactNode,
+  useCallback,
+  type FormEvent as ReactFormEvent,
+  useReducer,
+} from 'react';
 
-import FormValueNotProvidedError from "@root/errors/FormValueNotProvidedError";
-import useProxy from "@root/hooks/useProxy";
+import FormValueNotProvidedError from '@root/errors/FormValueNotProvidedError';
+import useProxy from '@root/hooks/useProxy';
 
 // #region Internal Utility & Constants
 
-const $boolInputTypes = ["checkbox", "radio"] as const;
-const $allowedPrimitiveTypes = ["string", "number", "boolean"] as const;
+const $boolInputTypes = ['checkbox', 'radio'] as const;
+const $allowedPrimitiveTypes = ['string', 'number', 'boolean'] as const;
 const $initialFormUserFeedbackState: FormUserFeedbackState = {
   isSubmitting: false,
 };
 
-/* internal */ function $isBoolInputType(type: HTMLInputTypeAttribute): type is (typeof $boolInputTypes)[number] {
+/* internal */ function $isBoolInputType(
+  type: HTMLInputTypeAttribute,
+): type is (typeof $boolInputTypes)[number] {
   return $boolInputTypes.includes(type as (typeof $boolInputTypes)[number]);
 }
 
 /* internal */ function $isPrimitiveTypeAllowed(
   type:
-    | "string"
-    | "number"
-    | "boolean"
+    | 'string'
+    | 'number'
+    | 'boolean'
     /* not allowed 👇 */
-    | "bigint"
-    | "symbol"
-    | "undefined"
-    | "object"
-    | "function",
+    | 'bigint'
+    | 'symbol'
+    | 'undefined'
+    | 'object'
+    | 'function',
 ): type is (typeof $allowedPrimitiveTypes)[number] {
-  return $allowedPrimitiveTypes.includes(type as (typeof $allowedPrimitiveTypes)[number]);
+  return $allowedPrimitiveTypes.includes(
+    type as (typeof $allowedPrimitiveTypes)[number],
+  );
 }
 
-/* internal */ function $isPrimitiveTypeOfValueAllowed(value: unknown): value is (typeof $allowedPrimitiveTypes)[number] {
+/* internal */ function $isPrimitiveTypeOfValueAllowed(
+  value: unknown,
+): value is (typeof $allowedPrimitiveTypes)[number] {
   return $isPrimitiveTypeAllowed(typeof value);
 }
 
@@ -39,7 +51,7 @@ const $initialFormUserFeedbackState: FormUserFeedbackState = {
   { type, payload }: FormUserFeedbackAction,
 ): FormUserFeedbackState {
   switch (type) {
-    case "Set Submitting":
+    case 'Set Submitting':
       return {
         ...state,
         isSubmitting: payload,
@@ -87,7 +99,7 @@ export interface AsynchronousHandleSubmit<U extends object> {
 }
 
 /* internal */ type FormUserFeedbackAction = {
-  type: "Set Submitting";
+  type: 'Set Submitting';
   payload: boolean;
 };
 
@@ -100,27 +112,34 @@ export default function useForm<U extends object>(
   const values = useProxy({ ...initialValues } as U);
   const errors = useProxy<FormValidationErrors<U>>({});
 
-  const [{ isSubmitting }, controlUserFeedback] = useReducer($reduceFormUserFeedbackState, $initialFormUserFeedbackState);
+  const [{ isSubmitting }, controlUserFeedback] = useReducer(
+    $reduceFormUserFeedbackState,
+    $initialFormUserFeedbackState,
+  );
 
   const handleChange = useCallback(
     <E>(field: keyof U, value?: U[keyof U]) =>
       function $handleChangeEventListenerClosure(event: E) {
-        if (typeof onChange === "function") {
+        if (typeof onChange === 'function') {
           if (onChange(event) === false) {
             return;
           }
         }
 
-        if (event && typeof event === "object" && "target" in event) {
+        if (event && typeof event === 'object' && 'target' in event) {
           const target = event.target as HTMLInputElement;
-          values[field] = ($isBoolInputType(target.type) ? target.checked : target.value) as unknown as U[keyof U];
+          values[field] = ($isBoolInputType(target.type)
+            ? target.checked
+            : target.value) as unknown as U[keyof U];
         } else if ($isPrimitiveTypeOfValueAllowed(value)) {
           values[field] = value;
         } else {
           throw new FormValueNotProvidedError<U>(
-            "useForm()",
+            'useForm()',
             field,
-            `Note that the form fields have to be of type ${$allowedPrimitiveTypes.join(", ")}.`,
+            `Note that the form fields have to be of type ${$allowedPrimitiveTypes.join(
+              ', ',
+            )}.`,
           );
         }
       },
@@ -143,11 +162,16 @@ export default function useForm<U extends object>(
 
   const handleSubmit = useCallback(
     ({ preventDefault = true }: VirtualHandleSubmitConfiguration = {}) =>
-      async function $handleSubmitEventListenerClosure<E>(event: ReactFormEvent<E>) {
+      async function $handleSubmitEventListenerClosure<E>(
+        event: ReactFormEvent<E>,
+      ) {
         if (preventDefault) {
           event.preventDefault();
         }
-        const validationErrors = typeof validate === "function" ? validate(values) : ({} as FormValidationErrors<U>);
+        const validationErrors =
+          typeof validate === 'function'
+            ? validate(values)
+            : ({} as FormValidationErrors<U>);
         const errorKeys = Object.keys(validationErrors).filter((key) => {
           const value = validationErrors[key as keyof U];
           return value !== undefined && value !== null;
@@ -162,16 +186,24 @@ export default function useForm<U extends object>(
           return;
         }
 
-        controlUserFeedback({ type: "Set Submitting", payload: true });
+        controlUserFeedback({ type: 'Set Submitting', payload: true });
         try {
           await onSubmit({ ...values }, event);
           if (resetAfterSubmit) {
             reset();
           }
         } catch (error) {}
-        controlUserFeedback({ type: "Set Submitting", payload: false });
+        controlUserFeedback({ type: 'Set Submitting', payload: false });
       },
-    [validate, values, onSubmit, errors, controlUserFeedback, resetAfterSubmit, reset],
+    [
+      validate,
+      values,
+      onSubmit,
+      errors,
+      controlUserFeedback,
+      resetAfterSubmit,
+      reset,
+    ],
   );
 
   return {

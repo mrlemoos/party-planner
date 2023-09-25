@@ -5,5 +5,5 @@ export default interface PartyMember {
   joinedAt: string;
   lastSeenAt: string;
 
-  status: "Connected" | "Disconnected";
+  status: 'Connected' | 'Disconnected';
 }

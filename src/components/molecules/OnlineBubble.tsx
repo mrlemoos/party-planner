@@ -1,8 +1,8 @@
-import { type JSX, type HTMLAttributes } from "react";
+import { type JSX, type HTMLAttributes } from 'react';
 
-import cls from "classnames";
+import cls from 'classnames';
 
-import Bubble from "@root/components/atoms/Bubble";
+import Bubble from '@root/components/atoms/Bubble';
 
 // #region Interfaces & Types
 
@@ -15,8 +15,18 @@ interface OnlineBubbleProps extends HTMLElementAttributes {
 
 // #endregion
 
-function OnlineBubble({ className, "aria-label": ariaLabel$ = "Online", ...props }: OnlineBubbleProps): JSX.Element {
-  return <Bubble aria-label={ariaLabel$} className={cls("bg-green-500 border-green-500", className)} {...props} />;
+function OnlineBubble({
+  className,
+  'aria-label': ariaLabel$ = 'Online',
+  ...props
+}: OnlineBubbleProps): JSX.Element {
+  return (
+    <Bubble
+      aria-label={ariaLabel$}
+      className={cls('bg-green-500 border-green-500', className)}
+      {...props}
+    />
+  );
 }
 
 export default OnlineBubble;

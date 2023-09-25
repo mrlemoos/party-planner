@@ -1,10 +1,16 @@
-"use client";
+'use client';
 
-import { type ReactNode, type JSX, useCallback } from "react";
+import { type ReactNode, type JSX, useCallback } from 'react';
 
-import { Root, Item, Header, Trigger, Content } from "@radix-ui/react-accordion";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
-import cls from "classnames";
+import {
+  Root,
+  Item,
+  Header,
+  Trigger,
+  Content,
+} from '@radix-ui/react-accordion';
+import { ChevronDownIcon } from '@radix-ui/react-icons';
+import cls from 'classnames';
 
 // #region Utilities & Constants
 
@@ -50,7 +56,7 @@ class AccordionControlledStateEvent<T extends string> {
      * @see {@link AccordionProps}
      * @see {@link AccordionProps.items}
      */
-    public readonly items: AccordionItem<T>[]
+    public readonly items: AccordionItem<T>[],
   ) {}
 }
 
@@ -139,24 +145,30 @@ interface AccordionProps<T extends string> {
  * @see {@link AccordionControlledStateEvent}
  * @see {@link AccordionControlledStateEventHandler}
  */
-function Accordion<T extends string>({ items, value, onFocusChange, isCollapsible = false, className }: AccordionProps<T>): JSX.Element {
+function Accordion<T extends string>({
+  items,
+  value,
+  onFocusChange,
+  isCollapsible = false,
+  className,
+}: AccordionProps<T>): JSX.Element {
   const handleValueChange = useCallback(
     (value: string) => {
-      if (typeof onFocusChange === "function") {
+      if (typeof onFocusChange === 'function') {
         const item = items.find(({ key }) => key === value) ?? items[0];
         const event = new AccordionControlledStateEvent<T>(value, item, items);
         onFocusChange(event);
       }
     },
-    [items, onFocusChange]
+    [items, onFocusChange],
   );
 
   return (
     <Root
-      type='single'
+      type="single"
       value={value}
       collapsible={isCollapsible}
-      className={cls("space-y-4 w-full", className)}
+      className={cls('space-y-4 w-full', className)}
       onValueChange={handleValueChange}
     >
       {items.map(({ header, content, key: key$ }) => {
@@ -168,29 +180,37 @@ function Accordion<T extends string>({ items, value, onFocusChange, isCollapsibl
             key={key}
             value={key}
             className={cls(
-              "border-l border-t border-r border-transparent rounded-t-lg",
+              'border-l border-t border-r border-transparent rounded-t-lg',
               {
-                "dark:bg-light-coal bg-gray-100": isSelected,
+                'dark:bg-light-coal bg-gray-100': isSelected,
               },
-              "transition-all focus-within:animate-slide-up-fade"
+              'transition-all focus-within:animate-slide-up-fade',
             )}
           >
-            <Header className='w-full'>
-              <Trigger className={cls("inline-flex w-full items-center justify-between px-4 py-3 text-left")}>
-                <span className='text-sm font-medium text-gray-900 dark:text-gray-100'>{header}</span>
+            <Header className="w-full">
+              <Trigger
+                className={cls(
+                  'inline-flex w-full items-center justify-between px-4 py-3 text-left',
+                )}
+              >
+                <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                  {header}
+                </span>
                 <ChevronDownIcon
                   className={cls(
-                    "ml-2 h-5 w-5 shrink-0 text-gray-700 ease-in-out dark:text-gray-400",
-                    "group-radix-state-open:rotate-180 group-radix-state-open:duration-300",
+                    'ml-2 h-5 w-5 shrink-0 text-gray-700 ease-in-out dark:text-gray-400',
+                    'group-radix-state-open:rotate-180 group-radix-state-open:duration-300',
                     {
-                      "rotate-180": isSelected,
-                    }
+                      'rotate-180': isSelected,
+                    },
                   )}
                 />
               </Trigger>
             </Header>
-            <Content className='pt-1 w-full px-4 pb-3 animate-scale-in-content'>
-              <div className='text-sm text-gray-700 dark:text-gray-400'>{content}</div>
+            <Content className="pt-1 w-full px-4 pb-3 animate-scale-in-content">
+              <div className="text-sm text-gray-700 dark:text-gray-400">
+                {content}
+              </div>
             </Content>
           </Item>
         );

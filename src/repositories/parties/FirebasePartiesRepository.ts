@@ -1,16 +1,24 @@
-import { randomUUID } from "node:crypto";
+import { randomUUID } from 'node:crypto';
 
-import { type DatabaseReference, getDatabase, ref as ref$, set, type Database, get, child } from "firebase/database";
+import {
+  type DatabaseReference,
+  getDatabase,
+  ref as ref$,
+  set,
+  type Database,
+  get,
+  child,
+} from 'firebase/database';
 
-import transformSnapshotIntoPartyDataset from "@root/util/transformSnapshotIntoPartyDataset";
-import type Party from "@root/models/Party";
-import type PartyMember from "@root/models/PartyMember";
+import transformSnapshotIntoPartyDataset from '@root/util/transformSnapshotIntoPartyDataset';
+import type Party from '@root/models/Party';
+import type PartyMember from '@root/models/PartyMember';
 
-import createFirebaseClient from "../_firebase-client/createFirebaseClient";
+import createFirebaseClient from '../_firebase-client/createFirebaseClient';
 
-import type PartiesRepository from "./PartiesRepository";
-import type CreatePartyDataTransferObject from "./CreatePartyDataTransferObject";
-import type JoinPartyDataTransferObject from "./JoinPartyDataTransferObject";
+import type PartiesRepository from './PartiesRepository';
+import type CreatePartyDataTransferObject from './CreatePartyDataTransferObject';
+import type JoinPartyDataTransferObject from './JoinPartyDataTransferObject';
 
 // #region Utilities & Constants
 
@@ -37,7 +45,10 @@ export default class FirebasePartiesRepository implements PartiesRepository {
     const party = transformSnapshotIntoPartyDataset(snapshot);
     return party ?? null;
   }
-  public async createParty({ ownerUserId, ownerDisplayName }: CreatePartyDataTransferObject): Promise<Party> {
+  public async createParty({
+    ownerUserId,
+    ownerDisplayName,
+  }: CreatePartyDataTransferObject): Promise<Party> {
     const partyId = randomUUID();
     const database = getDatabase();
     const ref = $getPartyRef(database, partyId);
@@ -53,16 +64,16 @@ export default class FirebasePartiesRepository implements PartiesRepository {
           userId: ownerUserId,
           joinedAt: now,
           lastSeenAt: now,
-          status: "Disconnected",
+          status: 'Disconnected',
         },
       ],
       stories: [],
       createdAt: now,
       updatedAt: now,
       voteSession: {
-        status: "Not Started",
+        status: 'Not Started',
         timer: 30 * 1000,
-        currentStoryId: "",
+        currentStoryId: '',
       },
     };
 
@@ -70,7 +81,11 @@ export default class FirebasePartiesRepository implements PartiesRepository {
 
     return party;
   }
-  public async joinParty({ userId, partyId, userDisplayName }: JoinPartyDataTransferObject): Promise<boolean> {
+  public async joinParty({
+    userId,
+    partyId,
+    userDisplayName,
+  }: JoinPartyDataTransferObject): Promise<boolean> {
     const party = await this.getParty(partyId);
 
     if (!party) {
@@ -94,11 +109,11 @@ export default class FirebasePartiesRepository implements PartiesRepository {
         userId,
         joinedAt: now,
         lastSeenAt: now,
-        status: "Disconnected",
+        status: 'Disconnected',
       };
       const newMembers = [...party.members, userAsMember];
 
-      const refChild = child(ref, "members");
+      const refChild = child(ref, 'members');
       await set(refChild, newMembers);
       return true;
     } catch (error) {
@@ -106,7 +121,7 @@ export default class FirebasePartiesRepository implements PartiesRepository {
         '🪡 An error occurred while trying to join the party. The error was: "%s". The party ID was: "%s". The user ID was: "%s".',
         error,
         partyId,
-        userId
+        userId,
       );
       return false;
     }

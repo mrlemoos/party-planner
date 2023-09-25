@@ -1,13 +1,16 @@
-"use client";
+'use client';
 
-import { createContext } from "react";
+import { createContext } from 'react';
 
-import type Party from "@root/models/Party";
-import type PartyMember from "@root/models/PartyMember";
-import type Story from "@root/models/Story";
+import type Party from '@root/models/Party';
+import type PartyMember from '@root/models/PartyMember';
+import type Story from '@root/models/Story';
 
-type PickedParty = Pick<Party, "members" | "partyId" | "ownerUserId" | "voteSession">;
-type VoteStatus = Required<Pick<Party, "voteSession">>["voteSession"]["status"];
+type PickedParty = Pick<
+  Party,
+  'members' | 'partyId' | 'ownerUserId' | 'voteSession'
+>;
+type VoteStatus = Required<Pick<Party, 'voteSession'>>['voteSession']['status'];
 
 interface PartyBoardContextSchema extends PickedParty {
   stories: Story[];
@@ -24,11 +27,17 @@ interface PartyBoardContextSchema extends PickedParty {
   connectMember(member: PartyMember): void;
   disconnectMember(memberId: string): void;
 
-  resetState(state: Partial<PickedParty & { stories: Story[]; partyOwner: PartyMember }>): void;
+  resetState(
+    state: Partial<PickedParty & { stories: Story[]; partyOwner: PartyMember }>,
+  ): void;
 
   isCurrentUserPartyOwner: boolean;
 
-  createVoteSession(partyId: string, storyId: string, voteStatus: VoteStatus): void;
+  createVoteSession(
+    partyId: string,
+    storyId: string,
+    voteStatus: VoteStatus,
+  ): void;
   updateVoteStatus(partyId: string, voteStatus: VoteStatus): void;
   tickTimer(partyId: string, milliseconds: number): void;
 

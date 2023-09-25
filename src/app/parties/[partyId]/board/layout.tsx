@@ -1,14 +1,14 @@
-import { type ReactNode, type JSX, Fragment } from "react";
+import { type ReactNode, type JSX, Fragment } from 'react';
 
-import { Metadata } from "next";
-import cls from "classnames";
+import { Metadata } from 'next';
+import cls from 'classnames';
 
-import TopBar from "@root/components/molecules/TopBar";
-import Footer from "@root/components/atoms/Footer";
-import Inter from "@root/styles/Inter";
+import TopBar from '@root/components/molecules/TopBar';
+import Footer from '@root/components/atoms/Footer';
+import Inter from '@root/styles/Inter';
 
 export const metadata: Metadata = {
-  title: "Party Planner 🎉",
+  title: 'Party Planner 🎉',
 };
 
 interface PartyBoardLayoutParams {
@@ -26,13 +26,16 @@ interface PartyBoardLayoutProps {
 }
 
 const defaultSearchParams: PartyBoardLayoutSearchParams = {
-  lang: "en",
+  lang: 'en',
 };
 
-export default function PartyBoardLayout({ children, searchParams = defaultSearchParams }: PartyBoardLayoutProps): JSX.Element {
+export default function PartyBoardLayout({
+  children,
+  searchParams = defaultSearchParams,
+}: PartyBoardLayoutProps): JSX.Element {
   return (
     <html lang={searchParams.lang}>
-      <body className={cls(Inter.className, "w-screen")}>
+      <body className={cls(Inter.className, 'w-screen')}>
         <Fragment>
           <TopBar />
           {children}

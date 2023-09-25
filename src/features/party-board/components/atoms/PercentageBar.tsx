@@ -1,17 +1,25 @@
-import { useMemo, type JSX } from "react";
+import { useMemo, type JSX } from 'react';
 
-import cls from "classnames";
+import cls from 'classnames';
 
-import Tooltip from "@root/components/atoms/Tooltip";
-import Poppins from "@root/styles/Poppins";
-import toRem from "@root/util/toRem";
+import Tooltip from '@root/components/atoms/Tooltip';
+import Poppins from '@root/styles/Poppins';
+import toRem from '@root/util/toRem';
 
 // #region Utilities & Constants
 
-const barPossibleColors = ["#E0BBE4", "#957DAD", "#D291BC", "#D291BC", "#FFDFD3"];
+const barPossibleColors = [
+  '#E0BBE4',
+  '#957DAD',
+  '#D291BC',
+  '#D291BC',
+  '#FFDFD3',
+];
 
 function $getRandomColor(): string {
-  return barPossibleColors[Math.floor(Math.random() * barPossibleColors.length)];
+  return barPossibleColors[
+    Math.floor(Math.random() * barPossibleColors.length)
+  ];
 }
 
 // #endregion
@@ -24,7 +32,9 @@ interface PercentageBarProps {
 
 // #endregion
 
-export default function PercentageBar({ percentage }: PercentageBarProps): JSX.Element {
+export default function PercentageBar({
+  percentage,
+}: PercentageBarProps): JSX.Element {
   const backgroundColor = useMemo(() => $getRandomColor(), []);
 
   const displayPercentageValue =
@@ -32,12 +42,17 @@ export default function PercentageBar({ percentage }: PercentageBarProps): JSX.E
     // so we hand over the null value to the Tooltip component so the ReactNode
     // won't render.
     Number.isNaN(percentage) ? null : (
-      <span className={cls(Poppins.className, "font-medium text-sm")}>{`${percentage.toFixed(1).replace(".0", "")}%`}</span>
+      <span
+        className={cls(Poppins.className, 'font-medium text-sm')}
+      >{`${percentage.toFixed(1).replace('.0', '')}%`}</span>
     );
 
   return (
     <Tooltip content={displayPercentageValue}>
-      <div style={{ height: `${percentage}%`, width: toRem(36), backgroundColor }} aria-label={`${percentage} percent of the votes`} />
+      <div
+        style={{ height: `${percentage}%`, width: toRem(36), backgroundColor }}
+        aria-label={`${percentage} percent of the votes`}
+      />
     </Tooltip>
   );
 }

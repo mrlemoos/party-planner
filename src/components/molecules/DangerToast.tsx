@@ -1,9 +1,14 @@
-"use client";
+'use client';
 
-import { type HTMLAttributes, type ReactNode, type ReactElement, type ButtonHTMLAttributes } from "react";
+import {
+  type HTMLAttributes,
+  type ReactNode,
+  type ReactElement,
+  type ButtonHTMLAttributes,
+} from 'react';
 
-import { Cross2Icon } from "@radix-ui/react-icons";
-import cls from "classnames";
+import { Cross2Icon } from '@radix-ui/react-icons';
+import cls from 'classnames';
 
 interface DangerToastProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -34,39 +39,57 @@ interface DangerToastProps extends HTMLAttributes<HTMLDivElement> {
   action: ReactNode;
 }
 
-function DangerToast({ header, children, action, className, ...props }: DangerToastProps): JSX.Element {
+function DangerToast({
+  header,
+  children,
+  action,
+  className,
+  ...props
+}: DangerToastProps): JSX.Element {
   return (
-    <div className={cls("md:w-[420px] flex flex-col gap-y-1 bg-white px-2 py-1 rounded-lg", className)} {...props}>
-      <div className='flex items-center gap-1 text-rose-800'>
+    <div
+      className={cls(
+        'md:w-[420px] flex flex-col gap-y-1 bg-white px-2 py-1 rounded-lg',
+        className,
+      )}
+      {...props}
+    >
+      <div className="flex items-center gap-1 text-rose-800">
         <Cross2Icon height={18} width={18} />
-        <span className={cls("font-semibold text-md")}>{header}</span>
+        <span className={cls('font-semibold text-md')}>{header}</span>
       </div>
-      <div className='flex items-center gap-2 text-black ml-6'>
-        <span className='font-normal text-sm flex-1'>{children}</span>
-        <div className={cls("flex items-center text-sm gap-1 mb-1")}>{action}</div>
+      <div className="flex items-center gap-2 text-black ml-6">
+        <span className="font-normal text-sm flex-1">{children}</span>
+        <div className={cls('flex items-center text-sm gap-1 mb-1')}>
+          {action}
+        </div>
       </div>
     </div>
   );
 }
 
-type ActionProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type">;
+type ActionProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'>;
 
-const Action = ({ children, className, ...props }: ActionProps): ReactElement => (
+const Action = ({
+  children,
+  className,
+  ...props
+}: ActionProps): ReactElement => (
   <button
     {...props}
     className={cls(
-      "bg-gray-200 text-gray-800 px-2 py-1 rounded-md",
-      "hover:bg-gray-300 hover:text-gray-950",
-      "transition-colors duration-200 ease-in-out",
-      className
+      'bg-gray-200 text-gray-800 px-2 py-1 rounded-md',
+      'hover:bg-gray-300 hover:text-gray-950',
+      'transition-colors duration-200 ease-in-out',
+      className,
     )}
-    type='button'
+    type="button"
   >
     {children}
   </button>
 );
 
-Action.displayName = "DangerToast.Action";
+Action.displayName = 'DangerToast.Action';
 
 DangerToast.Action = Action;
 

@@ -1,6 +1,6 @@
-import { type ContextType, type ReactNode, type JSX } from "react";
+import { type ContextType, type ReactNode, type JSX } from 'react';
 
-import PartyBoardContext from "../contexts/PartyBoardContext";
+import PartyBoardContext from '../contexts/PartyBoardContext';
 
 type PartyBoardContextType = NonNullable<ContextType<typeof PartyBoardContext>>;
 
@@ -11,6 +11,13 @@ interface PartyBoardProviderProps extends PartyBoardContextType {
 /**
  * The provider for the {@link PartyBoardContext}.
  */
-export default function PartyBoardProvider({ children, ...context }: PartyBoardProviderProps): JSX.Element {
-  return <PartyBoardContext.Provider value={context}>{children}</PartyBoardContext.Provider>;
+export default function PartyBoardProvider({
+  children,
+  ...context
+}: PartyBoardProviderProps): JSX.Element {
+  return (
+    <PartyBoardContext.Provider value={context}>
+      {children}
+    </PartyBoardContext.Provider>
+  );
 }

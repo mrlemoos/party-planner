@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { memo, type JSX } from "react";
+import { memo, type JSX } from 'react';
 
 interface MemberVotesSummaryProps {
   votesWithMember: {
@@ -9,9 +9,11 @@ interface MemberVotesSummaryProps {
   }[];
 }
 
-function MemberVotesSummary$({ votesWithMember }: MemberVotesSummaryProps): JSX.Element {
+function MemberVotesSummary$({
+  votesWithMember,
+}: MemberVotesSummaryProps): JSX.Element {
   return (
-    <div className='flex items-center'>
+    <div className="flex items-center">
       {votesWithMember.map(({ memberDisplayName, vote }) => {
         const key = `${memberDisplayName}-${vote}`;
 

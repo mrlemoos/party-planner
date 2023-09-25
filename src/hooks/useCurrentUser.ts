@@ -1,4 +1,4 @@
-import { useAuth } from "@clerk/nextjs";
+import { useAuth } from '@clerk/nextjs';
 
 export default function useCurrentUser() {
   const { userId, isSignedIn, sessionId, signOut } = useAuth();

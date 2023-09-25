@@ -1,12 +1,19 @@
-import { useCallback, type JSX, type FocusEvent as ReactFocusEvent } from "react";
+import {
+  useCallback,
+  type JSX,
+  type FocusEvent as ReactFocusEvent,
+} from 'react';
 
-import type Story from "@root/models/Story";
+import type Story from '@root/models/Story';
 
-import usePartyBoardContext from "../../context-hooks/usePartyBoardContext";
+import usePartyBoardContext from '../../context-hooks/usePartyBoardContext';
 
-type UserStoryEditableTitleProps = Pick<Story, "title" | "storyId">;
+type UserStoryEditableTitleProps = Pick<Story, 'title' | 'storyId'>;
 
-export default function UserStoryEditableTitle({ title, storyId }: UserStoryEditableTitleProps): JSX.Element {
+export default function UserStoryEditableTitle({
+  title,
+  storyId,
+}: UserStoryEditableTitleProps): JSX.Element {
   const { editStory } = usePartyBoardContext();
 
   const handleTitleChange = useCallback(
@@ -23,6 +30,11 @@ export default function UserStoryEditableTitle({ title, storyId }: UserStoryEdit
   );
 
   return (
-    <span className='font-normal flex-1' contentEditable={true} onBlur={handleTitleChange} dangerouslySetInnerHTML={{ __html: title }} />
+    <span
+      className="font-normal flex-1"
+      contentEditable={true}
+      onBlur={handleTitleChange}
+      dangerouslySetInnerHTML={{ __html: title }}
+    />
   );
 }

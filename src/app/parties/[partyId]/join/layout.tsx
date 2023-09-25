@@ -1,8 +1,8 @@
-import { type ReactNode, type JSX } from "react";
+import { type ReactNode, type JSX } from 'react';
 
-import cls from "classnames";
+import cls from 'classnames';
 
-import Inter from "@root/styles/Inter";
+import Inter from '@root/styles/Inter';
 
 interface JoinPartySearchParams {
   lang?: string;
@@ -21,13 +21,18 @@ interface JoinPartyLayoutProps {
 }
 
 const defaultSearchParams: JoinPartySearchParams = {
-  lang: "en",
+  lang: 'en',
 };
 
-function JoinPartyLayout({ children, searchParams = defaultSearchParams }: JoinPartyLayoutProps): JSX.Element {
+function JoinPartyLayout({
+  children,
+  searchParams = defaultSearchParams,
+}: JoinPartyLayoutProps): JSX.Element {
   return (
     <html lang={searchParams.lang}>
-      <body className={cls(Inter.className, "h-screen min-h-screen")}>{children}</body>
+      <body className={cls(Inter.className, 'h-screen min-h-screen')}>
+        {children}
+      </body>
     </html>
   );
 }

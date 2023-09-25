@@ -1,18 +1,34 @@
-"use client";
+'use client';
 
-import { type ContextType, useCallback, useEffect, useMemo, useReducer } from "react";
+import {
+  type ContextType,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useDebugValue,
+} from 'react';
 
-import { getDatabase, ref as ref$, onValue, type DataSnapshot, get, set, child, update } from "firebase/database";
-import { useRouter } from "next/navigation";
+import {
+  getDatabase,
+  ref as ref$,
+  onValue,
+  type DataSnapshot,
+  get,
+  set,
+  child,
+  update,
+} from 'firebase/database';
+import { useRouter } from 'next/navigation';
 
-import createFirebaseClient from "@root/repositories/_firebase-client/createFirebaseClient";
-import transformSnapshotIntoPartyDataset from "@root/util/transformSnapshotIntoPartyDataset";
-import useCurrentUser from "@root/hooks/useCurrentUser";
-import type Party from "@root/models/Party";
-import type Story from "@root/models/Story";
-import type PartyMember from "@root/models/PartyMember";
+import createFirebaseClient from '@root/repositories/_firebase-client/createFirebaseClient';
+import transformSnapshotIntoPartyDataset from '@root/util/transformSnapshotIntoPartyDataset';
+import useCurrentUser from '@root/hooks/useCurrentUser';
+import type Party from '@root/models/Party';
+import type Story from '@root/models/Story';
+import type PartyMember from '@root/models/PartyMember';
 
-import PartyBoardContext from "../contexts/PartyBoardContext";
+import PartyBoardContext from '../contexts/PartyBoardContext';
 
 // We only invoke the Firebase and get the database instance once on the client
 // side. This is because the Firebase client is not available on the server side
@@ -22,8 +38,8 @@ createFirebaseClient();
 
 // #region Interfaces & Types
 
-type VoteSession = Required<Pick<Party, "voteSession">>["voteSession"];
-type VoteStatus = VoteSession["status"];
+type VoteSession = Required<Pick<Party, 'voteSession'>>['voteSession'];
+type VoteStatus = VoteSession['status'];
 type PartyRealtime = NonNullable<ContextType<typeof PartyBoardContext>>;
 
 interface PartyRealtimeReducerState {
@@ -33,11 +49,11 @@ interface PartyRealtimeReducerState {
 
 type PartyRealtimeReducerAction =
   | {
-      type: "Update Realtime Party";
+      type: 'Update Realtime Party';
       payload: Party;
     }
   | {
-      type: "Switch Loading";
+      type: 'Switch Loading';
       payload: boolean;
     };
 
@@ -46,12 +62,12 @@ type PartyRealtimeReducerAction =
 // #region Utilities & Constants
 
 const defaultValues: Party = {
-  partyId: "",
-  ownerUserId: "",
+  partyId: '',
+  ownerUserId: '',
   stories: [],
   members: [],
-  createdAt: "",
-  updatedAt: "",
+  createdAt: '',
+  updatedAt: '',
 };
 
 const defaultReducerState: PartyRealtimeReducerState = {
@@ -59,15 +75,18 @@ const defaultReducerState: PartyRealtimeReducerState = {
   isLoading: true,
 };
 
-function $reducePartyRealtime(state = defaultReducerState, { type, payload }: PartyRealtimeReducerAction): PartyRealtimeReducerState {
+function $reducePartyRealtime(
+  state = defaultReducerState,
+  { type, payload }: PartyRealtimeReducerAction,
+): PartyRealtimeReducerState {
   switch (type) {
-    case "Update Realtime Party": {
+    case 'Update Realtime Party': {
       return {
         ...state,
         party: payload,
       };
     }
-    case "Switch Loading": {
+    case 'Switch Loading': {
       return {
         ...state,
         isLoading: payload,
@@ -76,6 +95,16 @@ function $reducePartyRealtime(state = defaultReducerState, { type, payload }: Pa
     default:
       return state;
   }
+}
+
+function $isCurrentUserConnected({
+  members,
+  currentUserId,
+}: Pick<Party, 'members'> & { currentUserId?: string | null }) {
+  return (
+    members.find(({ userId: memberUserId$ }) => memberUserId$ === currentUserId)
+      ?.status === 'Connected'
+  );
 }
 
 // #endregion
@@ -91,7 +120,10 @@ function $reducePartyRealtime(state = defaultReducerState, { type, payload }: Pa
  * the party data will be a default object until the first snapshot is received.
  */
 export default function usePartyRealtime(partyId: string): PartyRealtime {
-  const [{ isLoading, party }, dispatch] = useReducer($reducePartyRealtime, defaultReducerState);
+  const [{ isLoading, party }, dispatch] = useReducer(
+    $reducePartyRealtime,
+    defaultReducerState,
+  );
   const router = useRouter();
 
   const { userId } = useCurrentUser();
@@ -99,85 +131,89 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
   const setParty = useCallback(
     (nextState: Party | ((previousState: Party) => Party)) => {
       dispatch({
-        type: "Update Realtime Party",
-        payload: typeof nextState === "function" ? nextState(party) : nextState,
+        type: 'Update Realtime Party',
+        payload: typeof nextState === 'function' ? nextState(party) : nextState,
       });
     },
-    [party]
+    [party],
   );
 
+  const fetchParty = useCallback(async (partyId: string) => {
+    const database = getDatabase();
+    const ref = ref$(database, `parties/${partyId}`);
+
+    const snapshot = await get(ref);
+    const party = transformSnapshotIntoPartyDataset(snapshot);
+
+    if (!party) {
+      return;
+    }
+
+    setParty(party);
+  }, []);
+
   const addStory = useCallback(
-    function addStory$(story: Story) {
+    (story: Story) => {
       const database = getDatabase();
-      const ref = child(ref$(database, `parties/${partyId}`), "stories");
+      const ref = child(ref$(database, `parties/${partyId}`), 'stories');
 
       const stories = [...party.stories, story];
 
       set(ref, stories);
 
-      setParty((party) => ({
-        ...party,
-        stories,
-      }));
+      fetchParty(partyId);
     },
-    [partyId, party.stories]
+    [partyId, party.stories, fetchParty],
   );
 
   const removeStory = useCallback(
-    function removeStory$(storyId: string) {
+    (storyId: string) => {
       const database = getDatabase();
-      const ref = child(ref$(database, `parties/${partyId}`), "stories");
+      const ref = child(ref$(database, `parties/${partyId}`), 'stories');
 
-      const stories = party.stories.filter(({ storyId: storyId$ }) => storyId$ !== storyId);
+      const stories = party.stories.filter(
+        ({ storyId: storyId$ }) => storyId$ !== storyId,
+      );
 
       set(ref, stories);
 
-      setParty((party) => ({
-        ...party,
-        stories,
-      }));
+      fetchParty(partyId);
     },
-    [partyId, party.stories]
+    [partyId, party.stories, fetchParty],
   );
 
   const connectMember = useCallback(
-    function connectMember$(member: PartyMember) {
+    (member: PartyMember) => {
       const database = getDatabase();
-      const ref = child(ref$(database, `parties/${partyId}`), "members");
+      const ref = child(ref$(database, `parties/${partyId}`), 'members');
 
       const members = [...party.members, member];
 
       update(ref, members);
 
-      setParty((party) => ({
-        ...party,
-        members,
-      }));
+      fetchParty(partyId);
     },
-    [partyId, party.members]
+    [partyId, party.members, fetchParty],
   );
 
   const disconnectMember = useCallback(
-    function disconnectMember$(memberId: string) {
+    (memberId: string) => {
       const database = getDatabase();
-      const ref = child(ref$(database, `parties/${partyId}`), "members");
+      const ref = child(ref$(database, `parties/${partyId}`), 'members');
 
       const members = party.members.filter(({ userId }) => userId !== memberId);
 
       update(ref, members);
 
-      setParty((party) => ({
-        ...party,
-        members,
-      }));
+      fetchParty(partyId);
     },
-    [party.members, partyId]
+    [party.members, partyId, fetchParty],
   );
 
   const editStory = useCallback(
-    function editStory$(storyId: string, partial: Partial<Story>) {
+    (storyId: string, partial: Partial<Story>) => {
       const database = getDatabase();
-      const ref = child(ref$(database, `parties/${partyId}`), "stories");
+      const ref = child(ref$(database, `parties/${partyId}`), 'stories');
 
       const stories = party.stories.map(({ storyId: storyId$, ...story }) => {
         if (storyId === storyId$) {
@@ -192,33 +228,27 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       set(ref, stories);
 
-      setParty((party) => ({
-        ...party,
-        stories,
-      }));
+      fetchParty(partyId);
     },
-    [party.stories, partyId]
+    [party.stories, partyId, fetchParty],
   );
 
   const rewriteStories = useCallback(
-    function rewriteStories$(stories: Story[]) {
+    (stories: Story[]) => {
       const database = getDatabase();
-      const ref = child(ref$(database, `parties/${partyId}`), "stories");
+      const ref = child(ref$(database, `parties/${partyId}`), 'stories');
 
       set(ref, stories);
 
-      setParty((party) => ({
-        ...party,
-        stories,
-      }));
+      fetchParty(partyId);
     },
-    [partyId]
+    [partyId, fetchParty],
   );
 
   const resetVotes = useCallback(
-    function resetVotes$(storyId: string) {
+    (storyId: string) => {
       const database = getDatabase();
-      const ref = child(ref$(database, `parties/${partyId}`), "stories");
+      const ref = child(ref$(database, `parties/${partyId}`), 'stories');
 
       const stories = party.stories.map(({ storyId: storyId$, ...story }) => {
         if (storyId === storyId$) {
@@ -233,18 +263,15 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       set(ref, stories);
 
-      setParty((party) => ({
-        ...party,
-        stories,
-      }));
+      fetchParty(partyId);
     },
-    [partyId, party.stories]
+    [partyId, party.stories, fetchParty],
   );
 
   const revealStoryVotes = useCallback(
-    function revealStoryVotes$(storyId: string) {
+    (storyId: string) => {
       const database = getDatabase();
-      const ref = child(ref$(database, `parties/${partyId}`), "stories");
+      const ref = child(ref$(database, `parties/${partyId}`), 'stories');
 
       const stories = party.stories.map(({ storyId: storyId$, ...story }) => {
         if (storyId === storyId$) {
@@ -259,42 +286,43 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
       });
 
       update(ref, stories);
+
+      fetchParty(partyId);
     },
-    [party.stories, partyId]
+    [party.stories, partyId, fetchParty],
   );
 
   const voteStory = useCallback(
-    function voteStory$(userId: string, storyId: string, vote: number) {
+    (userId: string, storyId: string, vote: number) => {
       const database = getDatabase();
-      const ref = child(ref$(database, `parties/${partyId}`), "stories");
+      const ref = child(ref$(database, `parties/${partyId}`), 'stories');
 
-      const stories = party.stories.map(({ storyId: storyId$, votes = {}, ...story }) => {
-        if (storyId === storyId$) {
-          return {
-            storyId,
-            ...story,
-            votes: {
-              ...votes,
-              [userId]: vote,
-            },
-          };
-        }
+      const stories = party.stories.map(
+        ({ storyId: storyId$, votes = {}, ...story }) => {
+          if (storyId === storyId$) {
+            return {
+              storyId,
+              ...story,
+              votes: {
+                ...votes,
+                [userId]: vote,
+              },
+            };
+          }
 
-        return { storyId: storyId$, votes, ...story };
-      });
+          return { storyId: storyId$, votes, ...story };
+        },
+      );
 
       set(ref, stories);
 
-      setParty((previous) => ({
-        ...previous,
-        stories,
-      }));
+      fetchParty(partyId);
     },
-    [party.stories, partyId]
+    [party.stories, partyId, fetchParty],
   );
 
   const resetState = useCallback(
-    function resetState$(party: Party) {
+    (party: Party) => {
       const database = getDatabase();
       const ref = ref$(database, `parties/${partyId}`);
 
@@ -302,33 +330,34 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       setParty(party);
     },
-    [partyId]
+    [partyId],
   );
 
-  const createVoteSession = useCallback(function createVoteSession$(partyId: string, storyId: string, voteStatus: VoteStatus) {
-    const database = getDatabase();
-    const ref = child(ref$(database, `parties/${partyId}`), "voteSession");
+  const createVoteSession = useCallback(
+    (partyId: string, storyId: string, voteStatus: VoteStatus) => {
+      const database = getDatabase();
+      const ref = child(ref$(database, `parties/${partyId}`), 'voteSession');
 
-    // 30 seconds by default for now
-    const timer = 30 * 1000;
-    const voteSession: VoteSession = {
-      currentStoryId: storyId,
-      status: voteStatus,
-      timer,
-    };
+      // 60 seconds by default for now
+      // TODO: create party configuration so the party owner can change the timer.
+      const timer = 60 * 1000;
+      const voteSession: VoteSession = {
+        currentStoryId: storyId,
+        status: voteStatus,
+        timer,
+      };
 
-    set(ref, voteSession);
+      set(ref, voteSession);
 
-    setParty((previous) => ({
-      ...previous,
-      voteSession,
-    }));
-  }, []);
+      fetchParty(partyId);
+    },
+    [fetchParty],
+  );
 
   const updateVoteStatus = useCallback(
     function updateVoteSession$(partyId: string, voteStatus: VoteStatus) {
       const database = getDatabase();
-      const ref = child(ref$(database, `parties/${partyId}`), "voteSession");
+      const ref = child(ref$(database, `parties/${partyId}`), 'voteSession');
 
       const voteSession: VoteSession = {
         ...party?.voteSession!,
@@ -337,18 +366,15 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       set(ref, voteSession);
 
-      setParty((previous) => ({
-        ...previous,
-        voteSession,
-      }));
+      fetchParty(partyId);
     },
-    [party.voteSession]
+    [party.voteSession, fetchParty],
   );
 
   const tickTimer = useCallback(
-    function tickTimer$(partyId: string, milliseconds: number) {
+    (partyId: string, milliseconds: number) => {
       const database = getDatabase();
-      const ref = child(ref$(database, `parties/${partyId}`), "voteSession");
+      const ref = child(ref$(database, `parties/${partyId}`), 'voteSession');
 
       const voteSession: VoteSession = {
         ...party?.voteSession!,
@@ -356,16 +382,23 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
       };
 
       set(ref, voteSession);
+
+      fetchParty(partyId);
     },
-    [party.voteSession]
+    [partyId, party.voteSession, fetchParty],
   );
 
   const partyOwner = useMemo(
-    () => party.members?.find(({ userId }) => userId === party.ownerUserId) ?? party.members?.[0],
-    [party.members, party.ownerUserId]
+    () =>
+      party.members?.find(({ userId }) => userId === party.ownerUserId) ??
+      party.members?.[0],
+    [party.members, party.ownerUserId],
   );
 
-  const isCurrentUserPartyOwner = useMemo(() => userId === party.ownerUserId, [userId, party.ownerUserId]);
+  const isCurrentUserPartyOwner = useMemo(
+    () => userId === party.ownerUserId,
+    [userId, party.ownerUserId],
+  );
 
   useEffect(() => {
     if (!(partyId && isLoading)) {
@@ -380,17 +413,19 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
      * from the database. This function is also invoked once when the listener
      * is attached to the database.
      *
-     * If the snapshot does not exist, then we redirect the user to the pathname
-     * /404.
+     * If the {@link DataSnapshot snapshot} does not exist, then we redirect the
+     * user to the pathname `/404`.
+     *
+     * @see {@link DataSnapshot}
      */
     function onSnapshot(snapshot: DataSnapshot) {
       if (!snapshot.exists()) {
-        router.push("/404");
+        router.push('/404');
         return;
       }
       const party = transformSnapshotIntoPartyDataset(snapshot);
 
-      console.log("🚨 Realtime watcher has got this registry:", party);
+      console.log('🚨 Realtime watcher has got this registry:', party);
 
       if (!party) {
         return;
@@ -403,7 +438,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
       const snapshot = await get(ref);
       onSnapshot(snapshot);
       dispatch({
-        type: "Switch Loading",
+        type: 'Switch Loading',
         payload: false,
       });
     })();
@@ -423,20 +458,22 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
     function handleUnloadEventListener(event: Event) {
       event.preventDefault();
 
-      const currentUserMember = party.members.find(({ userId: memberUserId$ }) => memberUserId$ === userId);
+      const currentUserMember = party.members.find(
+        ({ userId: memberUserId$ }) => memberUserId$ === userId,
+      );
 
-      if (!currentUserMember || currentUserMember.status === "Disconnected") {
+      if (!currentUserMember) {
         return;
       }
 
       const database = getDatabase();
-      const ref = child(ref$(database, `parties/${partyId}`), "members");
+      const ref = child(ref$(database, `parties/${partyId}`), 'members');
 
       const newMembers = party.members.map<PartyMember>((member) => {
         if (member.userId === userId) {
           return {
             ...member,
-            status: "Disconnected",
+            status: 'Disconnected',
           };
         }
 
@@ -446,10 +483,10 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
       set(ref, newMembers);
     }
 
-    window.addEventListener("unload", handleUnloadEventListener);
+    window.addEventListener('unload', handleUnloadEventListener);
 
     return () => {
-      window.removeEventListener("unload", handleUnloadEventListener);
+      window.removeEventListener('unload', handleUnloadEventListener);
     };
   }, [party?.members, partyId, userId]);
 
@@ -459,20 +496,20 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
       party.members.length === 0 ||
       // If the user's status is "Connected", then the user is already connected
       // and we don't need to update the status.
-      party.members.find(({ userId: memberUserId$ }) => memberUserId$ === userId)?.status === "Connected"
+      $isCurrentUserConnected({ members: party.members, currentUserId: userId })
     ) {
       return;
     }
 
     const database = getDatabase();
     const ref = ref$(database, `parties/${partyId}`);
-    const refChild = child(ref, "members");
+    const refChild = child(ref, 'members');
 
     const newMembers = party.members.map<PartyMember>((member) => {
       if (member.userId === userId) {
         return {
           ...member,
-          status: "Connected",
+          status: 'Connected',
         };
       }
 

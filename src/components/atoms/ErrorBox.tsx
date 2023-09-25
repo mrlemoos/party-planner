@@ -1,10 +1,10 @@
-import { type ReactNode, type JSX, Fragment } from "react";
+import { type ReactNode, type JSX, Fragment } from 'react';
 
-import { Cross2Icon } from "@radix-ui/react-icons";
-import cls from "classnames";
-import Link from "next/link";
+import { Cross2Icon } from '@radix-ui/react-icons';
+import cls from 'classnames';
+import Link from 'next/link';
 
-import Poppins from "@root/styles/Poppins";
+import Poppins from '@root/styles/Poppins';
 
 interface ErrorBoxProps {
   /**
@@ -73,7 +73,7 @@ interface ErrorBoxProps {
  */
 function ErrorBox({
   isContainer = false,
-  error = "🚨 An error occurred",
+  error = '🚨 An error occurred',
   children,
   hasBackButton = true,
   footer,
@@ -82,26 +82,41 @@ function ErrorBox({
   return (
     <div
       className={cls(
-        "flex flex-col flex-1 gap-6 justify-center items-center rounded-lg bg-red-200 dark:bg-light-coal p-4 sm:p-6 border-2 border-red-100 dark:border-coal",
+        'flex flex-col flex-1 gap-6 justify-center items-center rounded-lg bg-red-200 dark:bg-light-coal p-4 sm:p-6 border-2 border-red-100 dark:border-coal',
         {
-          "container mx-auto": isContainer,
-        }
+          'container mx-auto': isContainer,
+        },
       )}
     >
-      <div className='flex items-center gap-1'>
-        <Cross2Icon className='text-red-700 dark:text-red-300' height={30} width={30} />
-        <h1 className={cls("font-semibold text-2xl text-black dark:text-white", Poppins.className)}>Sorry...</h1>
+      <div className="flex items-center gap-1">
+        <Cross2Icon
+          className="text-red-700 dark:text-red-300"
+          height={30}
+          width={30}
+        />
+        <h1
+          className={cls(
+            'font-semibold text-2xl text-black dark:text-white',
+            Poppins.className,
+          )}
+        >
+          Sorry...
+        </h1>
       </div>
 
       {children || !hasPleaseTryAgainLater ? (
         <Fragment>{children}</Fragment>
       ) : (
-        <h3 className='text-gray-500 dark:text-gray-900'>Please try again later</h3>
+        <h3 className="text-gray-500 dark:text-gray-900">
+          Please try again later
+        </h3>
       )}
-      <h2 className='font-medium text-lg text-black dark:text-white'>{error}</h2>
+      <h2 className="font-medium text-lg text-black dark:text-white">
+        {error}
+      </h2>
 
       {hasBackButton && (
-        <Link href='/' target='_self' className='decoration-transparent'>
+        <Link href="/" target="_self" className="decoration-transparent">
           Back home
         </Link>
       )}

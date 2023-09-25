@@ -58,9 +58,9 @@
     "typescript": "5.2.2"
   },
   "prettier": {
-    "printWidth": 140,
-    "jsxSingleQuote": true,
-    "singleQuote": false,
+    "printWidth": 80,
+    "jsxSingleQuote": false,
+    "singleQuote": true,
     "singleAttributePerLine": false,
     "tabWidth": 2,
     "semi": true

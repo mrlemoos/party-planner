@@ -1,9 +1,9 @@
 function $convertPropToMilliseconds({ seconds, milliseconds }: SleepProps) {
-  if (typeof seconds === "number") {
+  if (typeof seconds === 'number') {
     return seconds * 1000;
   }
 
-  if (typeof milliseconds === "number") {
+  if (typeof milliseconds === 'number') {
     return milliseconds;
   }
 }
@@ -14,6 +14,7 @@ type SleepProps = {
 };
 
 export default function sleep(param: number | SleepProps) {
-  const milliseconds = typeof param === "number" ? param : $convertPropToMilliseconds(param);
+  const milliseconds =
+    typeof param === 'number' ? param : $convertPropToMilliseconds(param);
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }

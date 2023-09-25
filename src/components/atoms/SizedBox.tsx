@@ -1,11 +1,11 @@
-import { type CSSProperties, memo, type HTMLAttributes, type JSX } from "react";
+import { type CSSProperties, memo, type HTMLAttributes, type JSX } from 'react';
 
-import toRem from "@root/util/toRem";
+import toRem from '@root/util/toRem';
 
 // #region Types & Interfaces
 
-type WidthProp = CSSProperties["width"];
-type HeightProp = CSSProperties["height"];
+type WidthProp = CSSProperties['width'];
+type HeightProp = CSSProperties['height'];
 
 interface SizedBoxProps extends HTMLAttributes<HTMLDivElement> {
   /** @ignore */
@@ -29,13 +29,20 @@ function SizedBox$({
   className,
   height: height$,
   width: width$,
-  "aria-hidden": ariaHidden$ = "true",
+  'aria-hidden': ariaHidden$ = 'true',
   ...props
 }: SizedBoxProps): JSX.Element {
-  const width = typeof width$ === "number" ? toRem(width$) : width$;
-  const height = typeof height$ === "number" ? toRem(height$) : height$;
+  const width = typeof width$ === 'number' ? toRem(width$) : width$;
+  const height = typeof height$ === 'number' ? toRem(height$) : height$;
 
-  return <div className={className} style={{ width, height }} aria-hidden={ariaHidden$} {...props} />;
+  return (
+    <div
+      className={className}
+      style={{ width, height }}
+      aria-hidden={ariaHidden$}
+      {...props}
+    />
+  );
 }
 
 const SizedBox = memo(SizedBox$) as typeof SizedBox$;

@@ -1,21 +1,23 @@
-import type GetPartyByIdResponseContract from "@root/contracts/parties/by-party-id/GetPartyByIdResponseContract";
-import getEnv from "@root/util/getEnv";
+import type GetPartyByIdResponseContract from '@root/contracts/parties/by-party-id/GetPartyByIdResponseContract';
+import getEnv from '@root/util/getEnv';
 
-const serverURL = getEnv("SERVER_URL");
+const serverURL = getEnv('SERVER_URL');
 
 interface FetchPartyByIdOptions {
   token: string;
 }
 
-export default async function fetchParty({ token }: FetchPartyByIdOptions): Promise<GetPartyByIdResponseContract> {
+export default async function fetchParty({
+  token,
+}: FetchPartyByIdOptions): Promise<GetPartyByIdResponseContract> {
   if (!token) {
-    throw new Error("fetchParty(): You must be logged in to fetch a party.");
+    throw new Error('fetchParty(): You must be logged in to fetch a party.');
   }
 
   const meta = await fetch(`${serverURL}/parties`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
   });

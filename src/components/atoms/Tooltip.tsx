@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { type ReactNode, type HTMLAttributes, type JSX, Fragment } from "react";
+import { type ReactNode, type HTMLAttributes, type JSX, Fragment } from 'react';
 
 import {
   Provider,
@@ -11,23 +11,39 @@ import {
   type TooltipContentProps as ContentProps,
   type TooltipProps as RootProps,
   type TooltipProviderProps as ProviderProps,
-} from "@radix-ui/react-tooltip";
-import cls from "classnames";
+} from '@radix-ui/react-tooltip';
+import cls from 'classnames';
 
 // #region Types & Interfaces
 
-type PickedContentProps = Pick<ContentProps, "align" | "alignOffset" | "side" | "sideOffset">;
+type PickedContentProps = Pick<
+  ContentProps,
+  'align' | 'alignOffset' | 'side' | 'sideOffset'
+>;
 
-type PickedRootProps = Pick<RootProps, "onOpenChange" | "disableHoverableContent" | "defaultOpen" | "open">;
+type PickedRootProps = Pick<
+  RootProps,
+  'onOpenChange' | 'disableHoverableContent' | 'defaultOpen' | 'open'
+>;
 
-type PickedProviderProps = Pick<ProviderProps, "skipDelayDuration" | "delayDuration">;
+type PickedProviderProps = Pick<
+  ProviderProps,
+  'skipDelayDuration' | 'delayDuration'
+>;
 
 type HTMLElementAttributes = HTMLAttributes<HTMLElement>;
 
-type OmittedHTMLElementAttributes = "children" | "content";
-type HTMLElementAttributesWithOmittedAttributes = Omit<HTMLElementAttributes, OmittedHTMLElementAttributes>;
+type OmittedHTMLElementAttributes = 'children' | 'content';
+type HTMLElementAttributesWithOmittedAttributes = Omit<
+  HTMLElementAttributes,
+  OmittedHTMLElementAttributes
+>;
 
-interface TooltipProps extends PickedContentProps, PickedRootProps, PickedProviderProps, HTMLElementAttributesWithOmittedAttributes {
+interface TooltipProps
+  extends PickedContentProps,
+    PickedRootProps,
+    PickedProviderProps,
+    HTMLElementAttributesWithOmittedAttributes {
   /**
    * The children behave as the trigger for the tooltip component, which means
    * that the tooltip will be rendered next to the trigger and the arrow will
@@ -53,9 +69,9 @@ interface TooltipProps extends PickedContentProps, PickedRootProps, PickedProvid
 export default function Tooltip({
   children,
   content,
-  align = "center",
+  align = 'center',
   alignOffset,
-  side = "top",
+  side = 'top',
   sideOffset = 4,
   delayDuration = 700,
   skipDelayDuration,
@@ -71,8 +87,16 @@ export default function Tooltip({
   }
 
   return (
-    <Provider skipDelayDuration={skipDelayDuration} delayDuration={delayDuration}>
-      <Root onOpenChange={onOpenChange} disableHoverableContent={disableHoverableContent} defaultOpen={defaultOpen} open={open}>
+    <Provider
+      skipDelayDuration={skipDelayDuration}
+      delayDuration={delayDuration}
+    >
+      <Root
+        onOpenChange={onOpenChange}
+        disableHoverableContent={disableHoverableContent}
+        defaultOpen={defaultOpen}
+        open={open}
+      >
         <Trigger asChild={true}>{children}</Trigger>
         <Content
           align={align}
@@ -80,20 +104,26 @@ export default function Tooltip({
           side={side}
           sideOffset={sideOffset}
           className={cls(
-            "radix-side-top:animate-slide-down-fade",
-            "radix-side-right:animate-slide-left-fade",
-            "radix-side-bottom:animate-slide-up-fade",
-            "radix-side-left:animate-slide-right-fade",
-            "inline-flex items-center rounded-md px-4 py-2",
-            "rounded-md shadow-xl cursor-default",
-            "text-xs",
-            "bg-coal text-white",
-            "dark:bg-white dark:text-coal",
-            className
+            'radix-side-top:animate-slide-down-fade',
+            'radix-side-right:animate-slide-left-fade',
+            'radix-side-bottom:animate-slide-up-fade',
+            'radix-side-left:animate-slide-right-fade',
+            'inline-flex items-center rounded-md px-4 py-2',
+            'rounded-md shadow-xl cursor-default',
+            'text-xs',
+            'bg-coal text-white',
+            'dark:bg-white dark:text-coal',
+            className,
           )}
           {...props}
         >
-          <Arrow className={cls("fill-current shadow-2xl", "stroke-coal text-black", "dark:stroke-gray-200 dark:text-gray-100")} />
+          <Arrow
+            className={cls(
+              'fill-current shadow-2xl',
+              'stroke-coal text-black',
+              'dark:stroke-gray-200 dark:text-gray-100',
+            )}
+          />
           {content}
         </Content>
       </Root>

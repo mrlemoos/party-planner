@@ -1,12 +1,15 @@
-"use client";
+'use client';
 
-import getClientURL from "./getClientURL";
+import getClientURL from './getClientURL';
 
 interface GetPartyBoardLinkOptions {
-  as?: "relative" | "external";
+  as?: 'relative' | 'external';
 }
 
-function getPartyBoardLink(partyId: string, { as = "relative" }: GetPartyBoardLinkOptions = {}): string {
+function getPartyBoardLink(
+  partyId: string,
+  { as = 'relative' }: GetPartyBoardLinkOptions = {},
+): string {
   const pathname = `/parties/${partyId}/board`;
 
   const links = {
