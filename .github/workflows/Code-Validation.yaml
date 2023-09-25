@@ -1,0 +1,21 @@
+on:
+  pull_request:
+    types:
+      - "opened"
+jobs:
+  code-validation:
+    runs-on: ubuntu-latest
+    name: Code Validation
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+      - name: Setup Bun 🍞
+        uses: oven-sh/setup-bun@v1
+      - name: TypeScript Check 📊
+        run: bun run type-check
+      - name: Format Analytics 💅
+        run: bun run format:check
+      - name: Lint Analytics 🧹
+        run: bun run lint
+      - name: Test Analytics 🧪
+        run: bun run test

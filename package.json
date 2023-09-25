@@ -11,11 +11,14 @@
     "prepare": "husky install",
     "format": "npx prettier --write --list-different",
     "format:all": "npx prettier --write --list-different .",
+    "format:check": "npx prettier . --check --list-different",
     "commitizen:init": "sh ./scripts/commitizen_init.sh",
     "commit": "cz",
     "git-hooks:add-commit-msg": "sh ./scripts/git-hooks/add_commit-msg_hook.sh",
     "git-hooks:add-pre-push": "sh ./scripts/git-hooks/add_pre-push_hook.sh",
-    "git-hooks:add-prepare-commit-msg": "sh ./scripts/git-hooks/add_prepare-commit-msg_hook.sh"
+    "git-hooks:add-prepare-commit-msg": "sh ./scripts/git-hooks/add_prepare-commit-msg_hook.sh",
+    "type-check": "tsc --noEmit",
+    "workflow": "act -n --container-architecture linux/amd64"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.23.5",
