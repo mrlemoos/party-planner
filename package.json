@@ -75,9 +75,17 @@
       "prettier",
       "import",
       "jsx-a11y",
-      "react",
-      "react-hooks"
-    ]
+      "plugin:react/recommended",
+      "plugin:react-hooks/recommended"
+    ],
+    "rules": {
+      "react-hooks/exhaustive-deps": "warn"
+    },
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    }
   },
   "husky": {
     "hooks": {
