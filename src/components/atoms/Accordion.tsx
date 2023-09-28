@@ -15,13 +15,13 @@ import cls from 'classnames';
 // #region Utilities & Constants
 
 /**
- * The class that is responsible for bearing the data about the change
- * in the controlled state passed to the Accordion component.
+ * The class that is responsible for bearing the data about the change in the
+ * controlled state passed to the Accordion component.
  *
  * An instance of `AccordionControlledStateEvent` is passed to the
- * {@link AccordionProps.onFocusChange} function when it is called by
- * the {@link Accordion} component that once the user changes the
- * focus to another mapped item.
+ * {@link AccordionProps.onFocusChange} function when it is called by the
+ * {@link Accordion} component that once the user changes the focus to another
+ * mapped item.
  *
  * @see {@link AccordionItem}
  */
@@ -56,7 +56,7 @@ class AccordionControlledStateEvent<T extends string> {
      * @see {@link AccordionProps}
      * @see {@link AccordionProps.items}
      */
-    public readonly items: AccordionItem<T>[],
+    public readonly items: AccordionItem<T>[]
   ) {}
 }
 
@@ -160,7 +160,7 @@ function Accordion<T extends string>({
         onFocusChange(event);
       }
     },
-    [items, onFocusChange],
+    [items, onFocusChange]
   );
 
   return (
@@ -184,13 +184,13 @@ function Accordion<T extends string>({
               {
                 'dark:bg-light-coal bg-gray-100': isSelected,
               },
-              'transition-all focus-within:animate-slide-up-fade',
+              'transition-all focus-within:animate-slide-up-fade'
             )}
           >
             <Header className="w-full">
               <Trigger
                 className={cls(
-                  'inline-flex w-full items-center justify-between px-4 py-3 text-left',
+                  'inline-flex w-full items-center justify-between px-4 py-3 text-left'
                 )}
               >
                 <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -202,7 +202,7 @@ function Accordion<T extends string>({
                     'group-radix-state-open:rotate-180 group-radix-state-open:duration-300',
                     {
                       'rotate-180': isSelected,
-                    },
+                    }
                   )}
                 />
               </Trigger>
