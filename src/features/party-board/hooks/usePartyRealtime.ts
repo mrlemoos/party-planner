@@ -299,13 +299,19 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
       const stories = party.stories.map(
         ({ storyId: storyId$, votes = {}, ...story }) => {
           if (storyId === storyId$) {
+            const newVotes = {
+              ...votes,
+              [userId]: vote,
+            };
+
+            if (Object.keys(newVotes).length === party.members.length) {
+              updateVoteStatus(partyId, 'Revealing');
+            }
+
             return {
               storyId,
               ...story,
-              votes: {
-                ...votes,
-                [userId]: vote,
-              },
+              votes: newVotes,
             };
           }
 
@@ -317,7 +323,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       fetchParty(partyId);
     },
-    [party.stories, partyId, fetchParty]
+    [party.stories, party.members, partyId, fetchParty]
   );
 
   const resetState = useCallback(

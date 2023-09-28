@@ -31,22 +31,20 @@ export default function VotingResults(): JSX.Element {
 
   const votesSummaryPerStory = useMemo(
     () => getVotesSummaryPerStory(stories, members),
-    [stories, members],
+    [stories, members]
   );
   const hasVoteStarted = useMemo(
     () => votesSummaryPerStory.length > 0,
-    [votesSummaryPerStory.length],
+    [votesSummaryPerStory.length]
   );
 
   const [currentAccordionItem, setCurrentAccordionItem] = useState(
-    stories[0]?.storyId,
+    stories[0]?.storyId
   );
 
   const handleFocusChange = useCallback<AccordionFocusChangeEventHandler>(
-    function handleFocusChange$({ rawValue }) {
-      setCurrentAccordionItem(rawValue);
-    },
-    [],
+    ({ rawValue }) => setCurrentAccordionItem(rawValue),
+    []
   );
 
   return (

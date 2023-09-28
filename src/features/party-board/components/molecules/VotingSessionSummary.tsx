@@ -144,6 +144,17 @@ export default function VotingSessionSummary(): JSX.Element {
       return;
     }
 
+    const newStories = stories.map((story) =>
+      story.storyId === voteSession.currentStoryId
+        ? {
+            ...story,
+            isRevealed: true,
+          }
+        : story
+    );
+
+    rewriteStories(newStories);
+
     const currentStoryIndex = stories.findIndex(
       ({ storyId }) => storyId === voteSession?.currentStoryId
     );
@@ -156,8 +167,42 @@ export default function VotingSessionSummary(): JSX.Element {
       return;
     }
 
-    createVoteSession(partyId, nextStory.storyId, 'Voting');
+    createVoteSession(partyId, nextStory.storyId, 'Not Started');
   }, [stories, partyId, createVoteSession, voteSession]);
+
+  const nonVotedStories = useMemo(
+    () =>
+      stories.filter(({ votes, isRevealed, storyId }) => {
+        if (
+          storyId === voteSession?.currentStoryId ||
+          isRevealed ||
+          typeof votes !== 'object'
+        ) {
+          return false;
+        }
+
+        const votesLength = Object.keys(votes).length;
+
+        return votesLength !== members.length;
+      }),
+    [stories, voteSession?.currentStoryId]
+  );
+
+  const hasVoteNextStoryButton = useMemo(() => {
+    if (nonVotedStories.length === 0) {
+      return false;
+    }
+
+    const currentStoryIndex = nonVotedStories.findIndex(
+      ({ storyId }) => storyId === voteSession?.currentStoryId
+    );
+
+    const isLast = currentStoryIndex === stories.length - 1;
+
+    if (isLast) {
+      return false;
+    }
+  }, [stories, nonVotedStories]);
 
   return (
     <div className="flex items-center gap-4">
@@ -175,7 +220,9 @@ export default function VotingSessionSummary(): JSX.Element {
           </span>
           <div className="flex items-center gap-2 ml-3">
             <TextButton onClick={handleVoteAgain}>Vote again</TextButton>
-            <OpaqueButton onClick={handleVoteNext}>Next</OpaqueButton>
+            {hasVoteNextStoryButton && (
+              <OpaqueButton onClick={handleVoteNext}>Next</OpaqueButton>
+            )}
           </div>
         </div>
       </div>

@@ -13,7 +13,7 @@ export default function getVotesSummaryPerStory(
   partyMembers: PartyMember[]
 ) {
   const votesPerStory = stories.map(({ isRevealed, storyId, votes, title }) => {
-    if (!isRevealed) {
+    if (!isRevealed || typeof votes !== 'object') {
       return {
         storyId,
         title,
@@ -38,5 +38,6 @@ export default function getVotesSummaryPerStory(
       votesWithMember,
     };
   });
+
   return votesPerStory;
 }

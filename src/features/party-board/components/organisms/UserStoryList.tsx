@@ -21,11 +21,30 @@ import UserStoryListItem from '../molecules/UserStoryListItem';
 import AddUserStoryForm from './AddUserStoryForm';
 
 export default function UserStoryList(): JSX.Element {
-  const { stories, addStory } = usePartyBoardContext();
-  const hasStories = useMemo(() => stories.length > 0, [stories.length]);
+  const { stories, addStory, members } = usePartyBoardContext();
 
   const [isAddingUserStory, setAddingUserStory] = useState(false);
   const handleAddUserStory = useCallback(() => setAddingUserStory(true), []);
+
+  const nonVotedStories = useMemo(
+    () =>
+      stories.filter(({ votes }) => {
+        if (typeof votes !== 'object') {
+          return true;
+        }
+
+        const votesLength = Object.keys(votes).length;
+        const membersLength = members.length;
+
+        return votesLength !== membersLength;
+      }),
+    [stories, members]
+  );
+
+  const hasStories = useMemo(
+    () => nonVotedStories.length > 0,
+    [nonVotedStories.length]
+  );
 
   const handleAddUserStorySubmit = useCallback(
     ({ storyId: storyId$, title }: Pick<Story, 'storyId' | 'title'>) => {
@@ -39,7 +58,7 @@ export default function UserStoryList(): JSX.Element {
 
       addStory(story);
     },
-    [addStory],
+    [addStory]
   );
 
   return (
@@ -58,7 +77,7 @@ export default function UserStoryList(): JSX.Element {
                 level="h3"
                 className={cls(
                   'text-xl font-medium select-none ml-6',
-                  Poppins.className,
+                  Poppins.className
                 )}
               >
                 User Stories
@@ -80,7 +99,7 @@ export default function UserStoryList(): JSX.Element {
               </Tooltip>
             </div>
             <ul className="flex flex-col">
-              {stories.map(({ storyId, title }, index, { length }) => {
+              {nonVotedStories.map(({ storyId, title }, index, { length }) => {
                 const isFirstItem = index === 0;
                 const isLastItem = length - 1 === index;
 
