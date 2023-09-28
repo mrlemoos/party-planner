@@ -12,7 +12,7 @@ interface UseClipboardProxy {
 
 // #region Utilities & Constants
 
-function $_copyToClipboard(text: string) {
+function $copyToClipboard(text: string) {
   if (
     'navigator' in window &&
     'clipboard' in window.navigator &&
@@ -26,17 +26,17 @@ function $_copyToClipboard(text: string) {
 
 export default function useClipboard(): [
   string | undefined,
-  (text: string) => void,
+  (text: string) => void
 ] {
   const proxy = useProxy<UseClipboardProxy>({});
 
   const copyToClipboard = useCallback(
-    function $copyToClipboard(text: string) {
-      $_copyToClipboard(text);
+    (text: string) => {
+      $copyToClipboard(text);
 
       proxy.text = text;
     },
-    [proxy],
+    [proxy]
   );
 
   return [proxy.text, copyToClipboard];
