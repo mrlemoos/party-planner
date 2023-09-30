@@ -1,3 +1,5 @@
+import { type JSX } from 'react';
+
 import { SignIn } from '@clerk/nextjs/app-beta';
 
 import AuthPage from '@root/components/organisms/AuthPage';

@@ -13,17 +13,12 @@ export const metadata: Metadata = {
 
 interface CreatePartyLayoutProps {
   children: ReactNode;
-
-  searchParams?: {
-    lang?: string;
-  };
 }
 
 const CreatePartyLayout = ({
   children,
-  searchParams = { lang: 'en' },
 }: CreatePartyLayoutProps): ReactElement => (
-  <html lang={searchParams.lang}>
+  <html>
     <body className={Inter.className} style={{ width: '100vw' }}>
       <TopBar className="fixed" />
       {children}

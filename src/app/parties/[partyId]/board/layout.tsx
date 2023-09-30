@@ -7,34 +7,25 @@ import TopBar from '@root/components/molecules/TopBar';
 import Footer from '@root/components/atoms/Footer';
 import Inter from '@root/styles/Inter';
 
+// #region Types & interfaces
+
+interface PartyBoardLayoutProps {
+  children: ReactNode;
+}
+
+// #endregion
+
+// #region Constants
+
 export const metadata: Metadata = {
   title: 'Party Planner 🎉',
 };
 
-interface PartyBoardLayoutParams {
-  partyId: string;
-}
+// #endregion
 
-interface PartyBoardLayoutSearchParams {
-  lang?: string;
-}
-
-interface PartyBoardLayoutProps {
-  children: ReactNode;
-  params: PartyBoardLayoutParams;
-  searchParams: PartyBoardLayoutSearchParams;
-}
-
-const defaultSearchParams: PartyBoardLayoutSearchParams = {
-  lang: 'en',
-};
-
-export default function PartyBoardLayout({
-  children,
-  searchParams = defaultSearchParams,
-}: PartyBoardLayoutProps): JSX.Element {
+function PartyBoardLayout({ children }: PartyBoardLayoutProps): JSX.Element {
   return (
-    <html lang={searchParams.lang}>
+    <html>
       <body className={cls(Inter.className, 'w-screen')}>
         <Fragment>
           <TopBar />
@@ -45,3 +36,5 @@ export default function PartyBoardLayout({
     </html>
   );
 }
+
+export default PartyBoardLayout;
