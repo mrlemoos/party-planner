@@ -10,8 +10,8 @@ import Link from 'next/link';
 import cls from 'classnames';
 
 import ErrorBox from '@root/components/atoms/ErrorBox';
-import RedirectReasons from '@root/constants/RedirectReasons';
 import isInt from '@root/util/isInt';
+import RedirectReasons from '@root/constants/RedirectReasons';
 
 // #region Interfaces & Types
 
@@ -25,7 +25,7 @@ interface JoinPartyFailureProps {
 
 function $getRetryReference(
   initialSearchParams: ReadonlyURLSearchParams,
-  pathname: string,
+  pathname: string
 ): string {
   const retry$ = initialSearchParams.get('retry');
 
@@ -38,7 +38,7 @@ function $getRetryReference(
       const rootSearchParams = new URLSearchParams();
       rootSearchParams.set(
         'redirectReason',
-        RedirectReasons.MaximumJoinRetriesReached,
+        RedirectReasons.MaximumJoinRetriesReached
       );
       rootSearchParams.set('from', pathname);
       rootSearchParams.set('lang', initialSearchParams.get('lang') || 'en');
@@ -86,7 +86,7 @@ function JoinPartyFailure({
                 'flex items-center justify-center gap-2',
                 'border-2 border-solid',
                 'bg-red-100 text-red-900 border-red-100',
-                'dark:bg-coal dark:text-white dark:border-coal',
+                'dark:bg-coal dark:text-white dark:border-coal'
               )}
             >
               <ReloadIcon />
