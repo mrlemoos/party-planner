@@ -137,19 +137,22 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
     [party]
   );
 
-  const fetchParty = useCallback(async (partyId: string) => {
-    const database = getDatabase();
-    const ref = ref$(database, `parties/${partyId}`);
+  const fetchParty = useCallback(
+    async (partyId: string) => {
+      const database = getDatabase();
+      const ref = ref$(database, `parties/${partyId}`);
 
-    const snapshot = await get(ref);
-    const party = transformSnapshotIntoPartyDataset(snapshot);
+      const snapshot = await get(ref);
+      const party = transformSnapshotIntoPartyDataset(snapshot);
 
-    if (!party) {
-      return;
-    }
+      if (!party) {
+        return;
+      }
 
-    setParty(party);
-  }, []);
+      setParty(party);
+    },
+    [setParty]
+  );
 
   const addStory = useCallback(
     (story: Story) => {
@@ -291,53 +294,6 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
     [party.stories, partyId, fetchParty]
   );
 
-  const voteStory = useCallback(
-    (userId: string, storyId: string, vote: number) => {
-      const database = getDatabase();
-      const ref = child(ref$(database, `parties/${partyId}`), 'stories');
-
-      const stories = party.stories.map(
-        ({ storyId: storyId$, votes = {}, ...story }) => {
-          if (storyId === storyId$) {
-            const newVotes = {
-              ...votes,
-              [userId]: vote,
-            };
-
-            if (Object.keys(newVotes).length === party.members.length) {
-              updateVoteStatus(partyId, 'Revealing');
-            }
-
-            return {
-              storyId,
-              ...story,
-              votes: newVotes,
-            };
-          }
-
-          return { storyId: storyId$, votes, ...story };
-        }
-      );
-
-      set(ref, stories);
-
-      fetchParty(partyId);
-    },
-    [party.stories, party.members, partyId, fetchParty]
-  );
-
-  const resetState = useCallback(
-    (party: Party) => {
-      const database = getDatabase();
-      const ref = ref$(database, `parties/${partyId}`);
-
-      set(ref, party);
-
-      setParty(party);
-    },
-    [partyId]
-  );
-
   const createVoteSession = useCallback(
     (partyId: string, storyId: string, voteStatus: VoteStatus) => {
       const database = getDatabase();
@@ -376,6 +332,53 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
     [party.voteSession, fetchParty]
   );
 
+  const voteStory = useCallback(
+    (userId: string, storyId: string, vote: number) => {
+      const database = getDatabase();
+      const ref = child(ref$(database, `parties/${partyId}`), 'stories');
+
+      const stories = party.stories.map(
+        ({ storyId: storyId$, votes = {}, ...story }) => {
+          if (storyId === storyId$) {
+            const newVotes = {
+              ...votes,
+              [userId]: vote,
+            };
+
+            if (Object.keys(newVotes).length === party.members.length) {
+              updateVoteStatus(partyId, 'Revealing');
+            }
+
+            return {
+              storyId,
+              ...story,
+              votes: newVotes,
+            };
+          }
+
+          return { storyId: storyId$, votes, ...story };
+        }
+      );
+
+      set(ref, stories);
+
+      fetchParty(partyId);
+    },
+    [partyId, party.stories, party.members.length, fetchParty, updateVoteStatus]
+  );
+
+  const resetState = useCallback(
+    (party: Party) => {
+      const database = getDatabase();
+      const ref = ref$(database, `parties/${partyId}`);
+
+      set(ref, party);
+
+      setParty(party);
+    },
+    [partyId, setParty]
+  );
+
   const tickTimer = useCallback(
     (partyId: string, milliseconds: number) => {
       const database = getDatabase();
@@ -390,7 +393,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       fetchParty(partyId);
     },
-    [partyId, party.voteSession, fetchParty]
+    [party?.voteSession, fetchParty]
   );
 
   const partyOwner = useMemo(
@@ -453,7 +456,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
     return () => {
       unsubscribe();
     };
-  }, [partyId, router]);
+  }, [isLoading, partyId, router, setParty]);
 
   useEffect(() => {
     if (!Array(party?.members) || party.members.length === 0) {
