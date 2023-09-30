@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install",
+    "prepare": "is-ci || husky install",
     "format": "npx prettier --write --list-different",
     "format:all": "npx prettier --write --list-different .",
     "format:check": "npx prettier . --check --list-different",
