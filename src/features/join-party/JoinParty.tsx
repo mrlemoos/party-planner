@@ -5,9 +5,9 @@ import { useEffect, type JSX } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 
 import Loading from '@root/components/atoms/Loading';
+import getPartyBoardLink from '@root/util/getPartyBoardLink';
 
 import JoinPartyFailure from './components/atoms/JoinPartyFailure';
-import getPartyBoardLink from '@root/util/getPartyBoardLink';
 
 // #region Interfaces & Types
 
@@ -25,7 +25,7 @@ function $isServerErrorValid(error?: string): boolean {
 
 // #endregion
 
-export default function JoinParty({ error }: JoinPartyProps): JSX.Element {
+function JoinParty({ error }: JoinPartyProps): JSX.Element {
   const router = useRouter();
   const params = useParams();
 
@@ -53,3 +53,5 @@ export default function JoinParty({ error }: JoinPartyProps): JSX.Element {
     </main>
   );
 }
+
+export default JoinParty;
