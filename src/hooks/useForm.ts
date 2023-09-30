@@ -17,13 +17,13 @@ const $initialFormUserFeedbackState: FormUserFeedbackState = {
   isSubmitting: false,
 };
 
-/* internal */ function $isBoolInputType(
+function $isBoolInputType(
   type: HTMLInputTypeAttribute
 ): type is (typeof $boolInputTypes)[number] {
   return $boolInputTypes.includes(type as (typeof $boolInputTypes)[number]);
 }
 
-/* internal */ function $isPrimitiveTypeAllowed(
+function $isPrimitiveTypeAllowed(
   type:
     | 'string'
     | 'number'
@@ -40,13 +40,13 @@ const $initialFormUserFeedbackState: FormUserFeedbackState = {
   );
 }
 
-/* internal */ function $isPrimitiveTypeOfValueAllowed(
+function $isPrimitiveTypeOfValueAllowed(
   value: unknown
 ): value is (typeof $allowedPrimitiveTypes)[number] {
   return $isPrimitiveTypeAllowed(typeof value);
 }
 
-/* internal */ function $reduceFormUserFeedbackState(
+function $reduceFormUserFeedbackState(
   state = $initialFormUserFeedbackState,
   { type, payload }: FormUserFeedbackAction
 ): FormUserFeedbackState {
@@ -69,7 +69,7 @@ export type FormValidationErrors<U extends object> = {
   [K in keyof U]?: ReactNode;
 };
 
-/* internal */ interface ValidateFunction<U extends object> {
+interface ValidateFunction<U extends object> {
   (values: U): {
     [K in keyof U]?: ReactNode;
   };
@@ -90,15 +90,15 @@ export interface AsynchronousHandleSubmit<U extends object> {
   <E>(values: U, event?: E): Promise<void> | void;
 }
 
-/* internal */ interface VirtualHandleSubmitConfiguration {
+interface VirtualHandleSubmitConfiguration {
   preventDefault?: boolean;
 }
 
-/* internal */ interface FormUserFeedbackState {
+interface FormUserFeedbackState {
   isSubmitting: boolean;
 }
 
-/* internal */ type FormUserFeedbackAction = {
+type FormUserFeedbackAction = {
   type: 'Set Submitting';
   payload: boolean;
 };
@@ -199,7 +199,19 @@ export default function useForm<U extends object>(
           if (resetAfterSubmit) {
             reset();
           }
-        } catch (error) {}
+        } catch (error) {
+          if (error instanceof Error) {
+            console.error(
+              '🚨 An instance of JavaScript Error occurred while onSubmit(). The exposed cause follows:',
+              error.message
+            );
+          } else {
+            console.error(
+              '🚨 An unknown error occurred while onSubmit(). The exposed cause follows:',
+              error
+            );
+          }
+        }
         controlUserFeedback({ type: 'Set Submitting', payload: false });
       },
     [
