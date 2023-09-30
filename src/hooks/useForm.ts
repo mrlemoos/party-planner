@@ -18,7 +18,7 @@ const $initialFormUserFeedbackState: FormUserFeedbackState = {
 };
 
 /* internal */ function $isBoolInputType(
-  type: HTMLInputTypeAttribute,
+  type: HTMLInputTypeAttribute
 ): type is (typeof $boolInputTypes)[number] {
   return $boolInputTypes.includes(type as (typeof $boolInputTypes)[number]);
 }
@@ -33,22 +33,22 @@ const $initialFormUserFeedbackState: FormUserFeedbackState = {
     | 'symbol'
     | 'undefined'
     | 'object'
-    | 'function',
+    | 'function'
 ): type is (typeof $allowedPrimitiveTypes)[number] {
   return $allowedPrimitiveTypes.includes(
-    type as (typeof $allowedPrimitiveTypes)[number],
+    type as (typeof $allowedPrimitiveTypes)[number]
   );
 }
 
 /* internal */ function $isPrimitiveTypeOfValueAllowed(
-  value: unknown,
+  value: unknown
 ): value is (typeof $allowedPrimitiveTypes)[number] {
   return $isPrimitiveTypeAllowed(typeof value);
 }
 
 /* internal */ function $reduceFormUserFeedbackState(
   state = $initialFormUserFeedbackState,
-  { type, payload }: FormUserFeedbackAction,
+  { type, payload }: FormUserFeedbackAction
 ): FormUserFeedbackState {
   switch (type) {
     case 'Set Submitting':
@@ -107,14 +107,14 @@ export interface AsynchronousHandleSubmit<U extends object> {
 
 export default function useForm<U extends object>(
   initialValues: Partial<U> = {},
-  { onChange, validate, onSubmit, resetAfterSubmit }: UseFormProps<U>,
+  { onChange, validate, onSubmit, resetAfterSubmit }: UseFormProps<U>
 ) {
   const values = useProxy({ ...initialValues } as U);
   const errors = useProxy<FormValidationErrors<U>>({});
 
   const [{ isSubmitting }, controlUserFeedback] = useReducer(
     $reduceFormUserFeedbackState,
-    $initialFormUserFeedbackState,
+    $initialFormUserFeedbackState
   );
 
   const handleChange = useCallback(
@@ -138,32 +138,39 @@ export default function useForm<U extends object>(
             'useForm()',
             field,
             `Note that the form fields have to be of type ${$allowedPrimitiveTypes.join(
-              ', ',
-            )}.`,
+              ', '
+            )}.`
           );
         }
       },
-    [values, onChange],
+    [values, onChange]
   );
 
-  const reset = useCallback(() => {
-    Object.keys(values).forEach((key$) => {
-      const key = key$ as keyof U;
-      values[key] = (initialValues as U)[key];
-    });
-  }, [values, initialValues]);
+  const reset = useCallback(
+    (resetValues: Partial<U> = {}) => {
+      Object.keys(values).forEach((key$) => {
+        const key = key$ as keyof U;
+        const value = values[key];
+        values[key] =
+          typeof resetValues[key] === 'undefined'
+            ? (undefined as unknown as U[keyof U])
+            : value;
+      });
+    },
+    [values]
+  );
 
   const overrideField = useCallback(
     (field: keyof U, value: U[keyof U]) => {
       values[field] = value;
     },
-    [values],
+    [values]
   );
 
   const handleSubmit = useCallback(
     ({ preventDefault = true }: VirtualHandleSubmitConfiguration = {}) =>
       async function $handleSubmitEventListenerClosure<E>(
-        event: ReactFormEvent<E>,
+        event: ReactFormEvent<E>
       ) {
         if (preventDefault) {
           event.preventDefault();
@@ -203,7 +210,7 @@ export default function useForm<U extends object>(
       controlUserFeedback,
       resetAfterSubmit,
       reset,
-    ],
+    ]
   );
 
   return {
