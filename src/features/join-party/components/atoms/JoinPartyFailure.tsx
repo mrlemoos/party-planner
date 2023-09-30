@@ -11,7 +11,6 @@ import cls from 'classnames';
 
 import ErrorBox from '@root/components/atoms/ErrorBox';
 import isInt from '@root/util/isInt';
-import RedirectReasons from '@root/constants/RedirectReasons';
 
 // #region Interfaces & Types
 
@@ -36,10 +35,7 @@ function $getRetryReference(
       // server.
 
       const rootSearchParams = new URLSearchParams();
-      rootSearchParams.set(
-        'redirectReason',
-        RedirectReasons.MaximumJoinRetriesReached
-      );
+      rootSearchParams.set('redirectReason', 'Maximum Join Retries Reached');
       rootSearchParams.set('from', pathname);
       rootSearchParams.set('lang', initialSearchParams.get('lang') || 'en');
 
