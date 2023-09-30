@@ -31,7 +31,7 @@ function Logo({
         },
         'flex items-center gap-3',
         Poppins.className,
-        className,
+        className
       )}
       {...props}
     >
