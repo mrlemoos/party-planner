@@ -137,7 +137,13 @@ export default function VotingSessionSummary(): JSX.Element {
     }));
 
     rewriteStories(newStories);
-  }, [stories, partyId, createVoteSession, voteSession]);
+  }, [
+    voteSession?.currentStoryId,
+    createVoteSession,
+    partyId,
+    stories,
+    rewriteStories,
+  ]);
 
   const handleVoteNext = useCallback(() => {
     if (!voteSession?.currentStoryId) {
@@ -168,7 +174,13 @@ export default function VotingSessionSummary(): JSX.Element {
     }
 
     createVoteSession(partyId, nextStory.storyId, 'Not Started');
-  }, [stories, partyId, createVoteSession, voteSession]);
+  }, [
+    voteSession?.currentStoryId,
+    stories,
+    rewriteStories,
+    createVoteSession,
+    partyId,
+  ]);
 
   const nonVotedStories = useMemo(
     () =>
@@ -185,7 +197,7 @@ export default function VotingSessionSummary(): JSX.Element {
 
         return votesLength !== members.length;
       }),
-    [stories, voteSession?.currentStoryId]
+    [members.length, stories, voteSession?.currentStoryId]
   );
 
   const hasVoteNextStoryButton = useMemo(() => {
@@ -202,7 +214,7 @@ export default function VotingSessionSummary(): JSX.Element {
     if (isLast) {
       return false;
     }
-  }, [stories, nonVotedStories]);
+  }, [nonVotedStories, stories.length, voteSession?.currentStoryId]);
 
   return (
     <div className="flex items-center gap-4">
