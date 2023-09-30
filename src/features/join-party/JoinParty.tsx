@@ -41,7 +41,7 @@ export default function JoinParty({ error }: JoinPartyProps): JSX.Element {
       : params.partyId;
     const link = getPartyBoardLink(partyId, { as: 'relative' });
     router.push(link);
-  }, []);
+  }, [hasError, params.partyId, router]);
 
   return (
     <main className="h-screen flex flex-col items-center justify-center">
