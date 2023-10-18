@@ -1,17 +1,26 @@
 {
   "cSpell.words": [
+    "Beedle",
+    "codegen",
     "commitlint",
     "endregion",
     "Hoverable",
     "nextjs",
+    "outdir",
+    "pandacss",
     "Roboto",
+    "Schwaber",
     "scrummates",
     "supabase",
     "tailwindcss",
     "wiptest",
     "zustand"
   ],
-  "editor.fontSize": 16,
+  "editor.fontSize": 20,
   "editor.fontLigatures": true,
-  "editor.lineHeight": 24
+  "editor.lineHeight": 30,
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ]
 }
