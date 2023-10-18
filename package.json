@@ -11,7 +11,7 @@
     "prepare": "is-ci || husky install",
     "format": "npx prettier --write --list-different",
     "format:all": "npx prettier --write --list-different .",
-    "format:check": "npx prettier . --check --list-different",
+    "format:check": "npx prettier . --check",
     "commitizen:init": "sh ./scripts/commitizen_init.sh",
     "commit": "cz",
     "git-hooks:add-commit-msg": "sh ./scripts/git-hooks/add_commit-msg_hook.sh",
