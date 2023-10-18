@@ -69,11 +69,14 @@
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "lint-staged": "^14.0.1",
+    "prettier-plugin-tailwindcss": "^0.5.6",
     "tailwindcss": "^3.3.3",
     "tailwindcss-radix": "^2.8.0",
     "typescript": "5.2.2"
   },
   "prettier": {
+    "plugins": ["prettier-plugin-tailwindcss"],
+    "tailwindFunctions": "tw",
     "printWidth": 80,
     "jsxSingleQuote": false,
     "singleQuote": true,
@@ -89,13 +92,15 @@
     ],
     "plugins": [
       "import",
-      "jsx-a11y"
+      "jsx-a11y",
+      "prettier"
     ],
     "rules": {
       "react-hooks/exhaustive-deps": "warn",
       "no-unused-vars": "off",
       "no-shadow": "off",
-      "no-undef": "off"
+      "no-undef": "off",
+      "prettier/prettier": "error"
     },
     "parserOptions": {
       "ecmaFeatures": {
