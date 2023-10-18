@@ -2,15 +2,15 @@
 
 import { Fragment } from 'react';
 
-import ClipboardBlock from '@root/components/molecules/ClipboardBlock';
 import Divider from '@root/components/atoms/Divider';
 import SecondaryAnchor from '@root/components/atoms/SecondaryAnchor';
 import SizedBox from '@root/components/atoms/SizedBox';
+import ClipboardBlock from '@root/components/molecules/ClipboardBlock';
 
-import OwnerJoinForm from './components/OwnerJoinForm';
-import CreatePartyProvider from './providers/CreatePartyProvider';
-import Title from './components/Title';
 import Description from './components/Description';
+import OwnerJoinForm from './components/OwnerJoinForm';
+import Title from './components/Title';
+import CreatePartyProvider from './providers/CreatePartyProvider';
 
 interface CreatePartyProps {
   partyId: string;
