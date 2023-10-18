@@ -11,5 +11,5 @@ export default authMiddleware({
 });
 
 export const config = {
-  matcher: ['/((?!.*\\..*|_next).*)', '/(api)(.*)', '/parties/create'],
+  matcher: ['/((?!.*\\..*|_next).*)', '/(api)(.*)'],
 };
