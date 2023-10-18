@@ -16,9 +16,9 @@
     "wiptest",
     "zustand"
   ],
-  "editor.fontSize": 20,
+  "editor.fontSize": 18,
   "editor.fontLigatures": true,
-  "editor.lineHeight": 30,
+  "editor.lineHeight": 24,
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
