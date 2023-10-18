@@ -4,7 +4,7 @@
   "description": "Point tickets. Plan your sprint. Have fun 🎉!",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS='--inspect' next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -33,6 +33,7 @@
     "framer-motion": "^10.16.2",
     "jotai": "^2.4.2",
     "next": "13.4.19",
+    "polished": "^4.2.2",
     "postcss": "8.4.29",
     "react": "18.2.0",
     "react-dom": "18.2.0"
@@ -40,6 +41,8 @@
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
+    "@mdx-js/loader": "^2.3.0",
+    "@next/mdx": "^13.5.3",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^11.0.0",
     "@semantic-release/git": "^10.0.1",
@@ -49,6 +52,8 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "@types/web": "^0.0.114",
+    "@vanilla-extract/css": "^1.13.0",
+    "@vanilla-extract/next-plugin": "^2.3.1",
     "bun-types": "^1.0.2",
     "commitizen": "^4.3.0",
     "cz-conventional-changelog": "^3.3.0",
@@ -62,7 +67,7 @@
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "lint-staged": "^14.0.1",
-    "tailwindcss": "3.3.3",
+    "tailwindcss": "^3.3.3",
     "tailwindcss-radix": "^2.8.0",
     "typescript": "5.2.2"
   },
