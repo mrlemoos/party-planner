@@ -16,7 +16,7 @@
     "wiptest",
     "zustand"
   ],
-  "editor.fontSize": 18,
+  "editor.fontSize": 20,
   "editor.fontLigatures": true,
   "editor.lineHeight": 30,
   "tailwindCSS.experimental.classRegex": [
