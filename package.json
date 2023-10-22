@@ -76,7 +76,6 @@
   },
   "prettier": {
     "plugins": ["prettier-plugin-tailwindcss"],
-    "tailwindFunctions": "tw",
     "printWidth": 80,
     "jsxSingleQuote": false,
     "singleQuote": true,
