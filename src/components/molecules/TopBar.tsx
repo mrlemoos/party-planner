@@ -1,11 +1,12 @@
-import { type HTMLAttributes, type ReactNode } from 'react';
+import { Fragment, type HTMLAttributes, type ReactNode } from 'react';
 
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { SignInButton, UserButton, currentUser } from '@clerk/nextjs';
 import cls from 'classnames';
 import Link from 'next/link';
 
-import NavigationAnchor from '@root/components/atoms/NavigationAnchor';
 import Logo from '@root/components/atoms/Logo';
+import NavigationAnchor from '@root/components/atoms/NavigationAnchor';
+import OpaqueButton from '../atoms/OpaqueButton';
 
 interface TopBarProps extends HTMLAttributes<HTMLDivElement> {
   navigation?: ReactNode;
@@ -17,7 +18,7 @@ interface TopBarProps extends HTMLAttributes<HTMLDivElement> {
   navClassName?: string;
 }
 
-function TopBar({
+async function TopBar({
   navigation,
   className,
   beforeLogo,
@@ -27,13 +28,18 @@ function TopBar({
   navClassName,
   children,
   ...props
-}: TopBarProps): JSX.Element {
+}: TopBarProps): Promise<JSX.Element> {
+  const user = await currentUser();
+
+  const isUserLoggedIn =
+    Array.isArray(user?.emailAddresses) && user?.emailAddresses?.length > 0;
+
   return (
-    <div className={cls('top-4 z-30 sticky h-14', className)} {...props}>
+    <div className={cls('sticky top-4 z-30 h-14', className)} {...props}>
       <div className={cls('container mx-auto', containerClassName)}>
         <header
           className={cls(
-            'flex justify-between items-center pl-4 pr-2 py-2 shadow-xl dark:shadow-md rounded-xl backdrop-blur-lg sticky top-4 mt-4 border-[1px] border-gray-100 dark:border-light-coal',
+            'sticky top-4 mt-4 flex items-center justify-between rounded-xl border-[1px] border-gray-100 py-2 pl-4 pr-2 shadow-xl backdrop-blur-lg dark:border-light-coal dark:shadow-md',
             headerClassName,
           )}
         >
@@ -47,21 +53,26 @@ function TopBar({
 
           {children}
 
-          <nav className={cls('flex align-items gap-2', navClassName)}>
-            <NavigationAnchor href="/parties/create">
-              Create a Party
-            </NavigationAnchor>
+          <nav className={cls('align-items flex gap-2', navClassName)}>
+            {isUserLoggedIn ? (
+              <Fragment>
+                <NavigationAnchor href="/parties/create">
+                  Create a Party
+                </NavigationAnchor>
+              </Fragment>
+            ) : (
+              <SignInButton>
+                <OpaqueButton>Create a Party</OpaqueButton>
+              </SignInButton>
+            )}
 
             {navigation}
 
-            <SignedOut>
-              <NavigationAnchor href="/sign-in">Sign in</NavigationAnchor>
-            </SignedOut>
-            <SignedIn>
+            {isUserLoggedIn && (
               <div className="mx-2">
-                <UserButton afterSignOutUrl="/parties/create" />
+                <UserButton afterSignOutUrl="/" />
               </div>
-            </SignedIn>
+            )}
           </nav>
         </header>
       </div>

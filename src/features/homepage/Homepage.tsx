@@ -4,17 +4,17 @@ import cls from 'classnames';
 
 import SizedBox from '@root/components/atoms/SizedBox';
 
-import PhilosophyBanner from './components/molecules/PhilosophyBanner';
 import FeatureComposition from './components/molecules/FeatureComposition';
+import PhilosophyBanner from './components/molecules/PhilosophyBanner';
 
 const firstViewSectionId = 'first-view';
 const scrumPointingPokerSectionId = 'scrum-pointing-poker';
 
 function Homepage(): JSX.Element {
   return (
-    <main className="w-screen min-h-screen overflow-x-hidden">
+    <main className="min-h-screen w-screen overflow-x-hidden">
       <section className="container mx-auto" id={firstViewSectionId}>
-        <article className="h-screen flex">
+        <article className="flex h-screen">
           <div className="flex flex-col">
             <SizedBox height={200} />
             <PhilosophyBanner />
@@ -25,7 +25,7 @@ function Homepage(): JSX.Element {
         className={cls(
           'min-h-[50vh]',
           'bg-gradient-to-br from-white to-purple-500',
-          'dark:from-coal dark:to-purple-950'
+          'dark:from-coal dark:to-purple-950',
         )}
         id={scrumPointingPokerSectionId}
       >
