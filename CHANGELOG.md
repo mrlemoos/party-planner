@@ -5,6 +5,13 @@
 
 * use server component to display sign in or user button option ([943cb57](https://github.com/mrlemoos/party-planner/commit/943cb57b7a2b23f31301f91e7017fcba1f46eb93))
 
+## [1.1.1](https://github.com/mrlemoos/party-planner/compare/v1.1.0...v1.1.1) (2023-10-23)
+
+
+### Bug Fixes
+
+* use server component to display sign in or user button option ([943cb57](https://github.com/mrlemoos/party-planner/commit/943cb57b7a2b23f31301f91e7017fcba1f46eb93))
+
 # [1.1.0](https://github.com/mrlemoos/party-planner/compare/v1.0.0...v1.1.0) (2023-10-18)
 
 
