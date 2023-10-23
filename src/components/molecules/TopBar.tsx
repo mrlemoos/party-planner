@@ -32,7 +32,9 @@ async function TopBar({
   const user = await currentUser();
 
   const isUserLoggedIn =
-    Array.isArray(user?.emailAddresses) && user?.emailAddresses?.length > 0;
+    Array.isArray(user?.emailAddresses) &&
+    typeof user?.emailAddresses?.length === 'number' &&
+    user.emailAddresses.length > 0;
 
   return (
     <div className={cls('sticky top-4 z-30 h-14', className)} {...props}>
