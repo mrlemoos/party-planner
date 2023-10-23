@@ -13,7 +13,7 @@ const ErrorMessage = ({
 }: ErrorMessageProps): ReactElement => (
   <p
     id={id}
-    className={cls('text-red-500 text-xs h-4', className)}
+    className={cls('h-4 text-xs text-red-500', className)}
     aria-hidden={ariaHidden}
     {...props}
   >

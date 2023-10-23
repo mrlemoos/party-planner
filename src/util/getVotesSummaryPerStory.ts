@@ -10,7 +10,7 @@ import type PartyMember from '@root/models/PartyMember';
  */
 export default function getVotesSummaryPerStory(
   stories: Story[],
-  partyMembers: PartyMember[]
+  partyMembers: PartyMember[],
 ) {
   const votesPerStory = stories.map(({ isRevealed, storyId, votes, title }) => {
     if (!isRevealed || typeof votes !== 'object') {
@@ -23,7 +23,7 @@ export default function getVotesSummaryPerStory(
 
     const votesWithMember = Object.entries(votes).map(([memberId, vote]) => {
       const memberDisplayName = partyMembers.find(
-        ({ userId }) => userId === memberId
+        ({ userId }) => userId === memberId,
       )?.displayName;
 
       return {

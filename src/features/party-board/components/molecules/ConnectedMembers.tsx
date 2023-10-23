@@ -47,10 +47,10 @@ export default function ConnectedMembers(): JSX.Element {
     <AfloatRightBar className="flex flex-col items-center">
       <div className="mb-3">
         {isLoading ? (
-          <Pulse className="h-10 flex justify-center items-center">
+          <Pulse className="flex h-10 items-center justify-center">
             <Skeleton
               role="status"
-              className="dark:bg-light-coal flex rounded-full"
+              className="flex rounded-full dark:bg-light-coal"
               style={{ height: 18, width: 18 }}
             />
           </Pulse>
@@ -58,7 +58,7 @@ export default function ConnectedMembers(): JSX.Element {
           <Tooltip content="Copy the invitation">
             <IconButton
               alt="Click to copy the link to share with your scrummates!"
-              className="w-8 h-8 flex justify-center items-center rounded-full"
+              className="flex h-8 w-8 items-center justify-center rounded-full"
               icon={
                 <ClipboardIcon
                   onClick={handleCopyJoinLinkToClipboard}
@@ -77,27 +77,27 @@ export default function ConnectedMembers(): JSX.Element {
           <Pulse className="flex flex-col items-center">
             <Skeleton
               role="status"
-              className="w-8 h-8 dark:bg-light-coal flex rounded-full"
+              className="flex h-8 w-8 rounded-full dark:bg-light-coal"
             />
             <SizedBox height={6} />
             <Skeleton
               role="status"
-              className="w-8 h-8 dark:bg-light-coal flex rounded-full"
+              className="flex h-8 w-8 rounded-full dark:bg-light-coal"
             />
             <SizedBox height={6} />
             <Skeleton
               role="status"
-              className="w-8 h-8 dark:bg-light-coal flex rounded-full"
+              className="flex h-8 w-8 rounded-full dark:bg-light-coal"
             />
             <SizedBox height={6} />
             <Skeleton
               role="status"
-              className="w-8 h-8 dark:bg-light-coal flex rounded-full"
+              className="flex h-8 w-8 rounded-full dark:bg-light-coal"
             />
             <SizedBox height={6} />
             <Skeleton
               role="status"
-              className="w-8 h-8 dark:bg-light-coal flex rounded-full"
+              className="flex h-8 w-8 rounded-full dark:bg-light-coal"
             />
           </Pulse>
         ) : (

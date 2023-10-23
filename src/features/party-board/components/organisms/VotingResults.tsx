@@ -31,25 +31,25 @@ export default function VotingResults(): JSX.Element {
 
   const votesSummaryPerStory = useMemo(
     () => getVotesSummaryPerStory(stories, members),
-    [stories, members]
+    [stories, members],
   );
   const hasVoteStarted = useMemo(
     () => votesSummaryPerStory.length > 0,
-    [votesSummaryPerStory.length]
+    [votesSummaryPerStory.length],
   );
 
   const [currentAccordionItem, setCurrentAccordionItem] = useState(
-    stories[0]?.storyId
+    stories[0]?.storyId,
   );
 
   const handleFocusChange = useCallback<AccordionFocusChangeEventHandler>(
     ({ rawValue }) => setCurrentAccordionItem(rawValue),
-    []
+    [],
   );
 
   return (
     <aside
-      className="flex flex-col justify-center h-full p-6 mr-4"
+      className="mr-4 flex h-full flex-col justify-center p-6"
       style={asideStyle}
     >
       {hasVoteStarted ? (
@@ -84,7 +84,7 @@ export default function VotingResults(): JSX.Element {
           ))}
         </div>
       ) : (
-        <Heading level="h5" className="text-gray-500 font-normal text-center">
+        <Heading level="h5" className="text-center font-normal text-gray-500">
           The vote summary will be displayed here once the vote has started. 🚀
         </Heading>
       )}

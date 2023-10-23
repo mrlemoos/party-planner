@@ -26,7 +26,7 @@ function $copyToClipboard(text: string) {
 
 export default function useClipboard(): [
   string | undefined,
-  (text: string) => void
+  (text: string) => void,
 ] {
   const proxy = useProxy<UseClipboardProxy>({});
 
@@ -36,7 +36,7 @@ export default function useClipboard(): [
 
       proxy.text = text;
     },
-    [proxy]
+    [proxy],
   );
 
   return [proxy.text, copyToClipboard];

@@ -43,7 +43,7 @@ export default function PercentageBar({
     // won't render.
     Number.isNaN(percentage) ? null : (
       <span
-        className={cls(Poppins.className, 'font-medium text-sm')}
+        className={cls(Poppins.className, 'text-sm font-medium')}
       >{`${percentage.toFixed(1).replace('.0', '')}%`}</span>
     );
 

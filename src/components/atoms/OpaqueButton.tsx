@@ -19,9 +19,9 @@ export default function OpaqueButton({
       className={cls(
         className,
         'px-4 py-2',
-        'decoration-inherit rounded-md font-medium transition',
-        'text-purple-800 bg-purple-100 hover:shadow-sm',
-        'dark:bg-purple-800 dark:text-purple-100'
+        'rounded-md font-medium decoration-inherit transition',
+        'bg-purple-100 text-purple-800 hover:shadow-sm',
+        'dark:bg-purple-800 dark:text-purple-100',
       )}
     >
       {children}

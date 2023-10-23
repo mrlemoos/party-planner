@@ -23,7 +23,7 @@ function OnlineBubble({
   return (
     <Bubble
       aria-label={ariaLabel$}
-      className={cls('bg-green-500 border-green-500', className)}
+      className={cls('border-green-500 bg-green-500', className)}
       {...props}
     />
   );

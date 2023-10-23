@@ -27,7 +27,7 @@ const VARIANTS = Object.entries(AnimatedTextContentVariants).map(
   ([key, value]) => ({
     key,
     value,
-  })
+  }),
 );
 const TOTAL_PRESENTATIONS = VARIANTS.length - 1;
 
@@ -38,19 +38,19 @@ function useInfinitePresentation(): UseInfinitePresentationResult {
   const router = useRouter();
 
   const presentationIndexQuery = searchParams.get(
-    SearchParamsPresentationKeyMap.currentPresentationIndex
+    SearchParamsPresentationKeyMap.currentPresentationIndex,
   );
 
   const presentationKey = useMemo(
     () =>
       (presentationIndexQuery ??
         'collaboration') as keyof typeof AnimatedTextContentVariants,
-    [presentationIndexQuery]
+    [presentationIndexQuery],
   );
 
   const presentationIndex = useMemo(
     () => VARIANTS.findIndex(({ key }) => presentationKey === key),
-    [presentationKey]
+    [presentationKey],
   );
 
   useEffect(() => {
@@ -70,7 +70,7 @@ function useInfinitePresentation(): UseInfinitePresentationResult {
       const query = new URLSearchParams();
       query.set(
         SearchParamsPresentationKeyMap.currentPresentationIndex,
-        String(nextPresentation.key)
+        String(nextPresentation.key),
       );
 
       router.replace(`/?${query.toString()}`, { scroll: false });

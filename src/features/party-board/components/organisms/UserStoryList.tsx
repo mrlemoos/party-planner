@@ -38,12 +38,12 @@ export default function UserStoryList(): JSX.Element {
 
         return votesLength !== membersLength;
       }),
-    [stories, members]
+    [stories, members],
   );
 
   const hasStories = useMemo(
     () => nonVotedStories.length > 0,
-    [nonVotedStories.length]
+    [nonVotedStories.length],
   );
 
   const handleAddUserStorySubmit = useCallback(
@@ -58,12 +58,12 @@ export default function UserStoryList(): JSX.Element {
 
       addStory(story);
     },
-    [addStory]
+    [addStory],
   );
 
   return (
     <div
-      className="bg-gray-100 dark:bg-coal shadow-lg rounded-xl flex flex-col"
+      className="flex flex-col rounded-xl bg-gray-100 shadow-lg dark:bg-coal"
       style={{ padding: toRem(8) }}
     >
       <div className="flex flex-col">
@@ -72,12 +72,12 @@ export default function UserStoryList(): JSX.Element {
         )}
         {hasStories ? (
           <div className="flex flex-col">
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <Heading
                 level="h3"
                 className={cls(
-                  'text-xl font-medium select-none ml-6',
-                  Poppins.className
+                  'ml-6 select-none text-xl font-medium',
+                  Poppins.className,
                 )}
               >
                 User Stories

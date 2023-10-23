@@ -76,7 +76,7 @@ const defaultReducerState: PartyRealtimeReducerState = {
 
 function $reducePartyRealtime(
   state = defaultReducerState,
-  { type, payload }: PartyRealtimeReducerAction
+  { type, payload }: PartyRealtimeReducerAction,
 ): PartyRealtimeReducerState {
   switch (type) {
     case 'Update Realtime Party': {
@@ -121,7 +121,7 @@ function $isCurrentUserConnected({
 export default function usePartyRealtime(partyId: string): PartyRealtime {
   const [{ isLoading, party }, dispatch] = useReducer(
     $reducePartyRealtime,
-    defaultReducerState
+    defaultReducerState,
   );
   const router = useRouter();
 
@@ -134,7 +134,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
         payload: typeof nextState === 'function' ? nextState(party) : nextState,
       });
     },
-    [party]
+    [party],
   );
 
   const fetchParty = useCallback(
@@ -151,7 +151,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       setParty(party);
     },
-    [setParty]
+    [setParty],
   );
 
   const addStory = useCallback(
@@ -165,7 +165,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       fetchParty(partyId);
     },
-    [partyId, party.stories, fetchParty]
+    [partyId, party.stories, fetchParty],
   );
 
   const removeStory = useCallback(
@@ -174,14 +174,14 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
       const ref = child(ref$(database, `parties/${partyId}`), 'stories');
 
       const stories = party.stories.filter(
-        ({ storyId: storyId$ }) => storyId$ !== storyId
+        ({ storyId: storyId$ }) => storyId$ !== storyId,
       );
 
       set(ref, stories);
 
       fetchParty(partyId);
     },
-    [partyId, party.stories, fetchParty]
+    [partyId, party.stories, fetchParty],
   );
 
   const connectMember = useCallback(
@@ -195,7 +195,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       fetchParty(partyId);
     },
-    [partyId, party.members, fetchParty]
+    [partyId, party.members, fetchParty],
   );
 
   const disconnectMember = useCallback(
@@ -209,7 +209,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       fetchParty(partyId);
     },
-    [party.members, partyId, fetchParty]
+    [party.members, partyId, fetchParty],
   );
 
   const editStory = useCallback(
@@ -232,7 +232,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       fetchParty(partyId);
     },
-    [party.stories, partyId, fetchParty]
+    [party.stories, partyId, fetchParty],
   );
 
   const rewriteStories = useCallback(
@@ -244,7 +244,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       fetchParty(partyId);
     },
-    [partyId, fetchParty]
+    [partyId, fetchParty],
   );
 
   const resetVotes = useCallback(
@@ -267,7 +267,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       fetchParty(partyId);
     },
-    [partyId, party.stories, fetchParty]
+    [partyId, party.stories, fetchParty],
   );
 
   const revealStoryVotes = useCallback(
@@ -291,7 +291,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       fetchParty(partyId);
     },
-    [party.stories, partyId, fetchParty]
+    [party.stories, partyId, fetchParty],
   );
 
   const createVoteSession = useCallback(
@@ -312,7 +312,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       fetchParty(partyId);
     },
-    [fetchParty]
+    [fetchParty],
   );
 
   const updateVoteStatus = useCallback(
@@ -329,7 +329,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       fetchParty(partyId);
     },
-    [party.voteSession, fetchParty]
+    [party.voteSession, fetchParty],
   );
 
   const voteStory = useCallback(
@@ -357,14 +357,20 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
           }
 
           return { storyId: storyId$, votes, ...story };
-        }
+        },
       );
 
       set(ref, stories);
 
       fetchParty(partyId);
     },
-    [partyId, party.stories, party.members.length, fetchParty, updateVoteStatus]
+    [
+      partyId,
+      party.stories,
+      party.members.length,
+      fetchParty,
+      updateVoteStatus,
+    ],
   );
 
   const resetState = useCallback(
@@ -376,7 +382,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       setParty(party);
     },
-    [partyId, setParty]
+    [partyId, setParty],
   );
 
   const tickTimer = useCallback(
@@ -393,19 +399,19 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
 
       fetchParty(partyId);
     },
-    [party?.voteSession, fetchParty]
+    [party?.voteSession, fetchParty],
   );
 
   const partyOwner = useMemo(
     () =>
       party.members?.find(({ userId }) => userId === party.ownerUserId) ??
       party.members?.[0],
-    [party.members, party.ownerUserId]
+    [party.members, party.ownerUserId],
   );
 
   const isCurrentUserPartyOwner = useMemo(
     () => userId === party.ownerUserId,
-    [userId, party.ownerUserId]
+    [userId, party.ownerUserId],
   );
 
   useEffect(() => {
@@ -467,7 +473,7 @@ export default function usePartyRealtime(partyId: string): PartyRealtime {
       event.preventDefault();
 
       const currentUserMember = party.members.find(
-        ({ userId: memberUserId$ }) => memberUserId$ === userId
+        ({ userId: memberUserId$ }) => memberUserId$ === userId,
       );
 
       if (!currentUserMember) {

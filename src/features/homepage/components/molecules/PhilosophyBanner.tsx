@@ -28,7 +28,7 @@ function PhilosophyBanner(): JSX.Element {
         <NavigationAnchor
           href={CREATE_PARTY_PATHNAME}
           target="_self"
-          className="text-xl py-3 font-medium"
+          className="py-3 text-xl font-medium"
           style={{ marginLeft: toRem(32) }}
           tabIndex={1}
         >

@@ -42,7 +42,7 @@ function Counter$({ current, total }: CounterProps): JSX.Element {
 
   return (
     <span
-      className="text-gray-500 text-sm flex items-center"
+      className="flex items-center text-sm text-gray-500"
       id={counterRootId}
     >
       <span

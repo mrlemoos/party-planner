@@ -63,7 +63,7 @@ function AddUserStoryForm({ onSubmit }: AddUserStoryFormProps): JSX.Element {
   const hasTitle = !!values.title;
 
   return (
-    <div className="flex flex-col gap-1 animate-scale-in">
+    <div className="flex animate-scale-in flex-col gap-1">
       <form className="flex gap-1" onSubmit={handleSubmit()}>
         <div className="w-[220px]">
           <Field
@@ -72,7 +72,7 @@ function AddUserStoryForm({ onSubmit }: AddUserStoryFormProps): JSX.Element {
             onChange={handleChange('storyId')}
             error={errors.storyId}
           />
-          <span className="text-gray-400 text-xs -mt-4">Optional</span>
+          <span className="-mt-4 text-xs text-gray-400">Optional</span>
         </div>
         <div className="md:w-[600px]">
           <Field

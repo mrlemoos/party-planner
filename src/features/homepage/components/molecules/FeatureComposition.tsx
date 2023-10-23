@@ -14,9 +14,9 @@ import toRem from '@root/util/toRem';
 
 function FeatureComposition(): JSX.Element {
   return (
-    <div className="container mx-auto py-16 flex flex-col items-center">
+    <div className="container mx-auto flex flex-col items-center py-16">
       <h2
-        className={cls('text-3xl font-medium mb-8', compositionWrapper)}
+        className={cls('mb-8 text-3xl font-medium', compositionWrapper)}
         aria-label="Less poker, more planning"
       >
         Less Poker & <strong>More Planning</strong>
@@ -24,7 +24,7 @@ function FeatureComposition(): JSX.Element {
           &nbsp;🎯
         </span>
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         <FeatureShowcase
           header="Effective Pointing"
           description="Easily point your user stories with our intuitive interface and save time during your sprint planning."

@@ -50,7 +50,7 @@ export default function UserStoryListItem({
   return (
     <ListItem
       className={cls(
-        'p-1 shadow-md bg-white dark:bg-coal flex justify-between animate-scale-in',
+        'flex animate-scale-in justify-between bg-white p-1 shadow-md dark:bg-coal',
         {
           'rounded-t-md': isFirstItem,
           'rounded-b-md': isLastItem,

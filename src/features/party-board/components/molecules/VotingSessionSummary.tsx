@@ -70,7 +70,7 @@ export default function VotingSessionSummary(): JSX.Element {
   const currentStory = useMemo(
     () =>
       stories.find(({ storyId }) => storyId === voteSession?.currentStoryId),
-    [stories, voteSession?.currentStoryId]
+    [stories, voteSession?.currentStoryId],
   );
 
   const { averageResult, votesCount } = useMemo(() => {
@@ -156,13 +156,13 @@ export default function VotingSessionSummary(): JSX.Element {
             ...story,
             isRevealed: true,
           }
-        : story
+        : story,
     );
 
     rewriteStories(newStories);
 
     const currentStoryIndex = stories.findIndex(
-      ({ storyId }) => storyId === voteSession?.currentStoryId
+      ({ storyId }) => storyId === voteSession?.currentStoryId,
     );
     const nextStoryIndex =
       typeof currentStoryIndex === 'number' ? currentStoryIndex + 1 : 0;
@@ -197,7 +197,7 @@ export default function VotingSessionSummary(): JSX.Element {
 
         return votesLength !== members.length;
       }),
-    [members.length, stories, voteSession?.currentStoryId]
+    [members.length, stories, voteSession?.currentStoryId],
   );
 
   const hasVoteNextStoryButton = useMemo(() => {
@@ -206,7 +206,7 @@ export default function VotingSessionSummary(): JSX.Element {
     }
 
     const currentStoryIndex = nonVotedStories.findIndex(
-      ({ storyId }) => storyId === voteSession?.currentStoryId
+      ({ storyId }) => storyId === voteSession?.currentStoryId,
     );
 
     const isLast = currentStoryIndex === stories.length - 1;
@@ -218,19 +218,19 @@ export default function VotingSessionSummary(): JSX.Element {
 
   return (
     <div className="flex items-center gap-4">
-      <div className="flex justify-center items-center flex-1 animate-scale-in-content delay-500">
+      <div className="flex flex-1 animate-scale-in-content items-center justify-center delay-500">
         <div className="flex flex-col items-center gap-3">
-          <span className="font-semibold text-xl mb-5">
+          <span className="mb-5 text-xl font-semibold">
             {currentStory?.title}
           </span>
-          <span className="font-normal text-sm">
+          <span className="text-sm font-normal">
             <b>{votesCount}</b> members have formed a majority of the votes
-            <span className="text-2xl ml-2">🏆</span>
+            <span className="ml-2 text-2xl">🏆</span>
           </span>
           <span className={cls('text-3xl font-semibold', Poppins.className)}>
             {averageResult}
           </span>
-          <div className="flex items-center gap-2 ml-3">
+          <div className="ml-3 flex items-center gap-2">
             <TextButton onClick={handleVoteAgain}>Vote again</TextButton>
             {hasVoteNextStoryButton && (
               <OpaqueButton onClick={handleVoteNext}>Next</OpaqueButton>
@@ -239,14 +239,14 @@ export default function VotingSessionSummary(): JSX.Element {
         </div>
       </div>
       {width > 900 && (
-        <div className="flex flex-col items-center gap-3 flex-1">
+        <div className="flex flex-1 flex-col items-center gap-3">
           <SizedBox height={32} />
           <div
-            className="flex gap-1 animate-scale-in-content"
+            className="flex animate-scale-in-content gap-1"
             style={animationCanvasStyle}
           >
             {memberVotes.map(({ vote, membersWhoVoted, percentage }) => (
-              <div key={`${vote}-vote`} className="flex items-center flex-col">
+              <div key={`${vote}-vote`} className="flex flex-col items-center">
                 <div className="flex flex-col">
                   <motion.div
                     initial={animation.initial}
@@ -256,7 +256,7 @@ export default function VotingSessionSummary(): JSX.Element {
                   </motion.div>
                 </div>
                 <span
-                  className={cls('text-xl font-normal mt-3', Poppins.className)}
+                  className={cls('mt-3 text-xl font-normal', Poppins.className)}
                 >
                   {vote}
                 </span>

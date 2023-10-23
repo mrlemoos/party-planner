@@ -15,7 +15,7 @@ function Skeleton({
       role={role}
       {...props}
       className={cls(
-        'bg-gray-300 dark:bg-light-coal pointer-events-none',
+        'pointer-events-none bg-gray-300 dark:bg-light-coal',
         className,
       )}
     />

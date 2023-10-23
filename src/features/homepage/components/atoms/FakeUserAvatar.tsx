@@ -114,7 +114,7 @@ function FakeUserAvatar({
   return (
     <motion.div
       aria-hidden="true"
-      className="flex items-center pointer-events-none"
+      className="pointer-events-none flex items-center"
       variants={{
         hidden,
         expand: {
@@ -136,14 +136,14 @@ function FakeUserAvatar({
         }}
         initial={MOTION_AVATAR_INITIAL}
         animate={MOTION_AVATAR_ANIMATE}
-        className="rounded-full shadow-xl border border-white flex items-center justify-center text-white text-lg font-semibold"
+        className="flex items-center justify-center rounded-full border border-white text-lg font-semibold text-white shadow-xl"
       >
         {children?.charAt(0)}
       </motion.div>
       {$isCommentValid(comment) && (
         <motion.div
           style={{ backgroundColor }}
-          className="px-2 py-1 rounded-md"
+          className="rounded-md px-2 py-1"
           variants={{
             hidden: {
               opacity: 0,

@@ -44,7 +44,7 @@ function JoinParty({ error }: JoinPartyProps): JSX.Element {
   }, [hasError, params.partyId, router]);
 
   return (
-    <main className="h-screen flex flex-col items-center justify-center">
+    <main className="flex h-screen flex-col items-center justify-center">
       {hasError ? (
         <JoinPartyFailure error={error} />
       ) : (

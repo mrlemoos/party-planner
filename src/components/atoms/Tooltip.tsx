@@ -109,7 +109,7 @@ export default function Tooltip({
             'radix-side-bottom:animate-slide-up-fade',
             'radix-side-left:animate-slide-right-fade',
             'inline-flex items-center rounded-md px-4 py-2',
-            'rounded-md shadow-xl cursor-default',
+            'cursor-default rounded-md shadow-xl',
             'text-xs',
             'bg-coal text-white',
             'dark:bg-white dark:text-coal',

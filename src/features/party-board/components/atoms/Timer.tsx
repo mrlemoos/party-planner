@@ -129,14 +129,14 @@ export default function Timer(): JSX.Element | null {
 
   return (
     <AfloatBottomBar
-      className="flex items-center gap-2 px-3 py-2 transition-all bg-red-700 pointer-events-none animate-scale-in-content"
+      className="pointer-events-none flex animate-scale-in-content items-center gap-2 bg-red-700 px-3 py-2 transition-all"
       style={{
         backgroundColor,
         color,
       }}
     >
       <ClockIcon height={20} width={20} />
-      <span className={cls('text-lg w-12', Inter.className)}>{time}</span>
+      <span className={cls('w-12 text-lg', Inter.className)}>{time}</span>
     </AfloatBottomBar>
   );
 }

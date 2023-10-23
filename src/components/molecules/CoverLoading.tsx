@@ -33,7 +33,7 @@ export default function CoverLoading({
   return (
     <div
       className={cls(
-        'flex flex-col justify-center items-center fixed top-0 bottom-0 left-0 right-0',
+        'fixed bottom-0 left-0 right-0 top-0 flex flex-col items-center justify-center',
         className,
       )}
       {...props}

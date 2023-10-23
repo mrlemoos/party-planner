@@ -49,18 +49,18 @@ function DangerToast({
   return (
     <div
       className={cls(
-        'md:w-[420px] flex flex-col gap-y-1 bg-white px-2 py-1 rounded-lg',
+        'flex flex-col gap-y-1 rounded-lg bg-white px-2 py-1 md:w-[420px]',
         className,
       )}
       {...props}
     >
       <div className="flex items-center gap-1 text-rose-800">
         <Cross2Icon height={18} width={18} />
-        <span className={cls('font-semibold text-md')}>{header}</span>
+        <span className={cls('text-md font-semibold')}>{header}</span>
       </div>
-      <div className="flex items-center gap-2 text-black ml-6">
-        <span className="font-normal text-sm flex-1">{children}</span>
-        <div className={cls('flex items-center text-sm gap-1 mb-1')}>
+      <div className="ml-6 flex items-center gap-2 text-black">
+        <span className="flex-1 text-sm font-normal">{children}</span>
+        <div className={cls('mb-1 flex items-center gap-1 text-sm')}>
           {action}
         </div>
       </div>
@@ -78,7 +78,7 @@ const Action = ({
   <button
     {...props}
     className={cls(
-      'bg-gray-200 text-gray-800 px-2 py-1 rounded-md',
+      'rounded-md bg-gray-200 px-2 py-1 text-gray-800',
       'hover:bg-gray-300 hover:text-gray-950',
       'transition-colors duration-200 ease-in-out',
       className,

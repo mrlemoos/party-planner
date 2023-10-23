@@ -12,7 +12,7 @@ const BADGE_STYLE: CSSProperties = {
 function PointTicketsBanner(): JSX.Element {
   return (
     <section className="flex flex-col">
-      <h2 className="text-xl font-semibold mb-3 text-white">Point Tickets</h2>
+      <h2 className="mb-3 text-xl font-semibold text-white">Point Tickets</h2>
       <ul>
         <ListItem>
           <span className="text-lg">Fibonacci</span>

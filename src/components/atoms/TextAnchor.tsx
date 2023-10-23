@@ -13,8 +13,8 @@ export default function TextAnchor({
   return (
     <Link
       className={cls(
-        'decoration-transparent font-medium px-2 py-1',
-        'text-purple-900 border-b-transparent border-b-2',
+        'px-2 py-1 font-medium decoration-transparent',
+        'border-b-2 border-b-transparent text-purple-900',
         'hover:border-b-purple-300',
         'dark:text-purple-200',
         className,

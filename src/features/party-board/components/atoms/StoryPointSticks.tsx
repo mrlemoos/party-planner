@@ -15,7 +15,7 @@ export default function StoryPointSticks({
   );
 
   return (
-    <div className={cls('flex justify-center items-center flex-wrap gap-1')}>
+    <div className={cls('flex flex-wrap items-center justify-center gap-1')}>
       {storyPointSticks.map((value) => (
         <div
           key={`${totalStoryPoints}-${value}`}

@@ -1,6 +1,6 @@
 export default function convertFromObjectWithPrefix<T>(
   object: any,
-  prefix: string
+  prefix: string,
 ): T {
   const convertedObject = {} as T;
 
@@ -12,7 +12,7 @@ export default function convertFromObjectWithPrefix<T>(
     const value = object[key];
     const convertedKey = key.replace(
       prefix,
-      ''
+      '',
     ) as keyof typeof convertedObject;
 
     convertedObject[convertedKey as keyof T] = value;

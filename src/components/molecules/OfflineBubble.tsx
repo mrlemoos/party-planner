@@ -23,7 +23,7 @@ function OfflineBubble({
   return (
     <Bubble
       aria-label={ariaLabel$}
-      className={cls('bg-rose-500 border-gray-500', className)}
+      className={cls('border-gray-500 bg-rose-500', className)}
       {...props}
     />
   );

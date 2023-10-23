@@ -33,10 +33,10 @@ export default function StartVote(): JSX.Element | null {
 
   if (isCurrentUserPartyOwner) {
     return (
-      <div className="flex justify-center animate-scale-in-content">
+      <div className="flex animate-scale-in-content justify-center">
         {voteSession?.currentStoryId &&
         story?.storyId === voteSession.currentStoryId ? (
-          <div className="flex flex-col items-center mt-4">
+          <div className="mt-4 flex flex-col items-center">
             <span className="font-normal">
               Tap the button below to start voting on{' '}
               <span className="font-medium">{story?.title}</span>.
@@ -55,7 +55,7 @@ export default function StartVote(): JSX.Element | null {
 
   if (partyOwner?.displayName) {
     return (
-      <h5 className="text-xl animate-scale-in">
+      <h5 className="animate-scale-in text-xl">
         Waiting for the{' '}
         <span className="font-medium">{partyOwner.displayName}</span> to start
         voting 🥱.

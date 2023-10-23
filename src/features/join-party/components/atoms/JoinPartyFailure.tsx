@@ -24,7 +24,7 @@ interface JoinPartyFailureProps {
 
 function $getRetryReference(
   initialSearchParams: ReadonlyURLSearchParams,
-  pathname: string
+  pathname: string,
 ): string {
   const retry$ = initialSearchParams.get('retry');
 
@@ -68,27 +68,27 @@ function JoinPartyFailure({
   }
 
   return (
-    <div className="flex flex-col justify-center items-center w-9/12 my-4 animate-scale-in-content">
+    <div className="my-4 flex w-9/12 animate-scale-in-content flex-col items-center justify-center">
       <ErrorBox
         error={error}
         hasBackButton={false}
         footer={
-          <div className="flex flex-col justify-center items-center gap-3 mt-4">
+          <div className="mt-4 flex flex-col items-center justify-center gap-3">
             <Link
               href={$getRetryReference(searchParams, pathname)}
               target="_self"
               className={cls(
-                'font-medium px-4 py-2 rounded-lg transition-all',
+                'rounded-lg px-4 py-2 font-medium transition-all',
                 'flex items-center justify-center gap-2',
                 'border-2 border-solid',
-                'bg-red-100 text-red-900 border-red-100',
-                'dark:bg-coal dark:text-white dark:border-coal'
+                'border-red-100 bg-red-100 text-red-900',
+                'dark:border-coal dark:bg-coal dark:text-white',
               )}
             >
               <ReloadIcon />
               Retry
             </Link>
-            <Link href="/" target="_self" className="text-gray-500 mt-6">
+            <Link href="/" target="_self" className="mt-6 text-gray-500">
               Back to home
             </Link>
           </div>

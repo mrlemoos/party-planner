@@ -11,7 +11,7 @@ const Container = ({
   ...props
 }: ContainerProps): ReactElement => (
   <div
-    className={cls('w-screen h-screen', className)}
+    className={cls('h-screen w-screen', className)}
     style={{
       width: '100vw',
       height: '100vh',

@@ -13,9 +13,9 @@ export default function AfloatRightBar({
     <div
       className={cls(
         'z-30',
-        'shadow-xl dark:shadow-md rounded-2xl bg-white dark:bg-coal dark:text-white',
+        'rounded-2xl bg-white shadow-xl dark:bg-coal dark:text-white dark:shadow-md',
         'border border-gray-200 dark:border-gray-700',
-        'hidden md:block fixed right-3 top-[30%] w-16 px-4 py-3 min-h-[300px] max-h-screen',
+        'fixed right-3 top-[30%] hidden max-h-screen min-h-[300px] w-16 px-4 py-3 md:block',
         'animate-slide-left-fade',
         className,
       )}

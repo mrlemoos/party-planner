@@ -37,14 +37,14 @@ export default function UserStoryListEmptyState({
   return (
     <div
       className={cls(
-        'flex flex-col justify-center items-center gap-6 p-3',
+        'flex flex-col items-center justify-center gap-6 p-3',
         className,
       )}
       style={{ minHeight: 400 }}
     >
       <h3
         className={cls(
-          'inline-block font-bold text-xl select-none',
+          'inline-block select-none text-xl font-bold',
           Poppins.className,
         )}
       >
@@ -53,14 +53,14 @@ export default function UserStoryListEmptyState({
       {isOwner ? (
         <Fragment>
           {hasCallToAction && (
-            <span className={cls('text-gray-500 text-sm select-none')}>
+            <span className={cls('select-none text-sm text-gray-500')}>
               Click on the button below to add user stories.
             </span>
           )}
           {callToAction}
         </Fragment>
       ) : (
-        <span className={cls('text-gray-500 text-sm select-none')}>
+        <span className={cls('select-none text-sm text-gray-500')}>
           The party owner has not added any user stories yet. Maybe you should
           get a hot cup of coffee ☕️
         </span>

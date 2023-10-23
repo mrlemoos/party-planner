@@ -82,7 +82,7 @@ function ErrorBox({
   return (
     <div
       className={cls(
-        'flex flex-col flex-1 gap-6 justify-center items-center rounded-lg bg-red-200 dark:bg-light-coal p-4 sm:p-6 border-2 border-red-100 dark:border-coal',
+        'flex flex-1 flex-col items-center justify-center gap-6 rounded-lg border-2 border-red-100 bg-red-200 p-4 dark:border-coal dark:bg-light-coal sm:p-6',
         {
           'container mx-auto': isContainer,
         },
@@ -96,7 +96,7 @@ function ErrorBox({
         />
         <h1
           className={cls(
-            'font-semibold text-2xl text-black dark:text-white',
+            'text-2xl font-semibold text-black dark:text-white',
             Poppins.className,
           )}
         >
@@ -111,7 +111,7 @@ function ErrorBox({
           Please try again later
         </h3>
       )}
-      <h2 className="font-medium text-lg text-black dark:text-white">
+      <h2 className="text-lg font-medium text-black dark:text-white">
         {error}
       </h2>
 

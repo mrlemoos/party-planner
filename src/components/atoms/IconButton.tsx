@@ -41,7 +41,7 @@ const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
     <button
       ref={ref}
       className={cls(
-        'flex justify-center items-center cursor-pointer',
+        'flex cursor-pointer items-center justify-center',
         className,
       )}
       type={type}

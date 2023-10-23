@@ -9,7 +9,7 @@ const GhostButton = forwardRef<HTMLButtonElement, GhostButtonProps>(
     <button
       ref={ref}
       className={cls(
-        'p-0 m-0 outline-none border-none bg-transparent',
+        'm-0 border-none bg-transparent p-0 outline-none',
         className,
       )}
       type={type}

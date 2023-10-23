@@ -61,14 +61,14 @@ function FeatureShowcase({
   return (
     <div
       className={cls(
-        'flex items-center m-8',
+        'm-8 flex items-center',
         showcaseContainer,
-        'hover:scale-150'
+        'hover:scale-150',
       )}
     >
       <div className={eyeCatcher}>{children}</div>
       <div className="ml-8">
-        <h3 className="text-xl font-semibold mb-4">{header}</h3>
+        <h3 className="mb-4 text-xl font-semibold">{header}</h3>
         <p className="text-gray-500">{description}</p>
       </div>
     </div>

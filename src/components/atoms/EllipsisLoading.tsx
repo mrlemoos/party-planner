@@ -15,26 +15,26 @@ export default function EllipsisLoading({
   return (
     <div
       className={cls(
-        'flex justify-center items-center gap-x-1',
+        'flex items-center justify-center gap-x-1',
         containerClassName,
       )}
       {...props}
     >
       <div
         className={cls(
-          'h-2.5 w-2.5 bg-gray-400 rounded-full animate-pulse',
+          'h-2.5 w-2.5 animate-pulse rounded-full bg-gray-400',
           className,
         )}
       />
       <div
         className={cls(
-          'h-2.5 w-2.5 bg-gray-400 rounded-full animate-pulse',
+          'h-2.5 w-2.5 animate-pulse rounded-full bg-gray-400',
           className,
         )}
       />
       <div
         className={cls(
-          'h-2.5 w-2.5 bg-gray-400 rounded-full animate-pulse',
+          'h-2.5 w-2.5 animate-pulse rounded-full bg-gray-400',
           className,
         )}
       />

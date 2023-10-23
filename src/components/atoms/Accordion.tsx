@@ -56,7 +56,7 @@ class AccordionControlledStateEvent<T extends string> {
      * @see {@link AccordionProps}
      * @see {@link AccordionProps.items}
      */
-    public readonly items: AccordionItem<T>[]
+    public readonly items: AccordionItem<T>[],
   ) {}
 }
 
@@ -160,7 +160,7 @@ function Accordion<T extends string>({
         onFocusChange(event);
       }
     },
-    [items, onFocusChange]
+    [items, onFocusChange],
   );
 
   return (
@@ -168,7 +168,7 @@ function Accordion<T extends string>({
       type="single"
       value={value}
       collapsible={isCollapsible}
-      className={cls('space-y-4 w-full', className)}
+      className={cls('w-full space-y-4', className)}
       onValueChange={handleValueChange}
     >
       {items.map(({ header, content, key: key$ }) => {
@@ -180,17 +180,17 @@ function Accordion<T extends string>({
             key={key}
             value={key}
             className={cls(
-              'border-l border-t border-r border-transparent rounded-t-lg',
+              'rounded-t-lg border-l border-r border-t border-transparent',
               {
-                'dark:bg-light-coal bg-gray-100': isSelected,
+                'bg-gray-100 dark:bg-light-coal': isSelected,
               },
-              'transition-all focus-within:animate-slide-up-fade'
+              'transition-all focus-within:animate-slide-up-fade',
             )}
           >
             <Header className="w-full">
               <Trigger
                 className={cls(
-                  'inline-flex w-full items-center justify-between px-4 py-3 text-left'
+                  'inline-flex w-full items-center justify-between px-4 py-3 text-left',
                 )}
               >
                 <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
@@ -202,12 +202,12 @@ function Accordion<T extends string>({
                     'group-radix-state-open:rotate-180 group-radix-state-open:duration-300',
                     {
                       'rotate-180': isSelected,
-                    }
+                    },
                   )}
                 />
               </Trigger>
             </Header>
-            <Content className="pt-1 w-full px-4 pb-3 animate-scale-in-content">
+            <Content className="w-full animate-scale-in-content px-4 pb-3 pt-1">
               <div className="text-sm text-gray-700 dark:text-gray-400">
                 {content}
               </div>

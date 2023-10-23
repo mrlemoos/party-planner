@@ -22,7 +22,7 @@ const style: CSSProperties = {
 export default function UserVoteIndicator(): JSX.Element {
   return (
     <Tooltip content="Your vote" side="top" sideOffset={18}>
-      <div className="absolute rounded-full cursor-help z-[1]" style={style} />
+      <div className="absolute z-[1] cursor-help rounded-full" style={style} />
     </Tooltip>
   );
 }

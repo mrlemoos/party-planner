@@ -50,7 +50,7 @@ function Badge({
 
   return (
     <span
-      className={cls('px-2 py-1 text-sm rounded-md', className)}
+      className={cls('rounded-md px-2 py-1 text-sm', className)}
       style={combinedStyle}
       {...props}
     >

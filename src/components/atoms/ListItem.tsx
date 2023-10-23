@@ -10,7 +10,7 @@ export default function ListItem({
   ...props
 }: ListItemProps): JSX.Element {
   return (
-    <li className={cls('list-none flex', className)} {...props}>
+    <li className={cls('flex list-none', className)} {...props}>
       {children}
     </li>
   );

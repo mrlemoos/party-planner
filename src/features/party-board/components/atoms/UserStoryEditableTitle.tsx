@@ -31,7 +31,7 @@ export default function UserStoryEditableTitle({
 
   return (
     <span
-      className="font-normal flex-1"
+      className="flex-1 font-normal"
       contentEditable={true}
       onBlur={handleTitleChange}
       dangerouslySetInnerHTML={{ __html: title }}

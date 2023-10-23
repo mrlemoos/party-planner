@@ -19,24 +19,24 @@ function Logo({
   return (
     <span
       className={cls(
-        'text-sm rounded-full py-2 cursor-pointer border border-transparent',
+        'cursor-pointer rounded-full border border-transparent py-2 text-sm',
         isMinimum
-          ? 'w-8 h-8 flex items-center justify-center bg-purple-100 text-lg'
-          : 'px-3 py-2 bg-purple-800 text-white relative',
+          ? 'flex h-8 w-8 items-center justify-center bg-purple-100 text-lg'
+          : 'relative bg-purple-800 px-3 py-2 text-white',
         'transition-all',
-        'dark:bg-purple-800 dark:border-white',
+        'dark:border-white dark:bg-purple-800',
         {
-          'hover:shadow-2xl hover:bg-white hover:scale-110 hover:text-black':
+          'hover:scale-110 hover:bg-white hover:text-black hover:shadow-2xl':
             isInteractive,
         },
         'flex items-center gap-3',
         Poppins.className,
-        className
+        className,
       )}
       {...props}
     >
       {!isMinimum && (
-        <span className={cls('absolute text-2xl -top-3 -right-3 -order-1')}>
+        <span className={cls('absolute -right-3 -top-3 -order-1 text-2xl')}>
           🎉
         </span>
       )}

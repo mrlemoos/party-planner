@@ -31,7 +31,7 @@ export default function UserStoryEditableStoryId({
   return (
     <span
       contentEditable={true}
-      className="text-gray-500 dark:text-gray-700 text-sm font-thin"
+      className="text-sm font-thin text-gray-500 dark:text-gray-700"
       dangerouslySetInnerHTML={{ __html: storyId }}
       onBlur={handleStoryIdChange}
     />

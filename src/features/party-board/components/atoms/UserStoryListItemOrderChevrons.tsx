@@ -62,7 +62,7 @@ export default function UserStoryListItemOrderChevrons({
   return (
     <div
       className={cls('flex flex-col items-center', {
-        'opacity-50 pointer-events-none': isDisabled,
+        'pointer-events-none opacity-50': isDisabled,
       })}
     >
       {!isMoveUpActionHidden && (

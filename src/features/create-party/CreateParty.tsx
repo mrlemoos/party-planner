@@ -24,7 +24,7 @@ export default function CreateParty({
   return (
     <CreatePartyProvider partyId={partyId} partyLink={partyLink}>
       <div
-        className="flex flex-col justify-center items-center fixed inset-0"
+        className="fixed inset-0 flex flex-col items-center justify-center"
         style={{ width: '100vw', height: '100vh' }}
       >
         <Fragment>

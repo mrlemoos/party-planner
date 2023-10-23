@@ -20,7 +20,7 @@ export default function SecondaryAnchor({
       href={href}
       target={target}
       className={cls(
-        'decoration-transparent text-gray-500 dark:text-gray-300',
+        'text-gray-500 decoration-transparent dark:text-gray-300',
         'hover:text-black dark:hover:text-white',
         className,
       )}

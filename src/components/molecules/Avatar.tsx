@@ -141,7 +141,7 @@ export default function Avatar({
             }
           : 'random',
       }),
-    [getUserAvatarAppearance, userId, isDisabled]
+    [getUserAvatarAppearance, userId, isDisabled],
   );
 
   return (
@@ -153,13 +153,13 @@ export default function Avatar({
       <div
         className={cls(
           'rounded-full border-[1px] border-coal dark:border-white',
-          'font-bold flex justify-center items-center cursor-default',
+          'flex cursor-default items-center justify-center font-bold',
           {
             relative: isPartyOwner,
             'border-gray-500': isDisabled,
           },
-          size === 'small' ? 'w-6 h-6 text-xs' : 'w-8 h-8',
-          className
+          size === 'small' ? 'h-6 w-6 text-xs' : 'h-8 w-8',
+          className,
         )}
         {...props}
         style={{ backgroundColor }}
@@ -167,8 +167,8 @@ export default function Avatar({
         {isPartyOwner && (
           <span
             className={cls(
-              'absolute -top-4 -right-[5px] text-xl rotate-[30deg]',
-              crownClassName
+              'absolute -right-[5px] -top-4 rotate-[30deg] text-xl',
+              crownClassName,
             )}
           >
             👑

@@ -23,7 +23,7 @@ const BANNER_COMPONENT_BY_PRESENTATION_INDEX = {
 function PrincipleBanner(): JSX.Element {
   const searchParams = useSearchParams();
   const presentationIndexQuery = searchParams.get(
-    SearchParamsPresentationKeyMap.currentPresentationIndex
+    SearchParamsPresentationKeyMap.currentPresentationIndex,
   );
   const presentationKey = (presentationIndexQuery ??
     'collaboration') as keyof typeof BANNER_COMPONENT_BY_PRESENTATION_INDEX;

@@ -40,14 +40,14 @@ const TRANSITION_DURATION_BASIS = 0.5;
 function CollaborationBanner(): JSX.Element {
   return (
     <section className="flex flex-col">
-      <h2 className="text-2xl font-semibold mb-3 text-white">Collaboration</h2>
+      <h2 className="mb-3 text-2xl font-semibold text-white">Collaboration</h2>
       <span className="text-white">
         Get your team aligned with realtime collaboration.
       </span>
 
       <br />
 
-      <div className="flex items-center flex-col relative">
+      <div className="relative flex flex-col items-center">
         {FAKE_USERS.map(({ username, comment }, pos) => {
           const backgroundColor = FAKE_USER_AVATAR_COLORS[pos];
 

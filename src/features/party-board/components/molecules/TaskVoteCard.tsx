@@ -112,7 +112,7 @@ export default function TaskVoteCard({
       <motion.div
         onClick={handleVoteStory}
         className={cls(
-          'py-6 px-1 bg-white rounded-lg shadow-md flex flex-col justify-between items-center',
+          'flex flex-col items-center justify-between rounded-lg bg-white px-1 py-6 shadow-md',
           disabled ? 'pointer-events-none cursor-default' : 'cursor-pointer',
         )}
         onMouseEnter={handleMouseEnter}
@@ -130,13 +130,13 @@ export default function TaskVoteCard({
         style={motionStyle}
       >
         <div aria-hidden="true" />
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center justify-center">
           <span className="font-medium text-black" style={cardValueStyle}>
             {cardValue}
           </span>
           <StoryPointSticks totalStoryPoints={cardValue} />
         </div>
-        <span className="mb-3 px-4 text-center text-xs text-gray-500 font-medium">
+        <span className="mb-3 px-4 text-center text-xs font-medium text-gray-500">
           {importantComment}
         </span>
       </motion.div>

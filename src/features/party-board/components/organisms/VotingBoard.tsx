@@ -50,15 +50,15 @@ export default function VotingBoard({
   );
 
   return (
-    <div className="flex flex-col gap-3 relative">
+    <div className="relative flex flex-col gap-3">
       {hasUserStory && (
         <div className="flex items-center gap-2">
           {!isGeneratedStoryId(computedStory.storyId) && (
-            <span className="font-normal text-gray-500 animate-scale-in-content">
+            <span className="animate-scale-in-content font-normal text-gray-500">
               {computedStory.storyId}
             </span>
           )}
-          <span className="font-medium animate-scale-in-content">
+          <span className="animate-scale-in-content font-medium">
             {computedStory.title}
           </span>
         </div>
@@ -69,7 +69,7 @@ export default function VotingBoard({
           initial={{ height: 0 }}
           animate={{ height: '100%', transition: { duration: 0.5 } }}
           exit={{ height: 0 }}
-          className="flex justify-center items-center flex-wrap gap-3 mb-8"
+          className="mb-8 flex flex-wrap items-center justify-center gap-3"
         >
           {earlyFibonacciSequence.map(({ value, importantComment }) => (
             <TaskVoteCard

@@ -60,7 +60,7 @@ const ClipboardBlock = ({
   return (
     <button
       className={cls(
-        'rounded-md h-10 min-w-[100px] pl-3 pr-1 py-2 flex items-center justify-center gap-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300',
+        'flex h-10 min-w-[100px] items-center justify-center gap-2 rounded-md bg-gray-100 py-2 pl-3 pr-1 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
         className,
       )}
       onClick={handleClick}
@@ -72,7 +72,7 @@ const ClipboardBlock = ({
       <span className="block md:hidden">Click here to copy party link</span>
       <div
         className={cls(
-          'transition-all w-8 h-8 rounded-sm flex justify-center items-center gap-2 bg-transparent',
+          'flex h-8 w-8 items-center justify-center gap-2 rounded-sm bg-transparent transition-all',
         )}
         title="Copied to your clipboard"
       >

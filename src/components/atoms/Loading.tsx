@@ -22,22 +22,22 @@ export default function Loading({
 }: LoadingProps): JSX.Element {
   return (
     <div
-      className={cls('flex flex-col justify-center items-center', className)}
+      className={cls('flex flex-col items-center justify-center', className)}
       {...props}
     >
       {hasPartyEmoji && (
         <div
           className={cls(
-            'motion-safe:animate-bounce motion-reduce:hidden text-2xl pointer-events-none',
+            'pointer-events-none text-2xl motion-safe:animate-bounce motion-reduce:hidden',
             emojiClassName,
           )}
         >
           🎉
         </div>
       )}
-      <div className="flex items-center pointer-events-none">
+      <div className="pointer-events-none flex items-center">
         <Logo
-          className={cls('animate-bounce mr-3', logoClassName)}
+          className={cls('mr-3 animate-bounce', logoClassName)}
           isMinimum={isLogoMinimum}
         />
         <span className="text-xl">{children}</span>

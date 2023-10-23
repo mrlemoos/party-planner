@@ -18,7 +18,7 @@ const Label = ({
 }: LabelProps): ReactElement => (
   <label
     className={cls(
-      'block uppercase tracking-wide text-gray-700 dark:text-gray-500 text-xs font-bold mb-2',
+      'mb-2 block text-xs font-bold uppercase tracking-wide text-gray-700 dark:text-gray-500',
       className,
     )}
     htmlFor={htmlFor}

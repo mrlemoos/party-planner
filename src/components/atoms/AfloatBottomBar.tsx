@@ -24,7 +24,7 @@ export default function AfloatBottomBar({
   return (
     <div
       className={cls(
-        'fixed bottom-8 left-[50%] translate-y-[50%] shadow-2xl bg-white dark:bg-light-coal rounded-md',
+        'fixed bottom-8 left-[50%] translate-y-[50%] rounded-md bg-white shadow-2xl dark:bg-light-coal',
         className,
       )}
       style={style}

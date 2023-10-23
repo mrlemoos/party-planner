@@ -21,7 +21,7 @@ function Bubble({
   return (
     <div
       aria-label={ariaLabel$}
-      className={cls('w-3 h-3 rounded-full border', className)}
+      className={cls('h-3 w-3 rounded-full border', className)}
       {...props}
     />
   );

@@ -4,8 +4,8 @@ import RobotoMono from '@root/styles/RobotoMono';
 
 export default function Description(): JSX.Element {
   return (
-    <div className="mx-auto max-w-[250px] md:max-w-[600px] mt-3 flex flex-col items-center">
-      <h2 className="text-gray-700 dark:text-gray-300 text-center sm:text-xs">
+    <div className="mx-auto mt-3 flex max-w-[250px] flex-col items-center md:max-w-[600px]">
+      <h2 className="text-center text-gray-700 dark:text-gray-300 sm:text-xs">
         You&rsquo;ve been crowned the{' '}
         <span className="font-semibold underline">owner</span> of the party. 👑
       </h2>
@@ -14,7 +14,7 @@ export default function Description(): JSX.Element {
         <span
           className={cls(
             RobotoMono.className,
-            'text-red-500 font-bold bg-gray-700 text-sm p-1 text-center',
+            'bg-gray-700 p-1 text-center text-sm font-bold text-red-500',
           )}
         >
           Party ID Link
