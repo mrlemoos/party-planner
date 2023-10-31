@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
-    "@commitlint/config-conventional": "^17.7.0",
+    "@commitlint/config-conventional": "^18.1.0",
     "@mdx-js/loader": "^2.3.0",
     "@next/mdx": "^13.5.3",
     "@semantic-release/changelog": "^6.0.3",
