@@ -4,3 +4,5 @@ build
 .vercel
 
 src/*.d.ts
+
+./scripts/*.js

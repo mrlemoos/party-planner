@@ -18,7 +18,7 @@ export default class FirebaseClientService {
 
   private async loadClientCredentialOptions(): Promise<FirebaseOptions> {
     try {
-      const credentialJSONFile = await import('./_/firebase-client-credential-config.json')
+      const credentialJSONFile = await import('./_/firebase-client-credentials.json')
       return credentialJSONFile as FirebaseOptions
     } catch {
       const credentialEnvironmentVariable = process.env.NEXT_PUBLIC_FIREBASE_CLIENT_CREDENTIAL_SCHEMA

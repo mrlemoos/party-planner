@@ -13,7 +13,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "tsc ./scripts/environment/write-firebase-credential-schema-files.ts && node ./scripts/environment/write-firebase-credential-schema-files.js && rimraf ./scripts/environment/write-firebase-credential-schema-files.js",
+    "prebuild": "tsc ./scripts/environment/write-firebase-credential-schema-files.ts && node ./scripts/environment/write-firebase-credential-schema-files.js && rm -rf ./scripts/environment/write-firebase-credential-schema-files.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -66,7 +66,6 @@
     "eslint-plugin-react": "^7.33.2",
     "prettier-plugin-tailwindcss": "^0.5.6",
     "prisma": "^5.6.0",
-    "rimraf": "^5.0.5",
     "tailwindcss-radix": "^2.8.0",
     "ts-node": "^10.9.1",
     "typescript": "5.2.2"
