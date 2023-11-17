@@ -1,7 +1,4 @@
-import { type FirebaseApp, initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-
-import firebaseClientCredentialConfig from './_/firebase-client-credential-config.json'
+import { type FirebaseApp, initializeApp, type FirebaseOptions } from 'firebase/app'
 
 /**
  * The service that provides access to the Firebase Admin SDK for the project to use on the client- and/or server-side
@@ -17,24 +14,34 @@ export default class FirebaseClientService {
    *
    * @see https://firebase.google.com/docs/web/setup#add-sdks-initialize
    */
-  private readonly FIREBASE_CONFIG = firebaseClientCredentialConfig
+  private readonly FIREBASE_CONFIG: FirebaseOptions | undefined
+
+  private async loadClientCredentialOptions(): Promise<FirebaseOptions> {
+    try {
+      const credentialJSONFile = await import('./_/firebase-client-credential-config.json')
+      return credentialJSONFile as FirebaseOptions
+    } catch {
+      const credentialEnvironmentVariable = process.env.NEXT_PUBLIC_FIREBASE_CLIENT_CREDENTIAL_SCHEMA
+      return JSON.parse(credentialEnvironmentVariable) as FirebaseOptions
+    }
+  }
 
   /**
    * Connects the application to Firebase and returns the Firebase Client SDK instance.
    */
-  private connect(): FirebaseApp {
-    return initializeApp(this.FIREBASE_CONFIG)
+  private async connect(): Promise<FirebaseApp> {
+    const options = await this.loadClientCredentialOptions()
+
+    return initializeApp(options)
   }
 
   // The singleton instance of the Firebase Client SDK.
   private $$singletonFirebaseClientInstance: FirebaseApp | null = null
 
-  public get instance(): FirebaseApp {
+  public async singleton(): Promise<FirebaseApp> {
     if (this.$$singletonFirebaseClientInstance === null) {
-      this.$$singletonFirebaseClientInstance = this.connect()
+      this.$$singletonFirebaseClientInstance = await this.connect()
     }
     return this.$$singletonFirebaseClientInstance
   }
-
-  public readonly auth = getAuth(this.instance)
 }
