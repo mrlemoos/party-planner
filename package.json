@@ -22,7 +22,8 @@
     "prisma:pull": "prisma db pull",
     "prisma:generate": "prisma generate",
     "script": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'",
-    "firebase:write-credentials": "sh ./scripts/firebase/write-credentials.sh"
+    "firebase:write-credentials": "sh ./scripts/firebase/write-credentials.sh",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.27.1",
