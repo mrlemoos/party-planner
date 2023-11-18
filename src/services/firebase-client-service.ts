@@ -9,13 +9,11 @@ import { type FirebaseApp, initializeApp, type FirebaseOptions } from 'firebase/
  */
 export default class FirebaseClientService {
   /**
-   * The object that carries the credentials for the Firebase Client SDK. 🚨 This must only be used in the client-
+   * Loads the object that carries the credentials for the Firebase Client SDK. 🚨 This must only be used in the client-
    * and/or server-side portion of the codebase.
    *
    * @see https://firebase.google.com/docs/web/setup#add-sdks-initialize
    */
-  private readonly FIREBASE_CONFIG: FirebaseOptions | undefined
-
   private async loadClientCredentialOptions(): Promise<FirebaseOptions> {
     try {
       const credentialJSONFile = await import('./_/firebase-client-credentials.json')
