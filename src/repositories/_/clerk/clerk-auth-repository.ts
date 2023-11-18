@@ -1,12 +1,8 @@
 import { currentUser as getClerkCurrentUser } from '@clerk/nextjs/server'
 import { auth } from '@clerk/nextjs'
 
-import AuthLoginDataTransferObject from '@root/dto/auth-login.dto'
-import CreateAccountDataTransferObject from '@root/dto/create-account.dto'
-import ServiceMethodNotImplementedException from '@root/exceptions/service-method-not-implemented-exception'
 import AuthRepository from '@root/repositories/auth/auth-repository'
 import type CurrentUserResult from '@root/repositories/auth/current-user-result'
-import type AuthLoginResult from '@root/repositories/auth/auth-login-result'
 
 class ClerkAuthRepository extends AuthRepository {
   async currentUser(): Promise<CurrentUserResult | undefined> {
@@ -42,12 +38,6 @@ class ClerkAuthRepository extends AuthRepository {
     }
 
     return result ?? undefined
-  }
-  signUp(_dto: CreateAccountDataTransferObject): Promise<AuthLoginResult> {
-    throw new ServiceMethodNotImplementedException('signUp')
-  }
-  login(_dto: AuthLoginDataTransferObject): Promise<AuthLoginResult> {
-    throw new ServiceMethodNotImplementedException('login')
   }
 }
 
