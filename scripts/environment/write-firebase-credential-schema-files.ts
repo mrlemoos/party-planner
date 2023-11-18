@@ -1,7 +1,8 @@
-import { writeFile, stat } from 'node:fs/promises'
+import { writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 import { config } from 'dotenv'
+import { accessSync, constants } from 'node:fs'
 
 // Load the .env file if the environment we're not running this through the pipeline.
 config()
@@ -58,10 +59,21 @@ function locateAndParseJSONEnvironmentVariable(environmentVariableKey: keyof Nod
   }
 }
 
+function hasFile(pathname: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    try {
+      accessSync(pathname, constants.F_OK)
+      resolve(true)
+    } catch {
+      resolve(false)
+    }
+  })
+}
+
 async function writeFirebaseAdminCredentialsJSONFile(): Promise<void> {
-  if ((await stat(FIREBASE_CLIENT_CREDENTIALS_JSON_FILE_PATHNAME)).isFile()) {
+  if (await hasFile(FIREBASE_ADMIN_CREDENTIALS_JSON_FILE_PATHNAME)) {
     throw new Error(
-      `"${FIREBASE_CLIENT_CREDENTIALS_JSON_FILE_PATHNAME}" already exists. This script will not overwrite it.`,
+      `"${FIREBASE_ADMIN_CREDENTIALS_JSON_FILE_PATHNAME}" already exists. This script will not overwrite it.`,
     )
   }
 
@@ -69,11 +81,12 @@ async function writeFirebaseAdminCredentialsJSONFile(): Promise<void> {
     ADMIN_SDK_CREDENTIAL_SCHEMA_ENVIRONMENT_VARIABLE_KEY,
   )
 
-  await writeFile(FIREBASE_ADMIN_CREDENTIALS_JSON_FILE_PATHNAME, JSON.stringify(firebaseAdminCredentials))
+  const fileData = JSON.stringify(firebaseAdminCredentials)
+  await writeFile(FIREBASE_ADMIN_CREDENTIALS_JSON_FILE_PATHNAME, fileData)
 }
 
 async function writeFirebaseClientCredentialsJSONFile(): Promise<void> {
-  if ((await stat(FIREBASE_CLIENT_CREDENTIALS_JSON_FILE_PATHNAME)).isFile()) {
+  if (await hasFile(FIREBASE_CLIENT_CREDENTIALS_JSON_FILE_PATHNAME)) {
     throw new Error(
       `"${FIREBASE_CLIENT_CREDENTIALS_JSON_FILE_PATHNAME}" already exists. This script will not overwrite it.`,
     )
@@ -83,11 +96,22 @@ async function writeFirebaseClientCredentialsJSONFile(): Promise<void> {
     CLIENT_SDK_CREDENTIAL_SCHEMA_ENVIRONMENT_VARIABLE_KEY,
   )
 
-  await writeFile(FIREBASE_CLIENT_CREDENTIALS_JSON_FILE_PATHNAME, JSON.stringify(firebaseClientCredentials))
+  const fileData = JSON.stringify(firebaseClientCredentials)
+  await writeFile(FIREBASE_CLIENT_CREDENTIALS_JSON_FILE_PATHNAME, fileData)
 }
 
 async function main() {
-  await Promise.allSettled([writeFirebaseAdminCredentialsJSONFile, writeFirebaseClientCredentialsJSONFile])
+  try {
+    await writeFirebaseAdminCredentialsJSONFile()
+  } catch (error) {
+    console.error(`🚨  ERROR (Firebase Admin SDK): ${error} (This error will not interrupt the process.)`)
+  }
+  try {
+    await writeFirebaseClientCredentialsJSONFile()
+  } catch (error) {
+    console.error(`🚨  ERROR (Firebase Client SDK): ${error} (This error will not interrupt the process.)`)
+  }
+
   console.log('Firebase Admin and Client credential schema files have successfully been written 🎯')
 }
 
