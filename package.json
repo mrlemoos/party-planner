@@ -13,14 +13,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "tsc ./scripts/environment/write-firebase-credential-schema-files.ts && node ./scripts/environment/write-firebase-credential-schema-files.js && rm -rf ./scripts/environment/write-firebase-credential-schema-files.js",
+    "prebuild": "pnpm run firebase:write-credentials && pnpm run prisma:generate",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prisma-db:push": "prisma db push",
-    "prisma-db:pull": "prisma db pull",
+    "prisma:push": "prisma db push",
+    "prisma:pull": "prisma db pull",
     "prisma:generate": "prisma generate",
-    "script": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'"
+    "script": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'",
+    "firebase:write-credentials": "tsc ./scripts/environment/write-firebase-credential-schema-files.ts && node ./scripts/environment/write-firebase-credential-schema-files.js && rm -rf ./scripts/environment/write-firebase-credential-schema-files.js"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.27.1",
