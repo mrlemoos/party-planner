@@ -1,0 +1,21 @@
+on:
+  pull_request:
+    types:
+      - 'opened'
+jobs:
+  code-validation:
+    runs-on: ubuntu-latest
+    name: Code Validation 📋
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+      - name: Setup Node.js 🌲
+        uses: actions/setup-node@v2
+      - name: Install Dependencies 📦
+        run: pnpm install
+      - name: TypeScript Check 📊
+        run: pnpm run type-check
+      - name: Lint Analytics 🧹
+        run: pnpm run lint
+      - name: Test Analytics 🧪
+        run: pnpm run test
