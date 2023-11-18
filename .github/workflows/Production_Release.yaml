@@ -25,7 +25,7 @@ jobs:
       - name: Setup Node.js 🌲
         uses: actions/setup-node@v2
       - name: Install Dependencies 📦
-        run: pnpm install && pnpm list
+        run: npm i -g pnpm && pnpm install && pnpm list
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
         run: npm audit signatures
       - name: Version and Generate Release Notes 🖍️
