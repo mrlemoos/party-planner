@@ -44,7 +44,7 @@ function PlanCard({ price, currency = '$', name, children, unit }: PlanCardProps
         <Card.Description>
           <span className='flex items-center justify-end' aria-label={`${price} ${currency} per ${unit}`}>
             <span className='text-sm'>{currency}</span>
-            <span className='mb-2 text-3xl font-bold text-white'>{price}</span>
+            <span className='mb-2 text-3xl font-bold text-foreground'>{price}</span>
             <span className='text-sm font-normal'>/{unit}</span>
           </span>
         </Card.Description>
