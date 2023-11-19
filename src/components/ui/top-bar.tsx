@@ -5,8 +5,8 @@ import Link, { LinkProps } from 'next/link'
 import merge from '@root/util/merge'
 
 import Button from './button'
-import Emblem from './emblem'
 import FloatingHeader from './floating-header'
+import Logo from './logo'
 
 /**
  * The props for the `<TopBar.Button />` component.
@@ -59,7 +59,7 @@ function TopBar({ children, className, rightSide, ...props }: TopBarProps): JSX.
   return (
     <FloatingHeader className={merge('z-10 flex items-center justify-between px-4', className)} {...props}>
       <Link href='/'>
-        <Emblem size='sm' />
+        <Logo />
       </Link>
       <FloatingHeader.NavigationMenu>{children}</FloatingHeader.NavigationMenu>
       {rightSide}
