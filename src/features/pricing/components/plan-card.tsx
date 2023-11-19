@@ -38,22 +38,21 @@ interface PlanCardProps {
  */
 function PlanCard({ price, currency = '$', name, children, unit }: PlanCardProps): JSX.Element {
   return (
-    <Card className='flex min-h-[30vh] max-w-sm flex-col p-6 sm:w-72'>
-      <div className='flex-1'>
-        <Card.Title className='text-3xl'>{name}</Card.Title>
-        <Card.Description>
-          <span className='flex items-center justify-end' aria-label={`${price} ${currency} per ${unit}`}>
-            <span className='text-sm'>{currency}</span>
-            <span className='mb-2 text-3xl font-bold text-foreground'>{price}</span>
-            <span className='text-sm font-normal'>/{unit}</span>
-          </span>
-        </Card.Description>
-        <Card.Content>
-          <List>{children}</List>
-        </Card.Content>
-      </div>
+    <Card className='flex flex-col p-6 shadow-2xl'>
+      <Card.Title className='text-3xl'>{name}</Card.Title>
+      <Card.Description>
+        <span className='flex items-center justify-end' aria-label={`${price} ${currency} per ${unit}`}>
+          <span className='text-sm'>{currency}</span>
+          <span className='mb-2 text-3xl font-bold text-foreground'>{price}</span>
+          <span className='text-sm font-normal'>/{unit}</span>
+        </span>
+      </Card.Description>
+      <Card.Content className='h-full'>
+        <List>{children}</List>
+      </Card.Content>
+
       <Card.Footer>
-        <Button disabled={true} className='w-full'>
+        <Button disabled={true} className='w-full' variant='outline'>
           Coming soon
         </Button>
       </Card.Footer>
