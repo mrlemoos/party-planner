@@ -26,7 +26,7 @@ P&P provides a simple and feature-rich platform that contains all the necessary 
 
 ## License
 
-The Party&Planning project is licensed under the [AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0.en.html) license. You can find a copy of the license in the [LICENSE](./LICENSE) file or at <https://www.gnu.org/licenses/agpl-3.0.en.html>.
+The Party&Planning project is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) license. You can find a copy of the license in the [LICENSE](./LICENSE) file or at <https://www.apache.org/licenses/LICENSE-2.0>.
 
 ## Buy me a Coffee ☕️
 
