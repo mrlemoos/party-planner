@@ -1,7 +1,7 @@
 import { SignUp as ClerkSignUp } from '@clerk/nextjs'
 
-import Emblem from '@root/components/ui/emblem'
 import Heading from '@root/components/ui/heading'
+import Logo from '@root/components/ui/logo'
 import ClerkTheme from '@root/styles/3rd-party/clerk/ClerkTheme'
 import merge from '@root/util/merge'
 
@@ -20,7 +20,7 @@ interface SignUpFormProps {
 function SignUpForm({ className }: SignUpFormProps): JSX.Element {
   return (
     <div className={merge('flex select-none items-center gap-3 md:flex-col', className)}>
-      <Emblem />
+      <Logo />
       <Heading hierarchy='h2' className='mb-6 ml-3 text-2xl md:ml-0'>
         Hey, newcomer 👋
       </Heading>
