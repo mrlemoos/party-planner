@@ -48,7 +48,13 @@ interface LogoProps {
   /**
    * The class name that is merged with the default class name at the root element.
    */
-  className: string
+  className?: string
+  /**
+   * Given true, the logo will animate when the user hovers over its container area.
+   *
+   * @default true
+   */
+  isAnimated?: boolean
 }
 
 /**
@@ -56,21 +62,21 @@ interface LogoProps {
  *
  * @props {@link LogoProps}
  */
-function Logo({ className }: LogoProps): JSX.Element {
+function Logo({ className, isAnimated = true }: LogoProps): JSX.Element {
   const [hasUserHovered, setUserHasHovered] = useState(true)
 
   const handleHoverStart = useCallback(
     (/* DOM native */ _mouseEvent: MouseEvent, _info: EventInfo) => {
-      if (hasUserHovered) {
+      if (hasUserHovered || !isAnimated) {
         return
       }
       setUserHasHovered(true)
     },
-    [hasUserHovered],
+    [hasUserHovered, isAnimated],
   )
 
   useEffect(() => {
-    if (!hasUserHovered) {
+    if (!hasUserHovered || !isAnimated) {
       return
     }
 
@@ -79,7 +85,7 @@ function Logo({ className }: LogoProps): JSX.Element {
     }, 5000)
 
     return () => clearTimeout(timeout)
-  }, [hasUserHovered])
+  }, [hasUserHovered, isAnimated])
 
   const letteringAnimation = hasUserHovered ? expandAnimation.animate : expandAnimation.initial
   const emojiAnimation = hasUserHovered ? fadeInUpAnimation.animate : fadeInUpAnimation.initial
