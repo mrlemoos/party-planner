@@ -7,7 +7,7 @@ import LandingPage from '@root/features/landing-page/landing-page'
 import NonProtectedTopBar from '@root/features/non-protected-top-bar/non-protected-top-bar'
 
 /**
- * The metadata for the root page that will be indexed by search engines.
+ * The {@link Metadata | metadata} for the root page that will be indexed by search engines.
  */
 export const metadata: Metadata = {
   title: 'P&P  🎉',

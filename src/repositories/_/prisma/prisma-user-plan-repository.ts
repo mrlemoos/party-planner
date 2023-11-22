@@ -1,10 +1,11 @@
-import { PrismaClient, type UserPlan } from '@prisma/client'
+import { type UserPlan } from '@prisma/client'
 
 import UserPlanRepository from '@root/repositories/user/plan/user-plan-repository'
 import UserPlanNotFoundException from '@root/repositories/user/plan/user-plan-not-found-exception'
+import PrismaService from '@root/services/prisma-service'
 
 class PrismaUserPlanRepository extends UserPlanRepository {
-  private readonly PRISMA_CLIENT = new PrismaClient()
+  private readonly PRISMA_CLIENT = PrismaService.client()
 
   async fetchUserPlans(): Promise<UserPlan[]> {
     const userPlans = await this.PRISMA_CLIENT.userPlan.findMany()
