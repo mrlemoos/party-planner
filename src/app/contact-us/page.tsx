@@ -28,10 +28,25 @@ export const metadata: Metadata = {
   ],
 }
 
+interface ContactUsFormDefaultValues {
+  /**
+   * The first name from the currently logged in user. If the user is not logged in, this will be `undefined`.
+   */
+  firstName?: string
+  /**
+   * The last name from the currently logged in user. If the user is not logged in, this will be `undefined`.
+   */
+  lastName?: string
+  /**
+   * The email from the currently logged in user. If the user is not logged in, this will be `undefined`.
+   */
+  email?: string
+}
+
 /**
  * The function that gets the default values for the contact us form, if these form values exist.
  */
-async function getFormDefaultValues() {
+async function getFormDefaultValues(): Promise<ContactUsFormDefaultValues> {
   const authRepo = createAuthRepository()
 
   try {
@@ -41,11 +56,12 @@ async function getFormDefaultValues() {
       return {}
     }
 
-    const email = user.email
+    const { email, displayName } = user
 
-    if (user.displayName) {
-      if (user.displayName.includes(' ')) {
-        const [firstName, lastName] = user.displayName.split(' ')
+    if (displayName) {
+      if (displayName.includes(' ')) {
+        const [firstName, ...lastNameFragments] = displayName.split(' ')
+        const lastName = lastNameFragments.join(' ')
         return {
           firstName,
           lastName,
@@ -54,7 +70,7 @@ async function getFormDefaultValues() {
       }
 
       return {
-        firstName: user.displayName,
+        firstName: displayName,
         email,
       }
     }
