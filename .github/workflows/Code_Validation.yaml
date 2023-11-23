@@ -12,7 +12,7 @@ jobs:
       - name: Setup Node.js 🌲
         uses: actions/setup-node@v2
       - name: Install Dependencies 📦
-        run: pnpm install
+        run: npm i -g pnpm && pnpm install && pnpm list
       - name: TypeScript Check 📊
         run: pnpm run type-check
       - name: Lint Analytics 🧹
