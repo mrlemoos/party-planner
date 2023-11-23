@@ -28,6 +28,19 @@ interface CurrentUserResult {
    * The JWT token that can be used to authenticate the user in future requests.
    */
   token: string
+  /**
+   * Boolean that indicates whether or not the user has enabled two-factor authentication.
+   */
+  isTwoFactorAuthenticationEnabled: boolean
+  /**
+   * The username of the user. This is the value used as an option to sign in to the user's account instead of an
+   * {@link email | e-mail} address.
+   */
+  username?: string
+  /**
+   * The timestamp in milliseconds since the epoch that represents the last time the user signed in.
+   */
+  lastSignInAt?: number
 }
 
 export default CurrentUserResult

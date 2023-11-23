@@ -1,33 +1,55 @@
-import { currentUser as getClerkCurrentUser } from '@clerk/nextjs/server'
+import { currentUser as getClerkCurrentUser, User as ClerkUser } from '@clerk/nextjs/server'
 import { auth } from '@clerk/nextjs'
 
 import AuthRepository from '@root/repositories/auth/auth-repository'
 import type CurrentUserResult from '@root/repositories/auth/current-user-result'
 
 class ClerkAuthRepository extends AuthRepository {
-  async currentUser(): Promise<CurrentUserResult | undefined> {
-    const user = await getClerkCurrentUser()
+  private getUserPhotoURLFromClerkServiceOrExternalAccountProvider(clerkUser: ClerkUser | null): string | undefined {
+    if (!clerkUser) {
+      return
+    }
+    if (clerkUser.hasImage) {
+      return clerkUser.imageUrl
+    }
 
-    const displayName = [user?.firstName, user?.lastName].filter(Boolean).join(' ')
-    const emailAddressObject = user?.primaryEmailAddressId
-      ? user.emailAddresses.find(({ id }) => id === user.primaryEmailAddressId)
+    for (const externalAccount of clerkUser.externalAccounts) {
+      if (externalAccount.imageUrl) {
+        return externalAccount.imageUrl
+      }
+    }
+  }
+
+  async currentUser(): Promise<CurrentUserResult | undefined> {
+    const clerkUser = await getClerkCurrentUser()
+
+    if (!clerkUser) {
+      return undefined
+    }
+
+    const displayName = [clerkUser.firstName, clerkUser.lastName].filter(Boolean).join(' ')
+    const emailAddressObject = clerkUser.primaryEmailAddressId
+      ? clerkUser.emailAddresses.find(({ id }) => id === clerkUser.primaryEmailAddressId)
       : undefined
     const email = emailAddressObject?.emailAddress
     const isEmailVerified =
       // Reference: https://clerk.com/docs/references/javascript/verification#verification
       emailAddressObject?.verification?.status === 'verified'
 
-    const uid = user?.id
+    const uid = clerkUser.id
     const token = await auth().getToken()
 
     if (!(token && uid)) {
       return undefined
     }
 
-    const phoneNumber = user?.phoneNumbers?.[0]?.phoneNumber
-    const photoURL = user?.hasImage ? user?.imageUrl : undefined
+    const phoneNumber = clerkUser.phoneNumbers?.[0]?.phoneNumber
+    const photoURL = this.getUserPhotoURLFromClerkServiceOrExternalAccountProvider(clerkUser)
+    const isTwoFactorAuthenticationEnabled = clerkUser.twoFactorEnabled
+    const username = clerkUser.username ?? undefined
+    const lastSignInAt = clerkUser.lastSignInAt ?? undefined
 
-    const result: CurrentUserResult = {
+    const user: CurrentUserResult = {
       displayName,
       email,
       isEmailVerified,
@@ -35,9 +57,12 @@ class ClerkAuthRepository extends AuthRepository {
       uid,
       phoneNumber,
       photoURL,
+      isTwoFactorAuthenticationEnabled,
+      lastSignInAt,
+      username,
     }
 
-    return result ?? undefined
+    return user ?? undefined
   }
 }
 
