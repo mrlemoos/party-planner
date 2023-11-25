@@ -1,3 +1,11 @@
+# [1.2.0](https://github.com/mrlemoos/party-planner/compare/v1.1.0...v1.2.0) (2023-11-25)
+
+
+### Features
+
+* create `onboarding` and `plan-selection` features ([#33](https://github.com/mrlemoos/party-planner/issues/33)) ([e0b0b38](https://github.com/mrlemoos/party-planner/commit/e0b0b3820229f7bf223d3acf632c3cd52a5acb11))
+* create a user-profile and onboarding features ([27fa0b4](https://github.com/mrlemoos/party-planner/commit/27fa0b4e13a67af070680ce0930a722f9ee7f27e))
+
 # [1.1.0](https://github.com/mrlemoos/party-planner/compare/v1.0.0...v1.1.0) (2023-11-23)
 
 
