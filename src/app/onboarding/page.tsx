@@ -7,7 +7,7 @@ import Onboarding from '@root/features/onboarding/onboarding'
 import createUserPlanRepository from '@root/repositories/user/plan/create-user-plan-repository'
 
 /**
- * The metadata for the page to remove the page from the search engines.
+ * The {@link Metadata | metadata} for the page to remove the page from the search engines.
  */
 export const metadata: Metadata = {
   title: 'Onboarding P&P',
@@ -20,10 +20,11 @@ export const metadata: Metadata = {
  */
 async function fetchCompactUserPlans() {
   const repo = createUserPlanRepository()
-  const plans = (await repo.fetchUserPlans()).map(({ id, name, price, highlights }) => ({
+  const plans = (await repo.fetchUserPlans()).map(({ id, name, price, period, highlights }) => ({
     id,
     name,
     price,
+    period,
     highlights,
   }))
   return plans

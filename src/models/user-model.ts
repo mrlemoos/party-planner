@@ -1,4 +1,4 @@
-interface CurrentUserResult {
+export default interface UserModel {
   /**
    * The display name of the user.
    */
@@ -42,5 +42,3 @@ interface CurrentUserResult {
    */
   lastSignInAt?: number
 }
-
-export default CurrentUserResult

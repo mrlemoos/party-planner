@@ -1,4 +1,4 @@
-import type CurrentUserResult from './current-user-result'
+import type UserModel from '@root/models/user-model'
 
 export default abstract class AuthRepository {
   /**
@@ -6,5 +6,5 @@ export default abstract class AuthRepository {
    *
    * @see {@link CurrentUserResult}
    */
-  abstract currentUser(): Promise<CurrentUserResult | undefined>
+  abstract currentUser(): Promise<UserModel | undefined>
 }

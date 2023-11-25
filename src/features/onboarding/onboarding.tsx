@@ -1,3 +1,5 @@
+import { type ComponentPropsWithoutRef } from 'react'
+
 import Link from 'next/link'
 
 import Heading from '@root/components/ui/heading'
@@ -10,17 +12,7 @@ import SelectionSubmitButton from '../plan-selection/components/selection-submit
 /**
  * Props for the {@link Onboarding} component.
  */
-interface OnboardingProps {
-  /**
-   * The plans to display.
-   */
-  plans: {
-    id: string
-    name: string
-    price: string
-    highlights: string[]
-  }[]
-}
+type OnboardingProps = Pick<ComponentPropsWithoutRef<typeof SelectionPlansRow>, 'plans'>
 
 /**
  * The onboarding feature component that aggregates the plan selection and the user information form.
@@ -41,7 +33,7 @@ function Onboarding({ plans }: OnboardingProps): JSX.Element {
       <SelectionSubmitButton />
       <div>
         <Paragraph className='text-center text-foreground/70'>
-          Under the hood, we use{' '}
+          Under the hood, we use&nbsp;
           <Link href='https://www.stripe.com' className='font-medium'>
             Stripe
           </Link>

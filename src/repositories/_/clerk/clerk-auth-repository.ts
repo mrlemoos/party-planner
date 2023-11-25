@@ -1,8 +1,7 @@
-import { currentUser as getClerkCurrentUser, User as ClerkUser } from '@clerk/nextjs/server'
-import { auth } from '@clerk/nextjs'
+import { User as ClerkUser, auth, currentUser } from '@clerk/nextjs/server'
 
 import AuthRepository from '@root/repositories/auth/auth-repository'
-import type CurrentUserResult from '@root/repositories/auth/current-user-result'
+import UserModel from '@root/models/user-model'
 
 class ClerkAuthRepository extends AuthRepository {
   private getUserPhotoURLFromClerkServiceOrExternalAccountProvider(clerkUser: ClerkUser | null): string | undefined {
@@ -20,11 +19,11 @@ class ClerkAuthRepository extends AuthRepository {
     }
   }
 
-  async currentUser(): Promise<CurrentUserResult | undefined> {
-    const clerkUser = await getClerkCurrentUser()
+  async currentUser(): Promise<UserModel | undefined> {
+    const clerkUser = await currentUser()
 
     if (!clerkUser) {
-      return undefined
+      return
     }
 
     const displayName = [clerkUser.firstName, clerkUser.lastName].filter(Boolean).join(' ')
@@ -40,7 +39,7 @@ class ClerkAuthRepository extends AuthRepository {
     const token = await auth().getToken()
 
     if (!(token && uid)) {
-      return undefined
+      return
     }
 
     const phoneNumber = clerkUser.phoneNumbers?.[0]?.phoneNumber
@@ -49,7 +48,7 @@ class ClerkAuthRepository extends AuthRepository {
     const username = clerkUser.username ?? undefined
     const lastSignInAt = clerkUser.lastSignInAt ?? undefined
 
-    const user: CurrentUserResult = {
+    const user: UserModel = {
       displayName,
       email,
       isEmailVerified,
@@ -62,7 +61,7 @@ class ClerkAuthRepository extends AuthRepository {
       username,
     }
 
-    return user ?? undefined
+    return user
   }
 }
 
