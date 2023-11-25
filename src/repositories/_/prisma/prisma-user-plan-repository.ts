@@ -22,14 +22,34 @@ class PrismaUserPlanRepository extends UserPlanRepository {
     return userPlanSubscription
   }
   async subscribeUserToPlan(userId: string, planId: string): Promise<UserPlanSubscription> {
-    const userPlanSubscription = await this.PRISMA_CLIENT.userPlanSubscription.create({
+    const existentUserSubscription = await this.PRISMA_CLIENT.userPlanSubscription.findFirst({
+      where: {
+        userId,
+      },
+    })
+
+    const hasPlan = !!existentUserSubscription
+
+    // NOTE: If the user already has a plan, update the planId instead of creating a new subscription. This is to avoid
+    // having multiple subscriptions for the same user.
+    if (hasPlan) {
+      const subscriptionRegistryId = existentUserSubscription.id
+
+      const newUserPlanSubscription = { ...existentUserSubscription, planId }
+
+      return await this.PRISMA_CLIENT.userPlanSubscription.update({
+        data: newUserPlanSubscription,
+        where: {
+          id: subscriptionRegistryId,
+        },
+      })
+    }
+    return await this.PRISMA_CLIENT.userPlanSubscription.create({
       data: {
         userId,
         planId,
       },
     })
-
-    return userPlanSubscription
   }
 
   async fetchUserPlans(): Promise<UserPlan[]> {

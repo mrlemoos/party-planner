@@ -21,10 +21,29 @@ interface SelectionPlansRowProps {
     id: string
     name: string
     price: string
+    period: string
     highlights: string[]
   }[]
 }
 
+/**
+ * Formats the accessibility label for a {@link SelectionCard} for a plan selection and returns it accordingly.
+ */
+function formatSelectionCardAccessibilityLabelForPlan(
+  planName: string,
+  price: string,
+  period: string,
+  isSelected: boolean,
+): string {
+  const priceAndPeriodDescription = price ? `${price} dollars per ${period}` : 'free'
+  const actionVerb = isSelected ? 'Selected' : 'Select'
+
+  return `${actionVerb} "${planName}" plan for ${priceAndPeriodDescription}`
+}
+
+/**
+ * The component that maps through the plans and renders a {@link SelectionCard} for each and binds their actions.
+ */
 function SelectionPlansRow({ plans }: SelectionPlansRowProps): JSX.Element {
   const pathname = usePathname()
   const router = useRouter()
@@ -47,18 +66,23 @@ function SelectionPlansRow({ plans }: SelectionPlansRowProps): JSX.Element {
   )
 
   return (
-    <div className='container flex flex-1 flex-col items-center gap-6 shadow-xl lg:flex-row'>
-      {plans.map(({ id, name, price, highlights }) => {
+    <div className='container flex flex-1 flex-col items-center gap-6 lg:flex-row'>
+      {plans.map(({ id, name, price, period, highlights }) => {
         const isSelected = selectedPlanId === id
         return (
-          <SelectionCard key={id} isSelected={isSelected} onClick={handleSelectPlan(id, isSelected)} className='gap-4'>
+          <SelectionCard
+            key={id}
+            isSelected={isSelected}
+            onClick={handleSelectPlan(id, isSelected)}
+            className={merge('gap-4', { 'pointer-events-none': isSelected })}
+            accessibilityLabel={formatSelectionCardAccessibilityLabelForPlan(name, price, period, isSelected)}
+          >
             <span className='text-2xl font-bold'>{name}</span>
             <span>
               <span className='text-sm font-medium'>$</span>
-              <span className={merge(isSelected ? 'text-white' : 'text-foreground', 'text-2xl font-semibold')}>
-                {price}
-              </span>
+              <span className={merge({ 'text-white': isSelected }, 'text-3xl font-bold')}>{price}</span>
               <span className='text-sm font-medium'>USD</span>
+              <span className='text-sm font-light'>/{period}</span>
             </span>
             <ul>
               {highlights.map((highlight) => (

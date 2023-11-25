@@ -8,7 +8,7 @@ import { motion } from 'framer-motion'
 import merge from '@root/util/merge'
 
 const selectionCard = cva(
-  'flex flex-col items-center justify-center hover:from-purple-700 hover:to-indigo-700 hover:bg-gradient-to-bl transition-all',
+  'flex flex-col items-center justify-center hover:from-purple-700 hover:to-indigo-700 hover:bg-gradient-to-bl transition-all hover:text-white',
   {
     variants: {
       variant: {
@@ -27,6 +27,10 @@ interface SelectionCardProps extends Pick<HTMLAttributes<HTMLElement>, 'children
    * Boolean indicating whether the card is selected.
    */
   isSelected: boolean
+  /**
+   * The accessibility label for the card for screen readers. This is used in place of the `aria-label` prop.
+   */
+  accessibilityLabel: string
 }
 
 /**
@@ -34,11 +38,19 @@ interface SelectionCardProps extends Pick<HTMLAttributes<HTMLElement>, 'children
  *
  * @props {@link SelectionCardProps}
  */
-function SelectionCard({ isSelected, children, className, onClick }: SelectionCardProps): JSX.Element {
+function SelectionCard({
+  isSelected,
+  children,
+  className,
+  onClick,
+  accessibilityLabel,
+}: SelectionCardProps): JSX.Element {
   const variant = isSelected ? 'selected' : 'unset'
 
   return (
     <motion.button
+      layout={true}
+      aria-label={accessibilityLabel}
       onClick={onClick}
       type='button'
       className={merge(

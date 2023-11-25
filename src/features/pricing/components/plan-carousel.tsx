@@ -1,7 +1,6 @@
 import Badge from '@root/components/ui/badge'
+import PlanCard from '@root/features/pricing/components/plan-card'
 import createUserPlanRepository from '@root/repositories/user/plan/create-user-plan-repository'
-
-import PlanCard from './plan-card'
 
 const userPlansRepository = createUserPlanRepository()
 

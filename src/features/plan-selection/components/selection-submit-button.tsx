@@ -14,12 +14,12 @@ import subscribeToPlanAction from '../server-actions/subscribe-to-plan-action'
  */
 const buttonContainerAnimation = {
   initial: {
+    height: 0,
     opacity: 0,
-    y: 20,
   },
   animate: {
+    height: 'auto',
     opacity: 1,
-    y: 0,
   },
 }
 
@@ -38,6 +38,7 @@ function SelectionSubmitButton(): JSX.Element {
       <AnimatePresence>
         {isPlanSelected && (
           <motion.div
+            layout={true}
             initial={buttonContainerAnimation.initial}
             animate={buttonContainerAnimation.animate}
             exit={buttonContainerAnimation.initial}
