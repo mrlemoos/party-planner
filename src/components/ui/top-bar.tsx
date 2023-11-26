@@ -58,7 +58,7 @@ interface TopBarProps extends ComponentPropsWithoutRef<typeof FloatingHeader> {
 function TopBar({ children, className, rightSide, ...props }: TopBarProps): JSX.Element {
   return (
     <FloatingHeader className={merge('z-10 flex items-center justify-between px-4', className)} {...props}>
-      <Link href='/'>
+      <Link href='/' className='w-[158px]'>
         <Logo />
       </Link>
       <FloatingHeader.NavigationMenu>{children}</FloatingHeader.NavigationMenu>
