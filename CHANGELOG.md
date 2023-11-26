@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/mrlemoos/party-planner/compare/v1.2.0...v1.3.0) (2023-11-26)
+
+
+### Features
+
+* **features/user-profile:** create user plan section ([cac12ab](https://github.com/mrlemoos/party-planner/commit/cac12ab712ab6ebe93f38f25faed5ae785613c4d))
+
 # [1.2.0](https://github.com/mrlemoos/party-planner/compare/v1.1.0...v1.2.0) (2023-11-25)
 
 
