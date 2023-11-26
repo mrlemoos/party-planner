@@ -4,10 +4,10 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useSearchParams } from 'next/navigation'
 
 import Button from '@root/components/ui/button'
+import subscribeToPlanAction from '@root/server-actions/subscribe-to-plan-action'
 
 import PlanSelectionFormField from '../constants/plan-selection-form-field'
 import PlanSelectionQueryParams from '../constants/plan-selection-query-params'
-import subscribeToPlanAction from '../server-actions/subscribe-to-plan-action'
 
 /**
  * The animation for the button container.
@@ -21,19 +21,21 @@ const buttonContainerAnimation = {
     height: 'auto',
     opacity: 1,
   },
-}
+} as const
 
 /**
  * The submit button for the plan selection form.
  */
 function SelectionSubmitButton(): JSX.Element {
   const searchParams = useSearchParams()
-
   const selectedPlanId = searchParams.get(PlanSelectionQueryParams.selectedPlanId) ?? undefined
+
+  const subscribeToPlanActionWithSelectedPlanId = subscribeToPlanAction.bind(null, selectedPlanId)
+
   const isPlanSelected = !!selectedPlanId
 
   return (
-    <form action={subscribeToPlanAction}>
+    <form action={subscribeToPlanActionWithSelectedPlanId}>
       <input name={PlanSelectionFormField.selectedPlan} className='hidden' defaultValue={selectedPlanId} />
       <AnimatePresence>
         {isPlanSelected && (

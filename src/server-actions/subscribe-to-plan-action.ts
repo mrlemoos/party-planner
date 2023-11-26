@@ -6,15 +6,32 @@ import { RedirectType, redirect } from 'next/navigation'
 import createAuthRepository from '@root/repositories/auth/create-auth-repository'
 import createUserPlanRepository from '@root/repositories/user/plan/create-user-plan-repository'
 
-import PlanSelectionFormField from '../constants/plan-selection-form-field'
-
 const auth = createAuthRepository()
 const userPlans = createUserPlanRepository()
 
 /**
  * Subscribe the currently logged in user to the selected plan.
+ *
+ * @example
+ * ```tsx
+ *
+ * function PlanSelectionForm(): JSX.Element {
+ *  const subscribeToPlanActionWithFieldName = subscribeToPlanAction.bind(null, '{{selectedPlanId}}')
+ *
+ *  return (
+ *   <Form onSubmit={subscribeToPlanActionWithFieldName} />
+ *  )
+ * }
+ *
+ * ```
+ *
+ * @see {@link https://nextjs.org/docs/app/api-reference/functions/server-actions#binding-arguments}
  */
-async function subscribeToPlanAction(values: FormData) {
+async function subscribeToPlanAction(planId: string | undefined) {
+  if (!planId) {
+    return
+  }
+
   const user = await auth.currentUser()
 
   if (!user) {
@@ -22,7 +39,6 @@ async function subscribeToPlanAction(values: FormData) {
   }
 
   const userId = user.uid
-  const planId = values.get(PlanSelectionFormField.selectedPlan)?.toString()
 
   if (!planId) {
     return
