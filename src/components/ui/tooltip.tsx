@@ -1,7 +1,6 @@
 'use client'
 
 import {
-  Fragment,
   forwardRef,
   useCallback,
   type ComponentPropsWithoutRef,
@@ -13,7 +12,6 @@ import {
 import {
   Arrow as PrimitiveArrow,
   Content as PrimitiveContent,
-  Portal as PrimitivePortal,
   Provider as PrimitiveProvider,
   Root as PrimitiveRoot,
   Trigger as PrimitiveTrigger,
@@ -23,10 +21,18 @@ import TooltipOpenStateUpdateEvent from '@root/events/tooltip-open-state-update-
 import isReactComponent from '@root/util/is-react-component'
 import merge from '@root/util/merge'
 
+import TooltipContentContainer from './tooltip-content-container'
+
 /**
  * The props for the {@link TooltipContentChild} component.
  */
-type TooltipContentChildProps = Pick<TooltipProps, 'content'>
+interface TooltipContentChildProps {
+  /**
+   * The {@link ReactElement | element} to render as the {@link Tooltip} content. It can be a
+   * {@link ComponentType | component} or a `string` literal.
+   */
+  content: ReactElement | ComponentType | string
+}
 
 /**
  * The {@link ReactElement | element} to render as the {@link Tooltip} content. It can be a
@@ -54,26 +60,33 @@ function TooltipContentChild({ content }: TooltipContentChildProps): JSX.Element
  */
 type TooltipRef = ElementRef<typeof PrimitiveContent>
 /**
+ * The props for the Primitive {@link PrimitiveContent | content} component from
+ * {@link https://www.radix-ui.com/primitives/docs/components/tooltip | @radix-ui/react-tooltip}.
+ */
+type PrimitiveContentProps = ComponentPropsWithoutRef<typeof PrimitiveContent>
+/**
+ * The (picked) props for the Primitive {@link PrimitiveContent | content} component from
+ * {@link https://www.radix-ui.com/primitives/docs/components/tooltip | @radix-ui/react-tooltip}.
+ */
+type ExcludedPrimitiveContentProps = Omit<
+  PrimitiveContentProps,
+  'children' | 'content' | 'side' | 'sideOffset' | 'align' | 'alignOffset'
+>
+/**
+ * The props for the {@link TooltipContentContainer} component.
+ */
+type TooltipContentContainerProps = ComponentPropsWithoutRef<typeof TooltipContentContainer>
+/**
+ * The (picked) props for the {@link TooltipContentContainer} component.
+ */
+type PickedTooltipContentContainerProps = Partial<Pick<TooltipContentContainerProps, 'isPortal' | 'rootPortalElement'>>
+/**
  * The {@link ComponentPropsWithoutRef | props} for the {@link Tooltip} component.
  */
 interface TooltipProps
-  extends Omit<
-    ComponentPropsWithoutRef<typeof PrimitiveContent>,
-    'children' | 'content' | 'side' | 'sideOffset' | 'align' | 'alignOffset'
-  > {
-  /**
-   * Boolean that enables the {@link Tooltip} to be rendered in a ReactDOM portal instead of the DOM tree. It is also
-   * possible to define the {@link rootPortalElement} prop to specify the portal element, otherwise it will be rendered
-   * in the {@link document.body}.
-   *
-   * @default false
-   */
-  isPortal?: boolean
-  /**
-   * The {@link HTMLElement | element} to render the {@link Tooltip} in a ReactDOM portal. If not defined, it will be
-   * rendered in the {@link document.body}.
-   */
-  rootPortalElement?: HTMLElement
+  extends /* NOTE: Interface of Radix's <Tooltip.Content /> */ ExcludedPrimitiveContentProps,
+    TooltipContentChildProps,
+    PickedTooltipContentContainerProps {
   /**
    * Boolean that indicates whether or not the {@link Tooltip} should render an arrow.
    *
@@ -157,7 +170,7 @@ const Tooltip = forwardRef<TooltipRef, TooltipProps>(
       side,
       alignOffset,
       align,
-      isPortal = false,
+      isPortal,
       rootPortalElement,
       hasArrow = true,
       isOpen,
@@ -170,8 +183,6 @@ const Tooltip = forwardRef<TooltipRef, TooltipProps>(
     },
     ref,
   ) => {
-    const CoercedPortal = (isPortal ? PrimitivePortal : Fragment) as typeof PrimitivePortal
-
     const handleOpenChange = useCallback(
       (isOpen: boolean) => {
         if (typeof onOpenStateUpdate === 'function') {
@@ -200,7 +211,7 @@ const Tooltip = forwardRef<TooltipRef, TooltipProps>(
           onOpenChange={handleOpenChange}
         >
           <PrimitiveTrigger asChild={true}>{children}</PrimitiveTrigger>
-          <CoercedPortal container={rootPortalElement}>
+          <TooltipContentContainer rootPortalElement={rootPortalElement} isPortal={isPortal}>
             <PrimitiveContent
               ref={ref}
               side={side}
@@ -216,7 +227,7 @@ const Tooltip = forwardRef<TooltipRef, TooltipProps>(
               <TooltipContentChild content={content} />
               {hasArrow && <PrimitiveArrow className='text-foreground' />}
             </PrimitiveContent>
-          </CoercedPortal>
+          </TooltipContentContainer>
         </PrimitiveRoot>
       </PrimitiveProvider>
     )
