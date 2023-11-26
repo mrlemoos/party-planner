@@ -33,6 +33,10 @@ class PrismaUserPlanRepository extends UserPlanRepository {
     // NOTE: If the user already has a plan, update the planId instead of creating a new subscription. This is to avoid
     // having multiple subscriptions for the same user.
     if (hasPlan) {
+      if (existentUserSubscription.planId === planId) {
+        return existentUserSubscription
+      }
+
       const subscriptionRegistryId = existentUserSubscription.id
 
       const newUserPlanSubscription = { ...existentUserSubscription, planId }
