@@ -24,6 +24,11 @@ interface SelectionPlansRowProps {
     period: string
     highlights: string[]
   }[]
+  /**
+   * The key for the search param that stores the selected plan ID. Defaults to
+   * {@link PlanSelectionQueryParams.selectedPlanId}.
+   */
+  searchParamSelectionStateKey?: string
 }
 
 /**
@@ -43,13 +48,18 @@ function formatSelectionCardAccessibilityLabelForPlan(
 
 /**
  * The component that maps through the plans and renders a {@link SelectionCard} for each and binds their actions.
+ *
+ * @props {@link SelectionPlansRowProps}
  */
-function SelectionPlansRow({ plans }: SelectionPlansRowProps): JSX.Element {
+function SelectionPlansRow({
+  plans,
+  searchParamSelectionStateKey = PlanSelectionQueryParams.selectedPlanId,
+}: SelectionPlansRowProps): JSX.Element {
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const selectedPlanId = searchParams.get(PlanSelectionQueryParams.selectedPlanId)
+  const selectedPlanId = searchParams.get(searchParamSelectionStateKey)
 
   const handleSelectPlan = useCallback(
     (planId: string, isSelected: boolean) => (_event: ReactMouseEvent<HTMLElement>) => {
@@ -57,12 +67,12 @@ function SelectionPlansRow({ plans }: SelectionPlansRowProps): JSX.Element {
         return
       }
       const newSearchParams = new URLSearchParams(searchParams)
-      newSearchParams.set(PlanSelectionQueryParams.selectedPlanId, planId)
+      newSearchParams.set(searchParamSelectionStateKey, planId)
 
       const href = `${pathname}?${newSearchParams.toString()}`
       router.push(href)
     },
-    [pathname, router, searchParams],
+    [pathname, router, searchParamSelectionStateKey, searchParams],
   )
 
   return (
