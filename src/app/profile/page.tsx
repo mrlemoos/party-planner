@@ -61,14 +61,14 @@ async function ProfilePage(): Promise<JSX.Element> {
     await userPlansRepository.fetchUserSubscriptionByUserId(userId),
     fetchUserCollaborationMetadataOrCoerceToCreated(userId),
   ])
-
-  const { name, period, price } = await userPlansRepository.fetchUserPlan(subscription.planId)
-  const plan = { name, period, price } as const
+  const allPlans = await userPlansRepository.fetchUserPlans()
+  const currentUserPlanId = subscription.planId
 
   return (
     <UserProfile
       user={user}
-      plan={plan}
+      allPlans={allPlans}
+      userCurrentPlanId={currentUserPlanId}
       avatarBackgroundColor={collaborationMetadata.avatarBackgroundColor}
       avatarForegroundColor={collaborationMetadata.avatarForegroundColor}
     />
