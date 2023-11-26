@@ -72,7 +72,7 @@ const DialogContent = forwardRef<DialogContentRef, DialogContentProps>(({ childr
   <PrimitiveContent
     ref={ref}
     className={merge(
-      'fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200',
+      'fixed left-[50%] top-[50%] z-50 grid translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200',
       'data-[state=open]:animate-in data-[state=closed]:animate-out',
       'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
       'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
@@ -199,7 +199,7 @@ const DialogCloseButton = forwardRef<DialogCloseButtonRef, DialogCloseButtonProp
     <PrimitiveClose ref={ref} {...props} asChild={true} className={className}>
       {children ?? (
         <Button size='icon' variant='ghost' className='absolute right-3 top-3'>
-          <Cross2Icon aria-label='Close' height={20} width={20} className='text-gray-500' />
+          <Cross2Icon aria-label='Close dialog' height={20} width={20} className='text-gray-500' />
         </Button>
       )}
     </PrimitiveClose>
@@ -210,30 +210,26 @@ DialogCloseButton.displayName = 'Dialog.CloseButton'
 /**
  * The props for the {@link DialogOverlay | dialog component}.
  */
-type DialogOverlayProps = Omit<ComponentPropsWithoutRef<typeof DialogCloseButton>, 'children' | 'aria-hidden'>
-/**
- * The ref type of the {@link DialogOverlay | overlay ref} element.
- */
-type DialogOverlayRef = ComponentRef<typeof DialogCloseButton>
+type DialogOverlayProps = Omit<ComponentPropsWithoutRef<'div'>, 'children' | 'aria-hidden'>
 /**
  * The component that wraps all dialog components. It provides a blur effect to the background.
  *
  * @props {@link DialogOverlayProps}
- * @ref {@link DialogOverlayRef}
  */
-const DialogOverlay = forwardRef<DialogOverlayRef, DialogOverlayProps>(({ className, ...props }, ref) => (
-  <DialogCloseButton
-    aria-hidden='true'
-    className={merge(
-      'fixed inset-0 z-50 bg-background/80 backdrop-blur-lg',
-      'data-[state=open]:animate-in data-[state=open]:fade-in-0',
-      'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
-      className,
-    )}
-    ref={ref}
-    {...props}
-  />
-))
+function DialogOverlay({ className, ...props }: DialogOverlayProps): JSX.Element {
+  return (
+    <div
+      aria-hidden='true'
+      className={merge(
+        'fixed inset-0 z-50 bg-background/80 backdrop-blur-lg',
+        'data-[state=open]:animate-in data-[state=open]:fade-in-0',
+        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
+        className,
+      )}
+      {...props}
+    />
+  )
+}
 DialogOverlay.displayName = 'Dialog.Overlay'
 
 /**
@@ -341,10 +337,18 @@ const DialogComposition = forwardRef<DialogRef, DialogProps>(
     const hasTrigger = useMemo(() => isValidElement(trigger), [trigger])
 
     const DialogContainer = isPortal ? PrimitivePortal : Fragment
+    const nullishTrigger = trigger ?? null
+
+    const handleClose = useCallback(() => {
+      const event = new DialogOpenStateChangeEvent(false, isPortal, nullishTrigger)
+
+      if (typeof onClose === 'function') {
+        onClose(event)
+      }
+    }, [isPortal, nullishTrigger, onClose])
 
     const handleOpenChange = useCallback(
       (isDialogNowOpen: boolean) => {
-        const nullishTrigger = trigger ?? null
         const event = new DialogOpenStateChangeEvent(isDialogNowOpen, isPortal, nullishTrigger)
 
         if (typeof onOpenChange === 'function') {
@@ -354,14 +358,14 @@ const DialogComposition = forwardRef<DialogRef, DialogProps>(
           onClose(event)
         }
       },
-      [isPortal, onOpenChange, trigger, onClose],
+      [isPortal, nullishTrigger, onOpenChange, onClose],
     )
 
     return (
       <PrimitiveRoot modal={modal} open={isOpen} defaultOpen={defaultOpen} onOpenChange={handleOpenChange}>
         {hasTrigger && <DialogTrigger>{trigger}</DialogTrigger>}
-        <DialogOverlay />
         <DialogContainer>
+          <DialogOverlay onClick={handleClose} />
           <DialogContent {...props} className={className} ref={ref}>
             {children}
           </DialogContent>
