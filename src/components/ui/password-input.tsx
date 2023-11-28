@@ -1,8 +1,10 @@
 'use client'
 
-import { useCallback, useState, type ComponentPropsWithoutRef } from 'react'
+import { type ComponentPropsWithoutRef } from 'react'
 
 import { EyeNoneIcon, EyeOpenIcon } from '@radix-ui/react-icons'
+
+import useToggleState from '@root/hooks/use-toggle-state'
 
 import Button from './button'
 import Input from './input'
@@ -50,9 +52,7 @@ type PasswordInputProps = Omit<ComponentPropsWithoutRef<typeof Input>, 'type'>
  * @props {@link PasswordInputProps}
  */
 function PasswordInput(props: PasswordInputProps): JSX.Element {
-  const [isPasswordVisible, setPasswordVisible] = useState(false)
-
-  const handleTogglePasswordVisibility = useCallback(() => setPasswordVisible((previous) => !previous), [])
+  const [isPasswordVisible, handleTogglePasswordVisibility] = useToggleState()
 
   const type = isPasswordVisible ? INPUT_TYPE_TEXT : INPUT_TYPE_PASSWORD
   const placeholder = isPasswordVisible ? VISIBLE_INPUT_VALUE_PLACEHOLDER : HIDDEN_INPUT_VALUE_PLACEHOLDER
