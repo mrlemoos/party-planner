@@ -2,14 +2,35 @@
 
 import { useCallback, useState, type ComponentPropsWithoutRef } from 'react'
 
+import UserAvatarPhotoDidNotLoadEvent from '@root/events/user-avatar-photo-did-not-load-event'
+
 import UserAvatarLetter from './user-avatar-letter'
 import UserAvatarPhoto from './user-avatar-photo'
 
 /**
+ * The props from the {@link UserAvatarPhoto} component.
+ */
+type UserAvatarPhotoProps = ComponentPropsWithoutRef<typeof UserAvatarPhoto>
+/**
+ * The props from the {@link UserAvatarLetter} component.
+ */
+type UserAvatarLetterProps = ComponentPropsWithoutRef<typeof UserAvatarLetter>
+/**
+ * The (remembered) props from the {@link UserAvatarPhoto} component.
+ */
+type RememberedUserAvatarProps = Omit<UserAvatarPhotoProps, 'onError'>
+/**
+ * The (partial) remembered props from the {@link UserAvatarPhoto} component.
+ */
+type RememberedPartialUserAvatarProps = Partial<RememberedUserAvatarProps>
+/**
+ * The (partial) props from the {@link UserAvatarLetter} component.
+ */
+type PartialUserAvatarLetterProps = Partial<UserAvatarLetterProps>
+/**
  * The props for the {@link UserAvatar} component.
  */
-type UserAvatarProps = Omit<Partial<ComponentPropsWithoutRef<typeof UserAvatarPhoto>>, 'onError'> &
-  Partial<ComponentPropsWithoutRef<typeof UserAvatarLetter>>
+type UserAvatarProps = RememberedPartialUserAvatarProps & PartialUserAvatarLetterProps
 
 /**
  * The class name for the container of the avatar.
@@ -28,18 +49,20 @@ function UserAvatar({
   source,
   alt,
 }: UserAvatarProps): JSX.Element | null {
-  const [hasError, setError] = useState(false)
+  const [imageDidNotLoadDueToError, setImageDidNotLoadDueToError] = useState(false)
 
-  const handleError = useCallback(() => setError(true), [])
+  const handleUserAvatarPhotoError = useCallback(({ isImageFromNext }: UserAvatarPhotoDidNotLoadEvent) => {
+    if (isImageFromNext) {
+      setImageDidNotLoadDueToError(true)
+    }
+  }, [])
 
-  if (hasError) {
+  if (imageDidNotLoadDueToError) {
+    const letter = alt?.charAt(0) ?? '@'
+
     return (
       <div className={CONTAINER_CLASS_NAME}>
-        <UserAvatarLetter
-          letter={alt?.charAt(0) ?? '@'}
-          backgroundColor={backgroundColor}
-          foregroundColor={foregroundColor}
-        />
+        <UserAvatarLetter letter={letter} backgroundColor={backgroundColor} foregroundColor={foregroundColor} />
       </div>
     )
   }
@@ -54,7 +77,7 @@ function UserAvatar({
   if (source && alt) {
     return (
       <div className={CONTAINER_CLASS_NAME}>
-        <UserAvatarPhoto source={source} alt={alt} onError={handleError} />
+        <UserAvatarPhoto source={source} alt={alt} onError={handleUserAvatarPhotoError} />
       </div>
     )
   }

@@ -1,5 +1,14 @@
 import Image from 'next/image'
 
+import UserAvatarPhotoDidNotLoadEvent from '@root/events/user-avatar-photo-did-not-load-event'
+
+/**
+ * The {@link UserAvatarPhotoDidNotLoadEvent | event} handler in case of an error while loading the image.
+ */
+interface UserAvatarPhotoErrorEventHandler {
+  (event: UserAvatarPhotoDidNotLoadEvent): void
+}
+
 /**
  * The props for the {@link UserAvatarPhoto} component.
  */
@@ -18,8 +27,12 @@ interface UserAvatarPhotoProps {
   alt: string
   /**
    * Function that is called when an error occurs while loading the image.
+   *
+   * @see https://nextjs.org/docs/api-reference/next/image#onerror
+   * @see {@link UserAvatarPhotoDidNotLoadEvent}
+   * @see {@link UserAvatarPhotoErrorEventHandler}
    */
-  onError?: () => void
+  onError?: UserAvatarPhotoErrorEventHandler
 }
 
 /**
@@ -28,7 +41,13 @@ interface UserAvatarPhotoProps {
  * @props {@link UserAvatarPhotoProps}
  */
 function UserAvatarPhoto({ source, alt, onError }: UserAvatarPhotoProps): JSX.Element {
-  return <Image className='rounded-full' src={source} alt={alt} width={48} height={48} onError={onError} />
+  function handleNextImageError() {
+    if (typeof onError === 'function') {
+      onError(new UserAvatarPhotoDidNotLoadEvent(source, alt, true))
+    }
+  }
+
+  return <Image className='rounded-full' src={source} alt={alt} width={48} height={48} onError={handleNextImageError} />
 }
 
 export default UserAvatarPhoto
