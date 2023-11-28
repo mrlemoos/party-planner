@@ -1,8 +1,8 @@
+import { accessSync, constants } from 'node:fs'
 import { writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 import { config } from 'dotenv'
-import { accessSync, constants } from 'node:fs'
 
 // Load the .env file if the environment we're not running this through the pipeline.
 config()
