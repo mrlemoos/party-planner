@@ -11,5 +11,4 @@ if [[ "$VERCEL_GIT_COMMIT_REF" == *"[ci skip]"  ]] ; then
 else
   # Don't build
   echo "✅ - Build can proceed"
-  exit 1;
 fi
