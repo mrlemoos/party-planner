@@ -5,8 +5,8 @@ import { type Metadata } from 'next'
 import SignUp from '@root/features/sign-up/sign-up'
 
 export const metadata: Metadata = {
-  title: 'P&P | Sign up  🎉',
-  description: 'Sign up to P&P.',
+  title: 'Planria | Sign up  🎉',
+  description: 'Sign up to Planria.',
 }
 
 function SignUpPage(): ReactElement {

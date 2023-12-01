@@ -7,7 +7,7 @@ import AboutProject from '@root/features/about-project/about-project'
 import NonProtectedTopBar from '@root/features/non-protected-top-bar/non-protected-top-bar'
 
 export const metadata: Metadata = {
-  title: 'About P&P  🎉',
+  title: 'About Planria  🎉',
   description: 'Point your tasks. Plan your sprint. Have fun.',
   keywords: ['party', 'planner', 'tasks', 'sprint', 'fun', 'planning poker', 'planning', 'poker'],
 }

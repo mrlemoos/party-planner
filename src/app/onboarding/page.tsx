@@ -10,7 +10,7 @@ import createUserPlanRepository from '@root/repositories/user/plan/create-user-p
  * The {@link Metadata | metadata} for the page to remove the page from the search engines.
  */
 export const metadata: Metadata = {
-  title: 'Onboarding P&P',
+  title: 'Onboarding Planria',
   robots: 'noindex, nofollow',
 }
 

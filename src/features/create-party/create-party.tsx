@@ -12,7 +12,12 @@ interface CreatePartyProps {
   partyId: string
 }
 
+/**
+ * A component that composes the page to create a party and copy the invite link.
+ */
 function CreateParty({ partyId }: CreatePartyProps): JSX.Element {
+  const href = `/parties/${partyId}/boards`
+
   return (
     <AnimatedWrapper className='mx-auto lg:max-w-xl'>
       <Card>
@@ -21,7 +26,7 @@ function CreateParty({ partyId }: CreatePartyProps): JSX.Element {
           <CopyPartyInviteInput partyId={partyId} />
         </Card.Content>
         <Card.Footer>
-          <CallToActionButton href={`/parties/${partyId}/boards`} />
+          <CallToActionButton href={href} />
         </Card.Footer>
       </Card>
     </AnimatedWrapper>

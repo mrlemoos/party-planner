@@ -9,7 +9,7 @@ import createUserPlanRepository from '@root/repositories/user/plan/create-user-p
 import getRandomAvatarColorMatch from '@root/util/get-random-avatar-color-match'
 
 export const metadata: Metadata = {
-  title: 'Profile | P&P',
+  title: 'Profile | Planria',
   robots: 'noindex',
 }
 

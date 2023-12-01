@@ -16,7 +16,7 @@ function NonProtectedTopBar(): JSX.Element {
           Soon
         </Badge>
       </div>
-      <TopBar.Button href='/about-project'>About P&P</TopBar.Button>
+      <TopBar.Button href='/about-project'>About Planria</TopBar.Button>
       <TopBar.Button href='/contact-us'>Contact us</TopBar.Button>
       <CreatePartyButton />
     </TopBar>
