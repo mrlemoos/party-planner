@@ -1,6 +1,9 @@
-# P&P
+# Planria & Party
 
-Party & Planning - or *P&P* as we like to call it - is the planning poker project that we are working on to provide a better experience for the planning poker process and enrich the Scrum experience for the thousands of teams around the world. 🌎
+[![codecov](https://codecov.io/gh/leolemos/party-planner/branch/main/graph/badge.svg)](https://codecov.io/gh/mrlemoos/party-planner)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+
+Planria is the planning poker project that we are working on to provide a better experience for the planning poker process and enrich the Scrum experience for the thousands of teams around the world. 🌎
 
 ![P&P logo](./readme-assets/homepage-screenshot.png)
 
