@@ -1,11 +1,11 @@
-# Planria & Party
+# Planria
 
 [![codecov](https://codecov.io/gh/leolemos/party-planner/branch/main/graph/badge.svg)](https://codecov.io/gh/mrlemoos/party-planner)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 Planria is the planning poker project that we are working on to provide a better experience for the planning poker process and enrich the Scrum experience for the thousands of teams around the world. 🌎
 
-![P&P logo](./readme-assets/homepage-screenshot.png)
+![Planria homepage screenshot](./readme-assets/homepage-screenshot.png)
 
 ## What is planning poker?
 
@@ -19,9 +19,9 @@ Scrum is a framework for project management that emphasizes teamwork, accountabi
 
 A Scrum team is a collection of individuals working together to deliver the requested and committed product increments. The Scrum team is self-organizing, even though there may be some level of hierarchy within the team. The Scrum team is cross-functional, meaning that the team has all the necessary skills to complete the work it commits to. The Scrum team is also self-managing, meaning that the team internally decides who does what, when and how. If you want to deepen into furthermore detail, here's the link to the [Wikipedia page on Scrum team](https://en.wikipedia.org/wiki/Scrum_(software_development)#Scrum_team).
 
-## How can P&P help you?
+## How can Planria help you?
 
-P&P provides a simple and feature-rich platform that contains all the necessary tools to make the planning poker process as smooth as possible. It provides a simple and intuitive interface that allows the Scrum team to focus on the task at hand and not on the tools. It also provides a rich set of features that can be used to enrich the Scrum experience so at least your three-hour long planning poker sessions are not as boring as they used to be. 😅
+Planria provides a simple and feature-rich platform that contains all the necessary tools to make the planning poker process as smooth as possible. It provides a simple and intuitive interface that allows the Scrum team to focus on the task at hand and not on the tools. It also provides a rich set of features that can be used to enrich the Scrum experience so at least your three-hour long planning poker sessions are not as boring as they used to be. 😅
 
 **We know that it is hard to find a good planning poker tool** and stick to it; and the many of those out there that we've tested throughout these years have been lacking in one way or another. That's why we've decided to create our own tool and make it available for everyone to use. We hope that you find it useful and that it helps you to make your Scrum experience more enjoyable. 🤗
 
