@@ -1,60 +1,43 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { AnimatePresence, motion, type TargetAndTransition } from 'framer-motion'
 
-import { motion, type EventInfo } from 'framer-motion'
-
-import FontSansSerif from '@root/styles/fonts/font-serif-sans'
+import fadeIn from '@root/animation/variants/fade-in'
+import fadeInOut from '@root/animation/variants/fade-in-out'
+import fadeInOutLeft from '@root/animation/variants/fade-in-out-left'
+import FontLogo from '@root/styles/fonts/font-logo'
+import combineShallow from '@root/util/combine-shallow'
 import merge from '@root/util/merge'
 
-/**
- * The animation that is applied to the lettering of the logo.
- */
-const expandAnimation = {
-  initial: {
-    width: 0,
-    opacity: 0,
+const planningWordExpandAnimation = {
+  initial: combineShallow<TargetAndTransition>({
+    x: -20,
+  }),
+  animate: combineShallow<TargetAndTransition>(fadeIn.animate, {
+    x: 0,
     transition: {
-      delay: 4,
+      delay: 0.5,
     },
-  },
-  animate: {
-    width: 'auto',
-    opacity: 1,
-  },
-}
+  }),
+} as const
 
-/**
- * The animation that is applied to the emoji of the logo.
- */
-const fadeInUpAnimation = {
-  initial: {
-    opacity: 0,
-    y: 20,
-    transition: {
-      delay: 3,
-    },
-  },
+const emojiAnimation = {
+  initial: fadeInOut.initial,
   animate: {
-    opacity: 1,
-    y: 0,
+    ...fadeInOut.animate,
     transition: {
-      delay: 0.2,
+      duration: 1,
+      delay: 0.5,
     },
   },
-}
+  exit: fadeInOut.exit,
+} as const
 
 interface LogoProps {
   /**
    * The class name that is merged with the default class name at the root element.
    */
   className?: string
-  /**
-   * Given true, the logo will animate when the user hovers over its container area.
-   *
-   * @default true
-   */
-  isAnimated?: boolean
 }
 
 /**
@@ -62,51 +45,33 @@ interface LogoProps {
  *
  * @props {@link LogoProps}
  */
-function Logo({ className, isAnimated = true }: LogoProps): JSX.Element {
-  const [hasUserHovered, setUserHasHovered] = useState(true)
-
-  const handleHoverStart = useCallback(
-    (/* DOM native */ _mouseEvent: MouseEvent, _info: EventInfo) => {
-      if (hasUserHovered || !isAnimated) {
-        return
-      }
-      setUserHasHovered(true)
-    },
-    [hasUserHovered, isAnimated],
-  )
-
-  useEffect(() => {
-    if (!hasUserHovered || !isAnimated) {
-      return
-    }
-
-    const timeout = setTimeout(() => {
-      setUserHasHovered(false)
-    }, 5000)
-
-    return () => clearTimeout(timeout)
-  }, [hasUserHovered, isAnimated])
-
-  const letteringAnimation = hasUserHovered ? expandAnimation.animate : expandAnimation.initial
-  const emojiAnimation = hasUserHovered ? fadeInUpAnimation.animate : fadeInUpAnimation.initial
-
+function Logo({ className }: LogoProps): JSX.Element {
   return (
-    <motion.div
-      onHoverStart={handleHoverStart}
-      aria-label='P&P'
-      className={merge('font-black tracking-wide', className, FontSansSerif.className)}
-    >
-      <motion.span className='flex items-center'>
-        <span>P</span>
-        <motion.span animate={letteringAnimation}>lanning</motion.span>
-        <span className='text-xl'>&</span>
-        <span>P</span>
-        <motion.span animate={letteringAnimation}>arty</motion.span>
-        <motion.span animate={emojiAnimation} className='text-xl'>
-          &nbsp;🎉
-        </motion.span>
-      </motion.span>
-    </motion.div>
+    <div className='flex items-center gap-1'>
+      <AnimatePresence>
+        <div className={merge('flex items-center gap-4 text-lg text-foreground', className)} aria-label='Planria'>
+          <motion.div
+            className={merge('text-medium text', FontLogo.className)}
+            initial={fadeInOutLeft.initial}
+            animate={fadeInOutLeft.animate}
+            exit={fadeInOutLeft.exit}
+          >
+            <span>P</span>
+            <motion.span initial={planningWordExpandAnimation.initial} animate={planningWordExpandAnimation.animate}>
+              lanria
+            </motion.span>
+            <motion.span
+              initial={emojiAnimation.initial}
+              animate={emojiAnimation.animate}
+              exit={emojiAnimation.exit}
+              className='mx-2'
+            >
+              🎉
+            </motion.span>
+          </motion.div>
+        </div>
+      </AnimatePresence>
+    </div>
   )
 }
 
