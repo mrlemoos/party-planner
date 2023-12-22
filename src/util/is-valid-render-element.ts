@@ -7,6 +7,6 @@ import { type ReactElement, isValidElement } from 'react'
  * @see {@link isValidElement}
  * @see {@link ReactElement}
  */
-export default function isValidRenderElement(element: unknown): element is ReactElement {
+export default function isValidRenderElement<P>(element: unknown): element is ReactElement<P> {
   return typeof element === 'string' || isValidElement(element)
 }
