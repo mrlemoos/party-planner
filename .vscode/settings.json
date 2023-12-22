@@ -2,12 +2,14 @@
   "cSpell.words": [
     "appspot",
     "aren",
+    "Asana",
     "behaviours",
     "clsx",
     "codecov",
     "colour",
     "colours",
     "commitlint",
+    "datasource",
     "deepmerge",
     "didn",
     "firebaseapp",
@@ -28,5 +30,8 @@
     "Sundance",
     "tailwindcss",
     "trpc"
+  ],
+  "cSpell.enableFiletypes": [
+    "prisma"
   ]
 }
