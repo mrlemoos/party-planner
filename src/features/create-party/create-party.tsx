@@ -1,35 +1,60 @@
-import Card from '@root/components/ui/card'
+'use client'
 
-import AnimatedCardHeader from './components/animated-card-header'
-import AnimatedWrapper from './components/animated-wrapper'
-import CallToActionButton from './components/call-to-action-button'
-import CopyPartyInviteInput from './components/copy-party-invite-input'
+import { type ComponentPropsWithoutRef } from 'react'
 
-interface CreatePartyProps {
-  /**
-   * The party ID.
-   */
-  partyId: string
-}
+import Heading from '@root/components/ui/heading'
+
+import AnimatedStepFormContainer from './components/animated-step-form-container'
+import PartySetupForm from './components/party-setup-form'
+import PartySetupStepIndicator from './components/party-setup-step-indicator'
+import RegisterTicketsForm from './components/register-tickets-form'
+import CreatePartyStep from './enums/create-party-step'
 
 /**
- * A component that composes the page to create a party and copy the invite link.
+ * The props for the PartySetupForm component.
  */
-function CreateParty({ partyId }: CreatePartyProps): JSX.Element {
-  const href = `/parties/${partyId}/boards`
+type PartySetupFormProps = ComponentPropsWithoutRef<typeof PartySetupForm>
+/**
+ * The (picked) props for the PartySetupForm component.
+ */
+type PickedPartySetupFormProps = Pick<PartySetupFormProps, 'partyId' | 'partyName'>
+/**
+ * The props for the {@link PartySetupStepIndicator} component.
+ */
+type PartySetupStepIndicatorProps = ComponentPropsWithoutRef<typeof PartySetupStepIndicator>
+/**
+ * The (picked) props for the {@link PartySetupStepIndicator} component.
+ */
+type PickedPartySetupStepIndicatorProps = Pick<PartySetupStepIndicatorProps, 'currentStepKey'>
+/**
+ * The (picked) props for the {@link PartySetupStepIndicator} component.
+ */
+type PartialPickedPartySetupStepIndicatorProps = Partial<PickedPartySetupStepIndicatorProps>
+/**
+ * The props for the {@link CreateParty} component.
+ */
+type CreatePartyProps = PickedPartySetupFormProps & PartialPickedPartySetupStepIndicatorProps
 
+/**
+ * The component that composes the portion of the UI that allows the user to create a party.
+ *
+ * @props {@link CreatePartyProps}
+ */
+function CreateParty({
+  partyId,
+  partyName,
+  currentStepKey = CreatePartyStep.NAME_YOUR_PARTY,
+}: CreatePartyProps): JSX.Element {
   return (
-    <AnimatedWrapper className='mx-auto lg:max-w-xl'>
-      <Card>
-        <AnimatedCardHeader />
-        <Card.Content>
-          <CopyPartyInviteInput partyId={partyId} />
-        </Card.Content>
-        <Card.Footer>
-          <CallToActionButton href={href} />
-        </Card.Footer>
-      </Card>
-    </AnimatedWrapper>
+    <main className='container mt-32 flex min-h-[calc(86dvh-8rem)] flex-col items-center gap-9'>
+      <Heading hierarchy='h1'>Let&apos;s create your party</Heading>
+      <AnimatedStepFormContainer key={currentStepKey}>
+        {currentStepKey === CreatePartyStep.NAME_YOUR_PARTY && (
+          <PartySetupForm partyName={partyName} partyId={partyId} />
+        )}
+        {currentStepKey === CreatePartyStep.PROVIDE_THE_TICKETS && <RegisterTicketsForm />}
+      </AnimatedStepFormContainer>
+    </main>
   )
 }
 
