@@ -1,33 +1,53 @@
+import { type HTMLAttributes } from 'react'
+
 import Link from 'next/link'
 
-import createAuthRepository from '@root/repositories/auth/create-auth-repository'
-import FeatureFlagService from '@root/services/feature-flag-service'
+import UserModel from '@root/models/user-model'
 import createSignInURI from '@root/util/create-sign-in-uri'
 
+import ComponentPropNotAllowedException from '@root/exceptions/component-prop-not-allowed-exception'
+import Avatar from './avatar'
 import Button from './button'
 
 const REFERRAL = 'top-bar-profile-button' as const
 
-const repo = createAuthRepository()
-const features = new FeatureFlagService()
-
 const loginHref = createSignInURI({ referral: REFERRAL })
+
+/**
+ * The (picked) properties from the {@link UserModel}.
+ */
+type PickedUserModel = Pick<UserModel, 'displayName' | 'username' | 'photoURL'>
+/**
+ * The remembered attributes of the {@link HTMLElement}.
+ */
+type RememberedHTMLElementAttributes = Omit<HTMLAttributes<HTMLElement>, 'children'>
+/**
+ * The props for the {@link TopBarProfileButton} component.
+ */
+interface TopBarProfileButtonProps extends PickedUserModel, RememberedHTMLElementAttributes {
+  /**
+   * @ignore
+   */
+  children?: never
+}
 
 /**
  * The `<TopBarProfileButton />` component is a button that is used in the `<TopBar />` component to designate the
  * profile button.
+ *
+ * @props {@link TopBarProfileButtonProps}
  */
-async function TopBarProfileButton(): Promise<JSX.Element | null> {
-  const user = await repo.currentUser()
-
-  // TODO: remove this when we're ready to open the site to everyone.
-  const isClosedToBeta = await features.getFeatureFlag('closed-for-beta')
-
-  if (isClosedToBeta) {
-    return null
+function TopBarProfileButton({
+  children,
+  displayName,
+  username,
+  photoURL,
+}: TopBarProfileButtonProps): JSX.Element | null {
+  if (typeof children !== 'undefined') {
+    throw new ComponentPropNotAllowedException('TopBarProfileButton', 'children')
   }
 
-  if (!user) {
+  if (!(displayName && username && photoURL)) {
     return (
       <Button asChild={true} variant='primary' className='font-semibold'>
         <Link href={loginHref} target='_self'>
@@ -37,7 +57,7 @@ async function TopBarProfileButton(): Promise<JSX.Element | null> {
     )
   }
 
-  return null
+  return <Avatar src={photoURL} alt={`@${username}`} fallback={displayName} />
 }
 
 export default TopBarProfileButton

@@ -10,7 +10,7 @@ import Button from './button'
 const featureFlags = new FeatureFlagService()
 
 const CURRENT_YEAR = new Date().getFullYear()
-const COPYRIGHT_HOLDER = 'mrlemoos.dev' as const
+const COPYRIGHT_HOLDER = 'planria.com' as const
 
 /**
  * The default children for the `<Footer />` component that is rendered when no {@link FooterProps.children children}

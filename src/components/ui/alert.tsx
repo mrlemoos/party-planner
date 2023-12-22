@@ -12,7 +12,7 @@ import AlertTitle from './alert-title'
  * The root styles are used to style the alert component.
  */
 const variantRootStyles = cva(
-  'relative flex w-full items-center rounded-lg border border-foreground/30 bg-background px-4 py-3 text-sm text-foreground shadow-2xl [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7',
+  'relative flex w-full items-center rounded-lg border border-foreground/30 bg-background px-4 py-3 text-sm text-foreground shadow-2xl [svg+div]:translate-y-[-3px] [svg]:absolute [svg]:left-4 [svg]:top-4 [svg]:text-foreground [svg~*]:pl-7',
   {
     variants: {
       variant: {
@@ -67,9 +67,14 @@ const DangerIcon = Cross2Icon as ComponentType<SVGAttributes<SVGSVGElement>>
 type AlertVariant = NonNullable<VariantProps<typeof variantIndicatorStyles>['variant']>
 
 /**
+ * The HTML div element attributes.
+ */
+type HTMLDivElementAttributes = HTMLAttributes<HTMLDivElement>
+
+/**
  * Props for the alert component.
  */
-interface AlertProps extends HTMLAttributes<HTMLDivElement> {
+interface AlertProps extends HTMLDivElementAttributes {
   /**
    * The variant of the alert.
    *

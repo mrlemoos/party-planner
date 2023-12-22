@@ -33,11 +33,11 @@ interface ProgressProps extends Omit<ComponentPropsWithoutRef<typeof PrimitiveRo
 const Progress = forwardRef<ProgressRef, ProgressProps>(({ className, value = 0, ...props }, ref) => (
   <PrimitiveRoot
     ref={ref}
-    className={merge('relative h-2 w-full overflow-hidden rounded-full bg-primary/20', className)}
+    className={merge('relative h-2 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-background/80', className)}
     {...props}
   >
     <PrimitiveIndicator
-      className='h-full w-full flex-1 bg-primary transition-all'
+      className='h-full w-full flex-1 bg-gradient-to-r from-purple-500 to-indigo-500 transition-all'
       style={{ transform: `translateX(-${100 - value}%)` }}
     />
   </PrimitiveRoot>
