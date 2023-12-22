@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react'
 
 import { ClerkProvider } from '@clerk/nextjs'
+import { type Metadata } from 'next'
 import colors from 'tailwindcss/colors'
 
 import ThemeProvider from '@root/components/ui/theme-provider'
@@ -8,6 +9,15 @@ import FontSans from '@root/styles/fonts/font-sans'
 import classes from '@root/util/classes'
 
 import '@root/styles/globals.css'
+
+/**
+ * The {@link Metadata | metadata} of the application.
+ */
+export const metadata: Metadata = {
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+  },
+}
 
 /**
  * The interface that maps the URL query parameters to the layout.
