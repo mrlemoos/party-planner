@@ -16,14 +16,16 @@ model UserPlan {
   period       String
   highlights   String[]
   isComingSoon Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model UserPlanSubscription {
-  id        String   @id @default(uuid())
-  userId    String
-  planId    String
+  id     String @id @default(uuid())
+  userId String
+  planId String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -31,18 +33,20 @@ model UserPlanSubscription {
 // This "WaitList" model is used to store the emails of users who want to be and will to be notified when the app is 
 // ready.
 model WaitList {
-  id        String   @id @default(uuid())
-  email     String   @unique
+  id    String @id @default(uuid())
+  email String @unique
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 // This "UserContactUsMessage" model is used to store the messages sent by users through the contact us form.
 model UserContactUsMessage {
-  id        String   @id @default(uuid())
-  name      String
-  email     String
-  message   String
+  id      String @id @default(uuid())
+  name    String
+  email   String
+  message String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -50,6 +54,12 @@ model UserContactUsMessage {
 model UserCollaborationMetadata {
   id                    String @id @default(uuid())
   userId                String
+  displayName           String
   avatarBackgroundColor String
   avatarForegroundColor String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  partyId String?
 }
