@@ -1,4 +1,4 @@
-import { type FirebaseApp, initializeApp, type FirebaseOptions } from 'firebase/app'
+import { type FirebaseApp, initializeApp, type FirebaseOptions, getApps } from 'firebase/app'
 
 /**
  * The service that provides access to the Firebase Admin SDK for the project to use on the client- and/or server-side
@@ -25,21 +25,28 @@ export default class FirebaseClientService {
   }
 
   /**
-   * Connects the application to Firebase and returns the Firebase Client SDK instance.
+   * @internal
+   *
+   * Connects the application to Firebase and returns the {@link FirebaseApp | Firebase Client SDK instance}.
    */
   private async connect(): Promise<FirebaseApp> {
+    const apps = getApps()
+
+    if (apps.length > 0) {
+      return apps[0]
+    }
+
     const options = await this.loadClientCredentialOptions()
 
     return initializeApp(options)
   }
 
   // The singleton instance of the Firebase Client SDK.
-  private $$singletonFirebaseClientInstance: FirebaseApp | null = null
+  private singletonFirebaseClientInstance: FirebaseApp | null = null
 
   public async singleton(): Promise<FirebaseApp> {
-    if (this.$$singletonFirebaseClientInstance === null) {
-      this.$$singletonFirebaseClientInstance = await this.connect()
-    }
-    return this.$$singletonFirebaseClientInstance
+    this.singletonFirebaseClientInstance ??= await this.connect()
+
+    return this.singletonFirebaseClientInstance
   }
 }

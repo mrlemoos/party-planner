@@ -11,7 +11,7 @@ export default class FirebaseAdminService {
    *
    * @see https://firebase.google.com/docs/database
    */
-  public readonly REALTIME_DATABASE_URL = process.env.FIREBASE_CLIENT_DATABASE_URL
+  public readonly REALTIME_DATABASE_URL = process.env.FIREBASE_ADMIN_REALTIME_DATABASE_URL
   /**
    * The object that carries the credentials for the Firebase Admin SDK. 🚨 This must only be used in the server-side
    * portion of the codebase.
