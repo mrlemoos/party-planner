@@ -1,6 +1,6 @@
 'use server'
 
-import { redirect } from 'next/navigation'
+import { RedirectType, redirect } from 'next/navigation'
 
 import createPartiesRepository from '@root/repositories/parties/create-parties-repository'
 import RenamePartyDataTransferObject from '@root/repositories/parties/dto/rename-party-data-transfer-object'
@@ -21,12 +21,8 @@ async function namePartyAction(partyId: string, values: FormData): Promise<void>
   }
 
   try {
-    await repo.renameParty(new RenamePartyDataTransferObject(partyId, partyName))
-
-    const searchParams = new URLSearchParams()
-    searchParams.set('step', CreatePartyStep.PROVIDE_THE_TICKETS)
-
-    return redirect(`/parties/create/${partyId}?${searchParams.toString()}`)
+    const dto = new RenamePartyDataTransferObject(partyId, partyName)
+    await repo.renameParty(dto)
   } catch (error) {
     const searchParams = new URLSearchParams()
     searchParams.set('error', 'It was not possible to rename the party. Please try again.')
@@ -35,8 +31,13 @@ async function namePartyAction(partyId: string, values: FormData): Promise<void>
       console.error(`namePartyAction(): An error occurred while renaming the party: ${error}`)
     }
 
-    return redirect(`/parties/create/${partyId}?${searchParams.toString()}`)
+    return redirect(`/parties/create/${partyId}?${searchParams.toString()}`, RedirectType.replace)
   }
+
+  const searchParams = new URLSearchParams()
+  searchParams.set('step', CreatePartyStep.PROVIDE_THE_TICKETS)
+
+  return redirect(`/parties/create/${partyId}?${searchParams.toString()}`, RedirectType.replace)
 }
 
 export default namePartyAction
