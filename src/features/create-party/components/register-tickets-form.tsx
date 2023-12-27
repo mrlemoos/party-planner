@@ -27,8 +27,10 @@ function RegisterTicketsForm(): JSX.Element {
           className={merge('w-full rounded-lg')}
           placeholder='e.g. Create the prettiest button ever!'
         />
-        <Small>
-          👀 <b>TIP</b>: If you type the ticket ID (<i>e.g.</i>, PLANRIA-1), we use it to identify your ticket!
+        <Small className='mt-6 leading-4 text-foreground/50'>
+          TIP: If you type the combination [TICKET ID] [TICKET SUMMARY], <i>e.g.</i>, &ldquo;
+          <code className='text-foreground/80'>ABC-123 Fix the bug</code>,&rdquo; the ticket will be automatically
+          identified.
         </Small>
       </div>
     </section>
