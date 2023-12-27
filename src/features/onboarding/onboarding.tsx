@@ -22,7 +22,7 @@ type OnboardingProps = Pick<ComponentPropsWithoutRef<typeof SelectionPlansRow>, 
 function Onboarding({ plans }: OnboardingProps): JSX.Element {
   return (
     <div className='container flex flex-col items-center justify-center gap-16'>
-      <Logo isAnimated={true} className='cursor-default select-none' />
+      <Logo className='cursor-default select-none' />
       <div className='flex flex-col items-center justify-center gap-1'>
         <Heading hierarchy='h1'>Select a plan</Heading>
         <Heading hierarchy='h2' className='text-base font-normal text-gray-500'>
