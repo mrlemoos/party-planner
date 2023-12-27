@@ -31,14 +31,14 @@ const userCollaborationMetadataRepository = createUserCollaborationMetadataRepos
  */
 const REDIRECT_URL = '/profile' as const
 
-async function fetchUserCollaborationMetadataOrCoerceToCreated(userId: string) {
+async function fetchUserCollaborationMetadataOrCoerceToCreated(userId: string, displayName: string) {
   try {
     const { avatarBackgroundColor, avatarForegroundColor } =
       await userCollaborationMetadataRepository.fetchUserCollaborationMetadataByUserId(userId)
     return { avatarBackgroundColor, avatarForegroundColor }
   } catch {
     const { backgroundColor, foregroundColor } = getRandomAvatarColorMatch()
-    const dto = new CreateUserCollaborationMetadataDto(userId, backgroundColor, foregroundColor)
+    const dto = new CreateUserCollaborationMetadataDto(userId, backgroundColor, foregroundColor, displayName, null)
     const { avatarBackgroundColor, avatarForegroundColor } =
       await userCollaborationMetadataRepository.createUserCollaborationMetadata(dto)
 
@@ -55,11 +55,11 @@ async function ProfilePage(): Promise<JSX.Element> {
   if (!user) {
     return redirectToSignIn({ returnBackUrl: REDIRECT_URL })
   }
-  const userId = user.uid
+  const { uid: userId, displayName } = user
 
   const [subscription, collaborationMetadata] = await Promise.all([
-    await userPlansRepository.fetchUserSubscriptionByUserId(userId),
-    fetchUserCollaborationMetadataOrCoerceToCreated(userId),
+    userPlansRepository.fetchUserSubscriptionByUserId(userId),
+    fetchUserCollaborationMetadataOrCoerceToCreated(userId, displayName),
   ])
   const allPlans = await userPlansRepository.fetchUserPlans()
   const currentUserPlanId = subscription.planId
