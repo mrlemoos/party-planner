@@ -4,5 +4,11 @@
  * This function converts that object to an actual array.
  */
 export default function convertFirebaseObjectToArray<T extends object, E extends T[keyof T]>(arrayLike: T): E[] {
-  return Object.values(arrayLike).map(([, value]) => value)
+  if (arrayLike) {
+    return Object.values(arrayLike).map(function (value) {
+      return value
+    })
+  }
+
+  return []
 }
