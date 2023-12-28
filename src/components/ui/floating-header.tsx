@@ -61,7 +61,7 @@ function FloatingHeader({ children, className, ...props }: FloatingHeaderProps):
   return (
     <RootElement
       className={merge(
-        'sticky top-6 mx-auto rounded-b-md border-gray-200 p-3 shadow-md backdrop-blur-lg dark:border-gray-700 md:max-w-[90vw] md:rounded-3xl md:border md:shadow-2xl xl:max-w-screen-2xl',
+        'sticky top-6 mx-auto rounded-b-md border-gray-500 p-3 shadow-md backdrop-blur-lg dark:border-gray-200/10 dark:border-gray-700 md:max-w-[90vw] md:rounded-3xl md:border md:shadow-2xl xl:max-w-screen-2xl',
         className,
       )}
       {...props}
