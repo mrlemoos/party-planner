@@ -75,7 +75,7 @@ function AboutProject(): JSX.Element {
         <Link href='https://clerk.com/privacy' className='font-bold'>
           Privacy Policy
         </Link>
-        and&nbsp;
+        &nbsp;and&nbsp;
         <Link href='https://clerk.com/terms'>Terms & Conditions</Link>
         &nbsp;official documentation.
       </Paragraph>
