@@ -25,7 +25,7 @@ async function CreatePartyButton(): Promise<JSX.Element | null> {
     <Button asChild={true} variant='primary' className='rounded-xl'>
       <Link href={CREATE_PARTY_PATHNAME} target='_self' replace={true}>
         Create party
-        <ArrowRightIcon className='ml-2' aria-hidden='true' />
+        <ArrowRightIcon className='ml-1.5' aria-hidden='true' height={18} width={18} />
       </Link>
     </Button>
   )
