@@ -1,19 +1,44 @@
-import { AnchorHTMLAttributes, ReactNode, type ComponentPropsWithoutRef } from 'react'
+import { type AnchorHTMLAttributes, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 
-import Link, { LinkProps } from 'next/link'
+import Link from 'next/link'
 
 import merge from '@root/util/merge'
 
 import Button from './button'
 import FloatingHeader from './floating-header'
 import Logo from './logo'
+import Tooltip from './tooltip'
 
 /**
  * The props for the `<TopBar.Button />` component.
  */
-type TopBarButtonProps = Omit<ComponentPropsWithoutRef<typeof Button>, 'asChild' | 'variant'> &
-  Pick<AnchorHTMLAttributes<HTMLAnchorElement>, 'target' | 'rel'> &
-  Pick<LinkProps, 'href'>
+type HTMLAnchorElementAttributes = AnchorHTMLAttributes<HTMLAnchorElement>
+/**
+ * The React-adapted attributes for the `<anchor>` element picked from the {@link HTMLAnchorElementAttributes} type.
+ */
+type PickedHTMLAnchorElementAttributes = Pick<HTMLAnchorElementAttributes, 'target' | 'rel'>
+/**
+ * The props from {@link Button} component.
+ */
+type ButtonProps = ComponentPropsWithoutRef<typeof Button>
+/**
+ * The picked props from {@link ButtonProps} type.
+ */
+type PickedButtonProps = Pick<ButtonProps, 'asChild' | 'variant' | 'className'>
+
+/**
+ * The props for the `<TopBar.Button />` component.
+ */
+interface TopBarButtonProps extends PickedHTMLAnchorElementAttributes, PickedButtonProps {
+  /**
+   * The custom {@link ReactNode node} which will be displayed inside the button.
+   */
+  children: ReactNode
+  /**
+   * The hyperlink reference for the button.
+   */
+  href: string
+}
 
 /**
  * The `<TopBar.Button />` component is a button that is used in the `<TopBar />` component.
@@ -23,7 +48,7 @@ type TopBarButtonProps = Omit<ComponentPropsWithoutRef<typeof Button>, 'asChild'
 function TopBarButton({ children, className, href, target, rel, ...props }: TopBarButtonProps): JSX.Element {
   return (
     <Button {...props} className={className} variant='ghost' asChild={true}>
-      <Link href={href} target={target} rel={rel}>
+      <Link href={href as ComponentPropsWithoutRef<typeof Link>['href']} target={target} rel={rel}>
         {children}
       </Link>
     </Button>
@@ -58,9 +83,11 @@ interface TopBarProps extends ComponentPropsWithoutRef<typeof FloatingHeader> {
 function TopBar({ children, className, rightSide, ...props }: TopBarProps): JSX.Element {
   return (
     <FloatingHeader className={merge('z-10 flex items-center justify-between px-4', className)} {...props}>
-      <Link href='/'>
-        <Logo />
-      </Link>
+      <Tooltip content='Planria • Go to home' side='bottom' hasArrow={true}>
+        <Link href='/'>
+          <Logo />
+        </Link>
+      </Tooltip>
       <FloatingHeader.NavigationMenu>{children}</FloatingHeader.NavigationMenu>
       {rightSide}
     </FloatingHeader>
