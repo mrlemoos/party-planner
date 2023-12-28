@@ -12,9 +12,9 @@ function EnrollWaitingListForm(): JSX.Element {
   return (
     <Fragment>
       <Paragraph className='md:max-w-[68rem]'>
-        As Planria is still in beta, we are actively picking sign-ups to help us with feedback of the Planria
-        experience. If you would like to be notified when we open up to new users in this beta phase, please sign up to
-        our waiting list.
+        As Planria is <span className='font-semibold'>still in beta</span>, we are actively picking sign-ups to help us
+        with feedback of the Planria experience. If you would like to be notified when we open up to new users in this
+        beta phase, please sign up to our waiting list.
       </Paragraph>
       <form action={enrollEmailToWaitingList}>
         <div className='mt-4 flex items-center gap-2'>
