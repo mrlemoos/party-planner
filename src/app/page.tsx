@@ -10,9 +10,9 @@ import NonProtectedTopBar from '@root/features/non-protected-top-bar/non-protect
  * The {@link Metadata | metadata} for the root page that will be indexed by search engines.
  */
 export const metadata: Metadata = {
-  title: 'Planria  🎉',
+  title: 'Planria | Less Poker & More Planning 🎯',
   description: 'Point your tasks. Plan your sprint. Have fun.',
-  keywords: ['party', 'planner', 'tasks', 'sprint', 'fun', 'planning poker', 'planning', 'poker'],
+  keywords: ['party', 'planner', 'tasks', 'sprint', 'fun', 'planning poker', 'planning', 'poker', 'planria'],
 }
 
 /**
