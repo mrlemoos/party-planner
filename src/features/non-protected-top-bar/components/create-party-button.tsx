@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from '@radix-ui/react-icons'
 import Link from 'next/link'
 
 import Button from '@root/components/ui/button'
@@ -24,6 +25,7 @@ async function CreatePartyButton(): Promise<JSX.Element | null> {
     <Button asChild={true} variant='primary' className='rounded-xl'>
       <Link href={CREATE_PARTY_PATHNAME} target='_self' replace={true}>
         Create party
+        <ArrowRightIcon className='ml-2' aria-hidden='true' />
       </Link>
     </Button>
   )
