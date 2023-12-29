@@ -103,21 +103,22 @@ async function writeFirebaseClientCredentialsJSONFile(): Promise<void> {
 async function main() {
   try {
     await writeFirebaseAdminCredentialsJSONFile()
+    console.log('[FIREBASE CREDENTIALS] The Firebase Admin credential schema file has successfully been written 🎯')
   } catch (error) {
-    console.error(`🚨  ERROR (Firebase Admin SDK): ${error} (This error will not interrupt the process.)`)
+    console.error(
+      `[Firebase Credential Schema Files] 🚨  ERROR (Firebase Admin SDK): ${error} (This error will not interrupt the process.)`,
+    )
   }
   try {
     await writeFirebaseClientCredentialsJSONFile()
+    console.log(
+      '[FIREBASE CREDENTIALS] Firebase Admin and Client credential schema files have successfully been written 🎯',
+    )
   } catch (error) {
-    console.error(`🚨  ERROR (Firebase Client SDK): ${error} (This error will not interrupt the process.)`)
+    console.error(
+      `[Firebase Credential Schema Files] 🚨  ERROR (Firebase Client SDK): ${error} (This error will not interrupt the process.)`,
+    )
   }
-
-  console.log('Firebase Admin and Client credential schema files have successfully been written 🎯')
 }
 
 main()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error(error)
-    process.exit(1)
-  })
