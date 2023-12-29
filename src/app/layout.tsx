@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 
 import { ClerkProvider } from '@clerk/nextjs'
-import { type Metadata } from 'next'
+import { type Metadata, type Viewport } from 'next'
 import colors from 'tailwindcss/colors'
 
 import ThemeProvider from '@root/components/ui/theme-provider'
@@ -17,6 +17,22 @@ export const metadata: Metadata = {
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION,
   },
+}
+
+/**
+ * The {@link Viewport | viewport} of the application.
+ */
+export const viewport: Viewport = {
+  themeColor: [
+    {
+      media: '(prefers-color-scheme: light)',
+      color: colors.white,
+    },
+    {
+      media: '(prefers-color-scheme: dark)',
+      color: colors.black,
+    },
+  ],
 }
 
 /**
@@ -57,10 +73,6 @@ interface RootLayoutProps {
 function RootLayout({ children, searchParams: { lang = 'en' } = {} }: RootLayoutProps): JSX.Element {
   return (
     <html lang={lang}>
-      <head>
-        <meta name='theme-color' media='(prefers-color-scheme: light)' content={colors.white} />
-        <meta name='theme-color' media='(prefers-color-scheme: dark)' content={colors.black} />
-      </head>
       <body className={classes('min-h-screen bg-background font-sans antialiased', FontSans.variable)}>
         <ClerkProvider>
           <ThemeProvider>{children}</ThemeProvider>
