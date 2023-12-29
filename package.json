@@ -19,7 +19,8 @@
     "prisma:generate": "prisma generate",
     "script": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'",
     "firebase:write-credentials": "sh ./scripts/firebase/write-credentials.sh",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test": "vitest"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.27.5",
@@ -76,6 +77,7 @@
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-react": "^7.33.2",
     "husky": "^8.0.3",
+    "jsdom": "^23.0.1",
     "prettier-plugin-tailwindcss": "^0.5.9",
     "prisma": "^5.7.0",
     "semantic-release": "^22.0.10",
