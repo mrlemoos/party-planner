@@ -8,6 +8,8 @@ import { twMerge } from 'tailwind-merge'
  *
  * @see {@link https://npmjs.com/package/clsx}
  * @see {@link https://npmjs.com/package/tailwind-merge}
+ *
+ * @deprecated Use `merge()` from `@root/util/merge` instead.
  */
 function classes(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
