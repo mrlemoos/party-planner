@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/mrlemoos/party-planner/compare/v1.3.0...v1.4.0) (2023-12-29)
+
+
+### Features
+
+* create `not-found` page and integrate with Next.js app router ([015b52d](https://github.com/mrlemoos/party-planner/commit/015b52d0598bcdd6d28c500d49d8d02cb0f68788))
+
 # [1.3.0](https://github.com/mrlemoos/party-planner/compare/v1.2.0...v1.3.0) (2023-11-26)
 
 
