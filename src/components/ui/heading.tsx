@@ -3,7 +3,7 @@ import { HTMLAttributes, isValidElement } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { cva } from 'class-variance-authority'
 
-const headingStylesheet = cva('scroll-m-20 tracking-tight', {
+const headingStylesheet = cva('scroll-m-20 tracking-tight text-foreground', {
   variants: {
     hierarchy: {
       h1: 'text-4xl font-extrabold lg:text-5xl',
