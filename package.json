@@ -18,7 +18,7 @@
     "prisma:pull": "prisma db pull",
     "prisma:generate": "prisma generate",
     "script": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'",
-    "firebase:write-credentials": "sh ./scripts/firebase/write-credentials.sh",
+    "firebase:write-credentials": "bun ./scripts/firebase/write-credentials.ts",
     "type-check": "tsc --noEmit",
     "test": "vitest"
   },
@@ -70,6 +70,7 @@
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
     "@vitejs/plugin-react": "^4.2.1",
+    "bun-types": "^1.0.20",
     "commitizen": "^4.3.0",
     "eslint": "8.52.0",
     "eslint-config-prettier": "^9.1.0",
