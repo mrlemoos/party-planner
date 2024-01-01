@@ -90,7 +90,7 @@ function useAlertController({ timeout = defaultTimeout, searchParamKey }: UseAle
       return
     }
 
-    const newSearchParams = new URLSearchParams(searchParams)
+    const newSearchParams = new URLSearchParams(searchParams.toString())
     newSearchParams.delete(variant)
 
     const newPathname = newSearchParams.size >= 1 ? `${pathname}?${newSearchParams.toString()}` : pathname

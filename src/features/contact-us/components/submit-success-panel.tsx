@@ -58,7 +58,7 @@ function SubmitSuccessPanel(): JSX.Element | null {
     }
 
     const timeoutId = setTimeout(() => {
-      const searchParamsToReplace = new URLSearchParams(searchParams)
+      const searchParamsToReplace = new URLSearchParams(searchParams.toString())
       searchParamsToReplace.delete(ContactUsSearchParams.SUCCESS_QUERY_URL_SEARCH_PARAM_KEY)
 
       const href = `${pathname}?${searchParamsToReplace.toString()}`

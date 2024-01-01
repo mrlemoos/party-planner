@@ -45,7 +45,7 @@ function ComposedTextarea({ name, id, onChange, ...props }: ComposedTextareaProp
     (event: ReactChangeEvent<HTMLTextAreaElement>) => {
       // If the error is present on the URL search params object, remove it.
       if (error) {
-        const newSearchParams = new URLSearchParams(searchParams)
+        const newSearchParams = new URLSearchParams(searchParams.toString())
         newSearchParams.delete(errorSearchParam)
 
         const url = new URL(pathname, window.location.href)

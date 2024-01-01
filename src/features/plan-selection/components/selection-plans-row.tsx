@@ -66,7 +66,7 @@ function SelectionPlansRow({
       if (isSelected) {
         return
       }
-      const newSearchParams = new URLSearchParams(searchParams)
+      const newSearchParams = new URLSearchParams(searchParams.toString())
       newSearchParams.set(searchParamSelectionStateKey, planId)
 
       const href = `${pathname}?${newSearchParams.toString()}`

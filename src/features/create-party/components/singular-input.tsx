@@ -37,7 +37,7 @@ function SingularInput({ className, children, onFocus, ...props }: SingularInput
       }
 
       if (error) {
-        const newSearchParams = new URLSearchParams(searchParams)
+        const newSearchParams = new URLSearchParams(searchParams.toString())
         newSearchParams.delete('error')
 
         const href = newSearchParams.size >= 1 ? `${pathname}?${newSearchParams.toString()}` : pathname

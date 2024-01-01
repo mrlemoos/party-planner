@@ -52,7 +52,7 @@ function ComposedInput({ name, id, onChange, ComposableComponent = Input, ...pro
     (event: ReactChangeEvent<HTMLInputElement>) => {
       // If the error is present on the URL search params object, remove it.
       if (error) {
-        const newSearchParams = new URLSearchParams(searchParams)
+        const newSearchParams = new URLSearchParams(searchParams.toString())
         newSearchParams.delete(errorSearchParam)
 
         const url = new URL(pathname, window.location.href)

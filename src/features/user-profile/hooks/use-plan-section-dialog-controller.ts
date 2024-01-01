@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react'
 
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
+
 import UserProfileSearchParams from '../constants/user-profile-search-params'
 
 /**
@@ -25,7 +26,7 @@ export default function usePlanSectionDialogController() {
    * The function that opens the plan section dialog.
    */
   const handleOpenPlanSectionDialog = useCallback(() => {
-    const newSearchParams = new URLSearchParams(searchParams)
+    const newSearchParams = new URLSearchParams(searchParams.toString())
     newSearchParams.set(
       UserProfileSearchParams.isUserPlanSectionDialogOpen,
       UserProfileSearchParams.isUserPlanSectionDialogOpenValue,
@@ -40,7 +41,7 @@ export default function usePlanSectionDialogController() {
    * The function that closes the plan section dialog.
    */
   const handleClosePlanSectionDialog = useCallback(() => {
-    const newSearchParams = new URLSearchParams(searchParams)
+    const newSearchParams = new URLSearchParams(searchParams.toString())
     newSearchParams.delete(UserProfileSearchParams.isUserPlanSectionDialogOpen)
 
     const href = `${pathname}?${newSearchParams.toString()}`
