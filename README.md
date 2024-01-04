@@ -5,7 +5,8 @@
 
 Planria is the planning poker project that we are working on to provide a better experience for the planning poker process and enrich the Scrum experience for the thousands of teams around the world. 🌎
 
-![Planria homepage screenshot](./readme-assets/homepage-screenshot.png)
+![Planria homepage screenshot - Dark mode](./readme-assets/homepage-screenshot-dark-mode.png)
+![Planria homepage screenshot - Light mode](./readme-assets/homepage-screenshot-light-mode.png)
 
 ## What is planning poker?
 
@@ -29,7 +30,7 @@ Planria provides a simple and feature-rich platform that contains all the necess
 
 ## License
 
-The Party&Planning project is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) license. You can find a copy of the license in the [LICENSE](./LICENSE) file or at <https://www.apache.org/licenses/LICENSE-2.0>.
+The **Planria** project is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) license. You can find a copy of the license in the [LICENSE](./LICENSE) file or at <https://www.apache.org/licenses/LICENSE-2.0>.
 
 ## Buy me a Coffee ☕️
 
