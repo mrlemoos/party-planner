@@ -1,13 +1,16 @@
+'use client'
+
 import { type AnchorHTMLAttributes, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 
+import { motion, type TargetAndTransition } from 'framer-motion'
 import Link from 'next/link'
 
 import merge from '@root/util/merge'
+import toRem from '@root/util/to-rem'
 
 import Button from './button'
 import FloatingHeader from './floating-header'
 import Logo from './logo'
-import Tooltip from './tooltip'
 
 /**
  * The props for the `<TopBar.Button />` component.
@@ -55,6 +58,19 @@ function TopBarButton({ children, className, href, target, rel, ...props }: TopB
   )
 }
 
+const keyframes = {
+  productLogo: {
+    whileHover: {
+      width: toRem(40),
+
+      transition: {
+        duration: 0.5,
+        type: 'spring',
+      },
+    },
+  } as TargetAndTransition,
+}
+
 /**
  * The props for the `<TopBar />` component.
  */
@@ -65,6 +81,8 @@ interface TopBarProps extends ComponentPropsWithoutRef<typeof FloatingHeader> {
    */
   rightSide?: ReactNode
 }
+
+const AnimatedLogo = motion(Logo)
 
 /**
  * The `<TopBar />` component is a floating header that is always visible at the top of the page and sticks to the top
@@ -83,11 +101,9 @@ interface TopBarProps extends ComponentPropsWithoutRef<typeof FloatingHeader> {
 function TopBar({ children, className, rightSide, ...props }: TopBarProps): JSX.Element {
   return (
     <FloatingHeader className={merge('z-10 flex items-center justify-between px-4', className)} {...props}>
-      <Tooltip content='Planria • Go to home' side='bottom' hasArrow={true}>
-        <Link href='/'>
-          <Logo />
-        </Link>
-      </Tooltip>
+      <Link href='/'>
+        <AnimatedLogo whileHover={keyframes.productLogo} />
+      </Link>
       <FloatingHeader.NavigationMenu>{children}</FloatingHeader.NavigationMenu>
       {rightSide}
     </FloatingHeader>
