@@ -1,3 +1,5 @@
+'use client'
+
 import { useMemo } from 'react'
 
 interface UseComputeErrorMessageProps {
@@ -11,27 +13,27 @@ interface UseComputeErrorMessageProps {
 }
 
 /**
+ * The {@link process.env} constant that determines whether the application is in development mode.
+ */
+const IS_DEVELOPMENT = process.env.NODE_ENV === 'development'
+
+/**
  * This React Hook computes the error message from the given {@link UseComputeErrorMessageProps.error | error}.
  *
  * @see {@link UseComputeErrorMessageProps}
  */
 function useComputeErrorMessage({ error }: UseComputeErrorMessageProps) {
-  const computedErrorMessage = useMemo(
-    function () {
-      if (error instanceof Error) {
-        if (error.digest) {
-          return error.digest
-        }
-
-        if (error.message) {
-          return error.message
-        }
+  const computedErrorMessage = useMemo(() => {
+    if (error instanceof Error) {
+      // NOTE: The original message is only shown in development mode to avoid leaking sensitive information to the
+      // end-user in production.
+      if (error.message && IS_DEVELOPMENT) {
+        return error.message
       }
+    }
 
-      return 'An unknown error occurred. Please try again.'
-    },
-    [error],
-  )
+    return 'An unexpected error occurred. Please try again.'
+  }, [error])
 
   return computedErrorMessage
 }
