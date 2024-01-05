@@ -31,7 +31,7 @@ const HOMEPAGE_HREF = '/' as const
 
 /**
  * The framer-motion-adapted {@link Logo} component.
- * 
+ *
  * @see {@link https://www.framer.com/api/motion/}
  * @see {@link Logo}
  * @see {@link motion}
