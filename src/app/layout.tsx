@@ -36,18 +36,6 @@ export const viewport: Viewport = {
 }
 
 /**
- * The interface that maps the URL query parameters to the layout.
- */
-interface RootLayoutSearchParams {
-  /**
-   * The URL query parameter that defines the language of the page.
-   *
-   * @default 'en'
-   */
-  lang?: 'en'
-}
-
-/**
  * The props of the layout.
  */
 interface RootLayoutProps {
@@ -57,12 +45,6 @@ interface RootLayoutProps {
    * @see {@link ReactNode}
    */
   children: ReactNode
-  /**
-   * The mapped URL search params.
-   *
-   * @see {@link RootLayoutSearchParams}
-   */
-  searchParams?: RootLayoutSearchParams
 }
 
 /**
@@ -70,9 +52,9 @@ interface RootLayoutProps {
  *
  * @props {@link RootLayoutProps}
  */
-function RootLayout({ children, searchParams: { lang = 'en' } = {} }: RootLayoutProps): JSX.Element {
+function RootLayout({ children }: RootLayoutProps): JSX.Element {
   return (
-    <html lang={lang}>
+    <html lang='en'>
       <body className={classes('min-h-screen bg-background font-sans antialiased', FontSans.variable)}>
         <ClerkProvider>
           <ThemeProvider>{children}</ThemeProvider>
