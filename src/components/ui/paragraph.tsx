@@ -1,6 +1,7 @@
 import { type HTMLAttributes } from 'react'
 
-import classes from '@root/util/classes'
+import FontSans from '@root/styles/fonts/font-sans'
+import merge from '@root/util/merge'
 
 type $$HTMLParagraphAttributes = HTMLAttributes<HTMLParagraphElement>
 
@@ -19,7 +20,8 @@ interface ParagraphProps extends $$HTMLParagraphAttributes {
 function Paragraph({ children, className, isMuted = false, ...props }: ParagraphProps): JSX.Element {
   return (
     <p
-      className={classes(
+      className={merge(
+        FontSans.className,
         'leading-7 [&:not(:first-child)]:mt-6',
         {
           'text-sm text-muted-foreground': isMuted,
