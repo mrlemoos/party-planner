@@ -6,7 +6,7 @@ import colors from 'tailwindcss/colors'
 
 import ThemeProvider from '@root/components/ui/theme-provider'
 import FontSans from '@root/styles/fonts/font-sans'
-import classes from '@root/util/classes'
+import merge from '@root/util/merge'
 
 import '@root/styles/globals.css'
 
@@ -55,7 +55,7 @@ interface RootLayoutProps {
 function RootLayout({ children }: RootLayoutProps): JSX.Element {
   return (
     <html lang='en'>
-      <body className={classes('min-h-screen bg-background font-sans antialiased', FontSans.variable)}>
+      <body className={merge('min-h-screen bg-background font-sans antialiased', FontSans.variable)}>
         <ClerkProvider>
           <ThemeProvider>{children}</ThemeProvider>
         </ClerkProvider>
