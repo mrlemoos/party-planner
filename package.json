@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "next dev",
     "postinstall": "prisma generate",
-    "prebuild": "pnpm run firebase:write-credentials && pnpm run prisma:generate",
+    "prebuild": "pnpm run prisma:generate",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -18,7 +18,6 @@
     "prisma:pull": "prisma db pull",
     "prisma:generate": "prisma generate",
     "script": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'",
-    "firebase:write-credentials": "bun ./scripts/firebase/write-credentials.ts",
     "type-check": "tsc --noEmit",
     "test": "vitest",
     "prepare": "husky install && chmod ug+x .husky/*"

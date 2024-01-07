@@ -118,18 +118,13 @@ namespace NodeJS {
      */
     readonly POSTGRES_DATABASE: string
     /**
-     * The Firebase Client SDK credentials schema for the project.
+     * The URL for the Supabase project that the project uses for the database.
      */
-    readonly NEXT_PUBLIC_FIREBASE_CLIENT_CREDENTIAL_SCHEMA: `{${string}}`
+    readonly NEXT_PUBLIC_SUPABASE_URL: string
     /**
-     * The Firebase Client SDK database URL for the project, e.g.
-     * `https://{{projectID}}-{{defaultCollection}}-rtdb.firebaseio.com`.
-     *
-     * @see https://firebase.google.com/docs/web/setup#add-sdks-initialize
-     *
-     * @example "https://party-planner-123a4-default-rtdb.firebaseio.com"
+     * The public key of the Supabase project that the project uses for the database.
      */
-    readonly NEXT_PUBLIC_FIREBASE_CLIENT_DATABASE_URL: string
+    readonly NEXT_PUBLIC_SUPABASE_PUBLIC_API_KEY: string
     /**
      * The [NextJS](https://nextjs.org) environment variable that contains the URL of the Vercel deployment for the
      * project. It is automatically set by Vercel at build time in the pipeline.
@@ -143,15 +138,5 @@ namespace NodeJS {
      * @example "party-planner.mrlemoos.dev"
      */
     readonly NEXT_PUBLIC_VERCEL_URL: string
-    /**
-     * The Firebase Admin SDK credentials schema for the project.
-     */
-    readonly FIREBASE_ADMIN_CREDENTIAL_SCHEMA: `{${string}}`
-    /**
-     * The URL of the Firebase Realtime Database for the project.
-     *
-     * @see https://firebase.google.com/docs/database
-     */
-    readonly FIREBASE_ADMIN_REALTIME_DATABASE_URL: string
   }
 }
