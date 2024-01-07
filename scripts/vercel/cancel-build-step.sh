@@ -11,7 +11,12 @@ echo "VERCEL_GIT_COMMIT_MESSAGE: $VERCEL_GIT_COMMIT_MESSAGE"
 if [[ "$VERCEL_GIT_COMMIT_MESSAGE" == *"[ci skip]"  ]] && [[ "$VERCEL_GIT_COMMIT_REF" == "main" ]] ; then
   echo "🛑 [CANCEL BUILD STEP] The build referred by $VERCEL_GIT_COMMIT_REF has been cancelled. See commit message: \"$VERCEL_GIT_COMMIT_MESSAGE\""
   exit 0;
-else
-  echo "✅ [CANCEL BUILD STEP] The build referred by $VERCEL_GIT_COMMIT_MESSAGE is allowed to proceed"
-  exit 1;
 fi
+
+if [[ "$VERCEL_GIT_COMMIT_REF" == "dependabot/"* ]] ; then
+  echo "🤖 [CANCEL BUILD STEP] The build (referred by $VERCEL_GIT_COMMIT_REF) will not proceed because it is a branch created by Dependabot. See commit message: \"$VERCEL_GIT_COMMIT_MESSAGE\""
+  exit 0;
+fi
+
+echo "✅ [CANCEL BUILD STEP] The build referred by $VERCEL_GIT_COMMIT_MESSAGE is allowed to proceed"
+exit 1;
