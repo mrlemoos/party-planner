@@ -10,9 +10,10 @@ const nextConfig = {
       },
     ],
   },
-  compiler: {
-    removeConsole: true,
-  },
+  // TODO: add this back when we have a better way to handle logging and monitoring in production and/or build time.
+  // compiler: {
+  //   removeConsole: true,
+  // },
   reactStrictMode: true,
 }
 
