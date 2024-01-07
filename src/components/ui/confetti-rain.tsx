@@ -119,6 +119,7 @@ const ConfettiRain = forwardRef<ConfettiRainImperativeRef, ConfettiRainProps>(
         style={confettiOverrideStyle}
         numberOfPieces={isAnimating ? pieces : 0}
         recycle={false}
+        className='fixed inset-0'
         confettiSource={{
           x: 0,
           y: 0,
