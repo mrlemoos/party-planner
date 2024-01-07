@@ -42,7 +42,6 @@ const animationPreset = {
  *
  * When the user enrolls to the waiting list, the component fades out and the {@link ConfettiRain | confetti animation}
  * is played. The component is then unmounted from the DOM.
- *
  */
 function EnrollWaitingListSubmitButton(): JSX.Element | null {
   const searchParams = useSearchParams()
