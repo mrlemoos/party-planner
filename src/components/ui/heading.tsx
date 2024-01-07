@@ -3,6 +3,8 @@ import { HTMLAttributes, isValidElement } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { cva } from 'class-variance-authority'
 
+import merge from '@root/util/merge'
+
 const headingStylesheet = cva('scroll-m-20 tracking-tight text-foreground', {
   variants: {
     hierarchy: {
@@ -145,7 +147,10 @@ function Heading({ className, children, hierarchy, asChild = false, ...props }: 
   const RenderElement = (asChild ? Slot : hierarchy) as unknown as NonNullable<HeadingProps['hierarchy']>
 
   return (
-    <RenderElement className={headingStylesheet({ hierarchy: asChild ? 'unset' : hierarchy, className })} {...props}>
+    <RenderElement
+      className={merge(headingStylesheet({ hierarchy: asChild ? 'unset' : hierarchy }), className)}
+      {...props}
+    >
       {children}
     </RenderElement>
   )
