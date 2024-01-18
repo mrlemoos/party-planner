@@ -2,8 +2,10 @@ import { User as ClerkUser, auth, currentUser } from '@clerk/nextjs/server'
 
 import AuthRepository from '@root/repositories/auth/auth-repository'
 import UserModel from '@root/models/user-model'
+import ClerkTemplateNotSupportedException from './clerk-template-not-supported-exception'
 
 class ClerkAuthRepository extends AuthRepository {
+  // #region private methods
   private getUserPhotoURLFromClerkServiceOrExternalAccountProvider(clerkUser: ClerkUser | null): string | undefined {
     if (!clerkUser) {
       return
@@ -17,6 +19,19 @@ class ClerkAuthRepository extends AuthRepository {
         return externalAccount.imageUrl
       }
     }
+  }
+  // #endregion
+
+  async getCurrentUserTokenByTemplate<T extends string>(template: T): Promise<string | null> {
+    if (template !== 'supabase') {
+      throw new ClerkTemplateNotSupportedException(
+        `The template provided to getCurrentUserTokenByTemplate("${template}") is not supported by Clerk.js. See more at https://clerk.com/docs/references/javascript/authentication#authentication and double check your implementation of the getCurrentUserTokenByTemplate("${template}") method.`,
+      )
+    }
+
+    const tokenWithTemplate = await auth().getToken({ template })
+
+    return tokenWithTemplate
   }
 
   async currentUser(): Promise<UserModel | undefined> {

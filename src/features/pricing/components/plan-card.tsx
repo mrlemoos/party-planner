@@ -1,8 +1,13 @@
+'use client'
+
 import { type ReactNode } from 'react'
 
-import Button from '@root/components/ui/button'
 import Card from '@root/components/ui/card'
-import List from '@root/components/ui/list'
+import merge from '@root/util/merge'
+import FontSansSerif from '@root/styles/fonts/font-serif-sans'
+import FontCurrency from '@root/styles/fonts/font-currency'
+import Button from '@root/components/ui/button'
+import Badge from '@root/components/ui/badge'
 
 interface PlanCardProps {
   /**
@@ -29,6 +34,10 @@ interface PlanCardProps {
    * @example `$`
    */
   currency?: string
+  /**
+   * The boolean which indicates if the plan is coming soon.
+   */
+  isComingSoon?: boolean
 }
 
 /**
@@ -36,26 +45,42 @@ interface PlanCardProps {
  *
  * @props {@link PlanCardProps}
  */
-function PlanCard({ price, currency = '$', name, children, unit }: PlanCardProps): JSX.Element {
-  return (
-    <Card className='flex flex-col p-6 shadow-2xl'>
-      <Card.Title className='text-3xl'>{name}</Card.Title>
-      <Card.Description>
-        <span className='flex items-center justify-end' aria-label={`${price} ${currency} per ${unit}`}>
-          <span className='text-sm'>{currency}</span>
-          <span className='mb-2 text-3xl font-bold text-foreground'>{price}</span>
-          <span className='text-sm font-normal'>/{unit}</span>
-        </span>
-      </Card.Description>
-      <Card.Content className='h-full'>
-        <List>{children}</List>
-      </Card.Content>
+function PlanCard({ price, currency = '$', name, children, unit, isComingSoon }: PlanCardProps): JSX.Element {
+  const isPlanFree = price === '0'
 
+  return (
+    <Card className='group relative border-emerald-500/20 bg-background p-2 transition-all hover:bg-gradient-to-br hover:from-emerald-400/80 hover:to-green-700/80 dark:border-gray-900'>
+      <Card.Header className='flex select-none flex-col gap-4'>
+        <Card.Title className={merge('text-2xl font-black', FontSansSerif.className)}>{name}</Card.Title>
+        <div className='flex items-stretch gap-1'>
+          <div className={FontCurrency.className}>
+            <span className='text-5xl font-semibold'>{currency}</span>
+            <span>
+              <span className='text-5xl font-semibold'>{price}</span>
+            </span>
+          </div>
+          <span className='inline'>
+            {!isPlanFree && <span className='text-base font-light'>+ taxes&nbsp;</span>}
+            <span className='text-xl font-light tracking-tight'>/{unit}</span>
+          </span>
+        </div>
+      </Card.Header>
+      <Card.Content className='flex min-h-[13rem] select-none flex-col gap-3'>
+        {isPlanFree && (
+          <span className='mb-3 text-foreground/50'>
+            The perfect plan for those who want to try Planria and see if it fits their needs.
+          </span>
+        )}
+        {children}
+      </Card.Content>
       <Card.Footer>
-        <Button disabled={true} className='w-full' variant='outline'>
-          Coming soon
-        </Button>
+        <Button className='w-full tracking-wide'>Choose plan</Button>
       </Card.Footer>
+      {isComingSoon && (
+        <Badge className='absolute -right-4 -top-2 bg-background tracking-wider' variant='outline'>
+          Coming soon
+        </Badge>
+      )}
     </Card>
   )
 }

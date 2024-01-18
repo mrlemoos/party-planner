@@ -3,26 +3,46 @@ import { redirect } from 'next/navigation'
 
 import createAuthRepository from '@root/repositories/auth/create-auth-repository'
 import createPartiesRepository from '@root/repositories/parties/create-parties-repository'
-import CreatePartyDataTransferObject from '@root/repositories/parties/dto/create-party-data-transfer-object'
 
+/**
+ * The instance of the auth repository.
+ */
 const authRepository = createAuthRepository()
-const partiesRepository = createPartiesRepository()
 
+/**
+ * The URL to redirect after the user signs up or signs in successfully if the user is not signed in already.
+ */
 const REDIRECT_URL = '/parties/create' as const
 
-async function PartiesCreatePage(): Promise<JSX.Element> {
-  const user = await authRepository.currentUser()
+/**
+ * This function creates a party and then returns its ID.
+ */
+async function createPartyAndReturnId(userAccessToken: string): Promise<string> {
+  const partiesRepo = createPartiesRepository(userAccessToken)
 
-  if (!user) {
+  const party = await partiesRepo.createParty()
+
+  return party.id
+}
+
+/**
+ * The name of the user token template to allow authentication to the repository layer.
+ */
+const USER_TOKEN_TEMPLATE_NAME = 'supabase' as const
+
+async function PartiesCreatePage(): Promise<JSX.Element> {
+  const token = await authRepository.getCurrentUserTokenByTemplate(USER_TOKEN_TEMPLATE_NAME)
+
+  console.log({ token })
+
+  if (!token) {
     // NOTE: The if statement above should never happen to be true, but you know, better safe than sorry :)
     return redirectToSignIn({ returnBackUrl: REDIRECT_URL })
   }
 
-  const partyOwnerId = user.uid
-  const partyOwnerDisplayName = user.displayName
+  const userAccessToken = token
 
-  const dto = new CreatePartyDataTransferObject(partyOwnerId, partyOwnerDisplayName, '[[PLACEHOLDER]]')
-  const { partyId } = await partiesRepository.createParty(dto)
+  const partyId = await createPartyAndReturnId(userAccessToken)
 
   const href = `/parties/create/${partyId}`
 

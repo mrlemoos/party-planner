@@ -1,19 +1,18 @@
-import CreateParty from '@root/features/create-party/create-party'
-import CreatePartyStep from '@root/features/create-party/enums/create-party-step'
+import { type Metadata } from 'next'
+
+import CreatePartyWizardForm from '@root/features/create-party/create-party-wizard-form'
 import generateRandomName from '@root/util/generate-random-name'
+
+export const metadata: Metadata = {
+  title: 'Planria | Create a party',
+  robots: 'noindex, nofollow',
+}
 
 interface PartiesCreateByIdPageParams {
   /**
    * The string that identifies the party created by the `/parties/create` page.
    */
   partyId: string
-}
-
-interface PartiesCreateByIdPageSearchParams {
-  /**
-   * The step in the party creation process.
-   */
-  step?: CreatePartyStep
 }
 
 /**
@@ -24,10 +23,6 @@ interface PartiesCreateByIdPageProps {
    * @see {@link PartiesCreateByIdPageParams}
    */
   params: PartiesCreateByIdPageParams
-  /**
-   * @see {@link PartiesCreateByIdPageSearchParams}
-   */
-  searchParams: PartiesCreateByIdPageSearchParams
 }
 
 /**
@@ -35,13 +30,14 @@ interface PartiesCreateByIdPageProps {
  *
  * @props {@link PartiesCreateByIdPageProps}
  */
-function PartiesCreateByIdPage({
-  params: { partyId },
-  searchParams: { step },
-}: PartiesCreateByIdPageProps): JSX.Element {
+async function PartiesCreateByIdPage({ params: { partyId } }: PartiesCreateByIdPageProps): Promise<JSX.Element> {
   const suggestedPartyName = generateRandomName()
 
-  return <CreateParty partyId={partyId} partyName={suggestedPartyName} currentStepKey={step} />
+  return (
+    <div className='container'>
+      <CreatePartyWizardForm suggestedPartyName={suggestedPartyName} partyId={partyId} />
+    </div>
+  )
 }
 
 export default PartiesCreateByIdPage

@@ -1,8 +1,10 @@
-import { type ComponentProps } from 'react'
+import { type ButtonHTMLAttributes, forwardRef, Fragment } from 'react'
 
 import { Slot } from '@radix-ui/react-slot'
-import classes from '@root/util/classes'
+import { ReloadIcon } from '@radix-ui/react-icons'
 import { cva, type VariantProps } from 'class-variance-authority'
+
+import merge from '@root/util/merge'
 
 const buttonVariants = cva(
   'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
@@ -30,10 +32,13 @@ const buttonVariants = cva(
   },
 )
 
-type $$ButtonVariants = VariantProps<typeof buttonVariants>
-type $$HTMLButtonElementAttributes = Omit<ComponentProps<'button'>, keyof $$ButtonVariants>
+type ButtonVariants = VariantProps<typeof buttonVariants>
+type KeyofButtonVariants = keyof ButtonVariants
 
-interface ButtonProps extends $$ButtonVariants, $$HTMLButtonElementAttributes {
+type HTMLButtonElementAttributes = ButtonHTMLAttributes<HTMLButtonElement>
+type RememberedHTMLButtonElementAttributes = Omit<HTMLButtonElementAttributes, KeyofButtonVariants>
+
+interface ButtonProps extends ButtonVariants, RememberedHTMLButtonElementAttributes {
   /**
    * If true, the props will be applied to child element inserted via the {@link children} instead of the root `button`
    * element which will not be rendered.
@@ -41,6 +46,13 @@ interface ButtonProps extends $$ButtonVariants, $$HTMLButtonElementAttributes {
    * @default false
    */
   asChild?: boolean
+  /**
+   * The boolean which determines whether or not the button is in a loading state. If true, the button will be disabled
+   * and the {@link children} will be replaced with a loading icon.
+   *
+   * @default false
+   */
+  isLoading?: boolean
 }
 
 /**
@@ -61,9 +73,9 @@ interface ButtonProps extends $$ButtonVariants, $$HTMLButtonElementAttributes {
  * ```
 
  * It also is possible to use the `Button` component as a wrapper around any element, in which case the props will be
- * applied to the child element instead of the root `button` element with the help of the
- * {@link ButtonProps.asChild asChild} prop. For instance, the following example will render an anchor (also referred to
- * `<a>` tag) element with the `Button` styles applied to it:
+ * applied to the child element instead of the root `button` element with the help of the `asChild` prop. For instance, 
+ * the following example will render an anchor (also referred to `<a>` tag) element with the `Button` styles applied to 
+ * it:
  *
  * @example
  * ```tsx
@@ -77,14 +89,46 @@ interface ButtonProps extends $$ButtonVariants, $$HTMLButtonElementAttributes {
  *  </Button>
  * ```
  */
-function Button({ className, children, variant, size, asChild = false, ...props }: ButtonProps): JSX.Element {
-  const RenderElement = (asChild ? Slot : 'button') as 'button'
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      className,
+      children,
+      variant,
+      size,
+      asChild = false,
+      isLoading = false,
+      'aria-label': ariaLabel = isLoading ? 'Loading...' : undefined,
+      ...props
+    },
+    ref,
+  ) => {
+    const RenderElement = (asChild ? Slot : 'button') as 'button'
 
-  return (
-    <RenderElement className={classes(buttonVariants({ variant, size, className }))} {...props}>
-      {children}
-    </RenderElement>
-  )
-}
+    return (
+      <RenderElement
+        ref={ref}
+        data-loading={isLoading}
+        className={merge(
+          buttonVariants({ variant, size, className }),
+          'data-[loading=true]:pointer-events-none data-[loading=true]:select-none',
+        )}
+        aria-label={ariaLabel}
+        {...props}
+      >
+        {isLoading ? (
+          <Fragment>
+            Loading...
+            <ReloadIcon className='ml-2 h-4 w-4 animate-spin' aria-hidden='true' />
+          </Fragment>
+        ) : (
+          children
+        )}
+      </RenderElement>
+    )
+  },
+)
+
+Button.displayName = 'Button'
 
 export default Button
