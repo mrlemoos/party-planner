@@ -12,6 +12,7 @@
     "datasource",
     "deepmerge",
     "didn",
+    "endregion",
     "firebaseapp",
     "Firestore",
     "hotspot",
@@ -33,7 +34,8 @@
     "Sundance",
     "Supabase",
     "tailwindcss",
-    "trpc"
+    "trpc",
+    "upsert"
   ],
   "cSpell.enableFiletypes": [
     "prisma"
