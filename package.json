@@ -17,7 +17,6 @@
     "prisma:push": "prisma db push",
     "prisma:pull": "prisma db pull",
     "prisma:generate": "prisma generate",
-    "script": "ts-node --compiler-options '{\"module\":\"CommonJS\"}'",
     "type-check": "tsc --noEmit",
     "test": "vitest",
     "prepare": "husky install && chmod ug+x .husky/*"
